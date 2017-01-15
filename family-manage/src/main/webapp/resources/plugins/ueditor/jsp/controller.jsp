@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	import="com.baidu.ueditor.ActionEnter"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%
+
+    request.setCharacterEncoding( "utf-8" );
+	response.setHeader("Content-Type" , "text/html");
+	String action = request.getParameter("action"); 
+	String rootPath = application.getRealPath( "/" );
+	String exec = new ActionEnter( request, rootPath ).exec();
+	if( action!=null && (action.equals("listfile") || action.equals("listimage") ) ){    
+        rootPath = rootPath.replace("\\", "/");    
+        exec = exec.replaceAll(rootPath, "/");  
+    }    
+	out.write(exec);
+	
+%>

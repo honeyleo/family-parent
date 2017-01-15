@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/aop     
        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-	<context:component-scan base-package="cn.lfy.base,cn.lfy.qneng" />
+	<context:component-scan base-package="cn.lfy.base,com.family" />
 	<!-- 使用默认的扫描方式 -->
 	<context:property-placeholder location="classpath:conf/jdbc.properties" ignore-unresolvable="true" />
 
@@ -54,13 +54,18 @@
 	<bean id="sqlSessionFactory-admin" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource-admin" />
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
-		<property name="mapperLocations" value="classpath:com/family/dao/mybatis/*.xml"/>
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:cn/lfy/base/dao/mybatis/*.xml</value>
+      			<value>classpath:com/family/dao/mybatis/*.xml</value>
+    		</array>
+		</property>
 	</bean>
 	
 	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory-admin"/>
-        <property name="basePackage" value="com.family.dao" />
+        <property name="basePackage" value="cn.lfy.base.dao,com.family.dao" />
     </bean>
 
 </beans>

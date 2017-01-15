@@ -19,6 +19,10 @@ public interface ErrorCode extends BaseErrorCode
      */
     static final int UNAUTHORIZED_OPERATE = SERVER_ERROR + SECURITY + 7;
     /**
+     * 用户名或密码错误
+     */
+    static final int ERROR_USERNAME_OR_PASSWORD = SERVER_ERROR + SECURITY + 8;
+    /**
      * {0}参数无效
      */
     static final int PARAM_ILLEGAL = SERVER_ERROR + WEB + 3;

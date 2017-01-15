@@ -12,6 +12,24 @@
        http://www.springframework.org/schema/aop     
        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"> 
+		<property name="maxTotal" value="32"></property> 
+		<property name="maxIdle" value="6"></property> 
+		<property name="maxWaitMillis" value="300"></property> 
+	</bean> 
+	
+	<bean id="redisClient" class="cn.lfy.common.cache.RedisClient" destroy-method="destroy"> 
+		<!--config --> 
+		<constructor-arg ref="jedisPoolConfig"></constructor-arg> 
+		<!-- host --> 
+		<constructor-arg value="127.0.0.1"></constructor-arg> 
+		<!-- port --> 
+		<constructor-arg value="6379"></constructor-arg> 
+		<!-- timeout --> 
+		<constructor-arg value="1000"></constructor-arg> 
+	
+	</bean> 
+
 	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
 		<property name="maxPoolSize" value="200" />
