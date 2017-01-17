@@ -6,13 +6,16 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import cn.lfy.common.framework.exception.ApplicationException;
-import cn.lfy.common.framework.exception.ErrorCode;
+import com.family.service.TokenService;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
+	@Autowired
+	private TokenService tokenService;
+	
 	/** 忽略拦截请求的Url **/
 	public static Set<String> ignoreUrl = new HashSet<String>();
 
@@ -22,16 +25,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String requestUrl = request.getRequestURI();
 
 		if (!(ignoreUrl.contains(requestUrl))) {
-
-			if (!LoginVerify(request)) {
-				throw ApplicationException.newInstance(ErrorCode.PERMISSION_DENIED);
+			String accessToken = request.getHeader("access_token");
+			if(accessToken == null) {
+				accessToken = request.getParameter("access_token");
 			}
+			tokenService.verifyAccessToken(accessToken);
 		}
 		return super.preHandle(request, response, handler);
-	}
-
-	private boolean LoginVerify(HttpServletRequest request) {
-		return true;
 	}
 
 }

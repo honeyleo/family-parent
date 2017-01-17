@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.family.model.AccessToken;
 import com.family.model.CurrentUser;
-import com.family.service.UserProxyService;
+import com.family.service.TokenService;
 
 import cn.lfy.base.model.User;
 import cn.lfy.base.service.UserService;
@@ -18,6 +18,7 @@ import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
 import cn.lfy.common.utils.MessageDigestUtil;
+import cn.lfy.common.utils.RequestUtil;
 import cn.lfy.common.utils.Strings;
 import cn.lfy.common.utils.Validators;
 
@@ -28,7 +29,7 @@ public class LoginController {
 	private UserService userService;
 	
 	@Autowired
-	private UserProxyService userProxyService;
+	private TokenService tokenService;
 	
 	@Autowired
 	private RedisClient redisClient;
@@ -58,8 +59,10 @@ public class LoginController {
 		currentUser.setUsername(user.getUsername());
 		currentUser.setNickname(user.getNickname());
 		currentUser.setPhone(user.getPhone());
+		currentUser.setRegTime(user.getCreateTime().getTime()/1000);
+		currentUser.setIp(RequestUtil.getUserIpAddr(request));
 		
-		AccessToken accessToken = userProxyService.token(currentUser);
+		AccessToken accessToken = tokenService.token(currentUser);
 		Message.Builder builder = Message.newBuilder();
 		builder.data(accessToken);
 		return builder.build();
@@ -68,9 +71,9 @@ public class LoginController {
 	@RequestMapping("/refresh_token")
 	@ResponseBody
 	public Object refreshToken(HttpServletRequest request) {
-		String refreshToken = request.getParameter("refresh_token");
-		Validators.notEmpty(refreshToken, ErrorCode.PARAM_ILLEGAL, "refresh_token");
-		AccessToken accessToken = userProxyService.getAccessTokenByRefreshToken(refreshToken);
+		String refreshToken = request.getParameter("access_token");
+		Validators.notEmpty(refreshToken, ErrorCode.PARAM_ILLEGAL, "access_token");
+		AccessToken accessToken = tokenService.refreshToken(refreshToken);
 		Validators.notNull(accessToken, ErrorCode.ACCESS_TOKEN_INVALID);
 		return Message.newBuilder().data(accessToken).build();
 	}

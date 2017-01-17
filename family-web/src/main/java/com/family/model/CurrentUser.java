@@ -13,6 +13,10 @@ public class CurrentUser implements Serializable {
 	private String nickname;
 	
 	private String phone;
+	
+	private String ip;
+	
+	private long regTime;
 
 	public long getId() {
 		return id;
@@ -44,6 +48,22 @@ public class CurrentUser implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public long getRegTime() {
+		return regTime;
+	}
+
+	public void setRegTime(long regTime) {
+		this.regTime = regTime;
 	}
 	
 }
