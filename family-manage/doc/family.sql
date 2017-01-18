@@ -10,10 +10,33 @@ Target Server Type    : MYSQL
 Target Server Version : 50618
 File Encoding         : 65001
 
-Date: 2017-01-17 23:29:10
+Date: 2017-01-18 22:59:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for dict
+-- ----------------------------
+DROP TABLE IF EXISTS `dict`;
+CREATE TABLE `dict` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '字典类型',
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
+  `parentId` int(11) NOT NULL DEFAULT '0' COMMENT '父节点ID',
+  `parentIdPath` varchar(200) NOT NULL DEFAULT '' COMMENT '父节点路径',
+  `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
+  `seq` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '顺序号',
+  `updateTime` bigint(20) NOT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_type_pid` (`type`,`parentId`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
+
+-- ----------------------------
+-- Records of dict
+-- ----------------------------
+INSERT INTO `dict` VALUES ('1', 'JOB_FIELD', '工作领域', '0', '$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('5', 'JOB_FIELD', '行业', '1', '$1$', '', '0', '1484750124');
 
 -- ----------------------------
 -- Table structure for menu
@@ -33,7 +56,7 @@ CREATE TABLE `menu` (
   `onMenu` tinyint(4) DEFAULT '1' COMMENT '是否显示在菜单',
   `icon` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of menu
@@ -66,6 +89,12 @@ INSERT INTO `menu` VALUES ('69', '后台主页', '1', '-1', '$', '/manager/home'
 INSERT INTO `menu` VALUES ('76', '个人设置', '1', '69', '$69$', '/manager/user/personal', '11', '', '1', '2017-01-06 22:34:33', '0', null);
 INSERT INTO `menu` VALUES ('77', '业务管理', '1', '1', '$1$', '', '2', '', '1', '2017-01-08 21:33:40', '1', null);
 INSERT INTO `menu` VALUES ('78', '业务管理1', '1', '77', '$1$77$', '/manager/role/list', '1', '', '1', '2017-01-08 21:34:17', '1', null);
+INSERT INTO `menu` VALUES ('79', '字典管理', '1', '2', '$1$2$', '/manager/dict/list', '4', '', '1', '2017-01-18 21:47:44', '1', null);
+INSERT INTO `menu` VALUES ('80', '字典树', '1', '79', '$1$2$79$', '/manager/dict/api/tree', '1', '', '1', '2017-01-18 21:48:27', '0', null);
+INSERT INTO `menu` VALUES ('81', '字典详情', '1', '79', '$1$2$79$', '/manager/dict/detail', '2', '', '1', '2017-01-18 21:49:09', '0', null);
+INSERT INTO `menu` VALUES ('82', '新增字典', '1', '79', '$1$2$79$', '/manager/dict/add', '3', '', '1', '2017-01-18 21:49:59', '0', null);
+INSERT INTO `menu` VALUES ('83', '更新字典', '1', '79', '$1$2$79$', '/manager/dict/update', '4', '', '1', '2017-01-18 21:50:31', '0', null);
+INSERT INTO `menu` VALUES ('84', '删除字典', '1', '83', '$1$2$79$83$', '/manager/dict/del', '5', '', '1', '2017-01-18 21:51:06', '0', null);
 
 -- ----------------------------
 -- Table structure for news_home
@@ -3609,6 +3638,12 @@ INSERT INTO `role_menu` VALUES ('1', '75');
 INSERT INTO `role_menu` VALUES ('1', '76');
 INSERT INTO `role_menu` VALUES ('1', '77');
 INSERT INTO `role_menu` VALUES ('1', '78');
+INSERT INTO `role_menu` VALUES ('1', '79');
+INSERT INTO `role_menu` VALUES ('1', '80');
+INSERT INTO `role_menu` VALUES ('1', '81');
+INSERT INTO `role_menu` VALUES ('1', '82');
+INSERT INTO `role_menu` VALUES ('1', '83');
+INSERT INTO `role_menu` VALUES ('1', '84');
 INSERT INTO `role_menu` VALUES ('2', '1');
 INSERT INTO `role_menu` VALUES ('2', '2');
 INSERT INTO `role_menu` VALUES ('2', '3');

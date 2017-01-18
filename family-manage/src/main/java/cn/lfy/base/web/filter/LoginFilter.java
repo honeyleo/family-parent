@@ -1,6 +1,7 @@
 package cn.lfy.base.web.filter;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import cn.lfy.base.model.LoginUser;
+import cn.lfy.common.utils.ParamUtils;
 
 public class LoginFilter extends OncePerRequestFilter {
 
@@ -21,8 +23,13 @@ public class LoginFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-		long start = System.currentTimeMillis();
 		String requestUri = request.getRequestURI();
+		Map<String, Object> paraMap = ParamUtils.getParameter(request);
+		if(!paraMap.isEmpty()) {
+			log.info(requestUri + "?" + ParamUtils.getParameterText(paraMap, null, "&"));
+		} else {
+			log.info(requestUri);
+		}
 		
 		if(!LoginVerify(request)) {
 			String httpAjax=request.getHeader("X-Requested-With");
@@ -36,7 +43,6 @@ public class LoginFilter extends OncePerRequestFilter {
 			return;
 		}
 		filterChain.doFilter(request, response);
-		log.info("登录会话拦截，请求URL："+requestUri + " cost " + (System.currentTimeMillis() - start) + "ms");
 	}
 
 	

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.family.common.service.UserService;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -29,7 +30,6 @@ import cn.lfy.base.model.PageInfo;
 import cn.lfy.base.model.Role;
 import cn.lfy.base.model.TreeNode;
 import cn.lfy.base.model.type.StateType;
-import cn.lfy.base.service.UserService;
 import cn.lfy.base.service.RoleService;
 import cn.lfy.base.service.UserRoleService;
 import cn.lfy.common.framework.exception.ApplicationException;

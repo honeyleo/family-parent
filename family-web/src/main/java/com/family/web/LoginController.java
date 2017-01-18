@@ -8,12 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.family.common.service.UserService;
 import com.family.model.AccessToken;
 import com.family.model.CurrentUser;
 import com.family.service.TokenService;
 
 import cn.lfy.base.model.User;
-import cn.lfy.base.service.UserService;
 import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;

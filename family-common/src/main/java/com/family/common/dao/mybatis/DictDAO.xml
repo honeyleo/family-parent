@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.DictDAO" >
+  <resultMap id="BaseResultMap" type="cn.lfy.base.model.Dict" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="parentId" property="parentId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="parentIdPath" property="parentIdPath" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="updateTime" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.parentId != null" >
+         and parentId = #{condition.parentId}
+      </if>
+      <if test="condition.type != null" >
+         and type = #{condition.type}
+      </if>
+    </trim>
+  </sql>
+  
+   <sql id="Example_Order_Clause">
+  	<trim prefix="order by" prefixOverrides="," >
+  		<if test="orderMap.id != null">
+  			,id #{orderMap.id}
+  		</if>  		
+  	</trim>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    id, parentId, name, `remark`, type, updateTime, `seq`, parentIdPath
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
+    select
+    <include refid="Base_Column_List" />
+    from dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="_parameter != null" >
+      <include refid="Example_Order_Clause" />
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dict where id = #{id}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dict where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="cn.lfy.base.model.Dict" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dict (parentId, name,`remark`, type, seq, parentIdPath, updateTime) values (#{parentId}, #{name}, #{remark}, #{type}, #{seq}, #{parentIdPath}, #{updateTime})
+  </insert>
+  
+  <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.lfy.base.model.Dict" >
+    update dict
+    <set >
+      <if test="updateTime != null" >
+        updateTime = #{updateTime},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="remark != null" >
+        `remark` = #{remark},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="getDicts" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dict
+    <if test="list != null and list.size() > 0">
+    	where id in
+    	<foreach collection="list" open="(" item="id" separator="," close=")">
+    		#{id}
+    	</foreach>
+    </if>
+  </select>
+</mapper>

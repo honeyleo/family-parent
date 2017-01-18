@@ -1,11 +1,14 @@
-package cn.lfy.base.dao;
+package com.family.common.dao;
 
+import java.util.Collection;
 import java.util.List;
 
-import cn.lfy.base.model.User;
-import cn.lfy.base.model.Criteria;
+import org.apache.ibatis.annotations.Param;
 
-public interface UserDAO {
+import cn.lfy.base.model.Criteria;
+import cn.lfy.base.model.Dict;
+
+public interface DictDAO {
     /**
      * 根据条件查询记录总数
      */
@@ -19,28 +22,27 @@ public interface UserDAO {
     /**
      * 保存记录,不管记录里面的属性是否为空
      */
-    int insert(User record);
+    int insert(Dict record);
 
     /**
      * 根据条件查询记录集
      */
-    List<User> selectByExample(Criteria example);
+    List<Dict> selectByExample(Criteria example);
 
     /**
      * 根据主键查询记录
      */
-    User selectByPrimaryKey(Long id);
+    Dict selectByPrimaryKey(Long id);
 
     /**
      * 根据主键更新属性不为空的记录
      */
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(Dict record);
     
     /**
-     * 根据登录名查询，username唯一
-     * @param username
-     * @return
+     * 根據ID列表查詢列表
+     * @param list
      */
-    User selectByUsername(String username);
+    List<Dict> getDicts(@Param("list")Collection<Long> list);
 
 }

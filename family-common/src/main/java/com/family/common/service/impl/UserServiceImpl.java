@@ -1,15 +1,16 @@
-package cn.lfy.base.service.impl;
+package com.family.common.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.lfy.base.dao.UserDAO;
+import com.family.common.dao.UserDAO;
+import com.family.common.service.UserService;
+
 import cn.lfy.base.model.User;
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
-import cn.lfy.base.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

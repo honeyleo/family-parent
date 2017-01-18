@@ -77,7 +77,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String requestUrl = request.getRequestURI();
 		long respMill = System.currentTimeMillis();
 		long reqMill = (Long)request.getAttribute("reqMill");
-		log.info("权限拦截，请求url：" + requestUrl + "，cost " + (respMill - reqMill));
+		log.info("权限拦截 " + requestUrl + " cost " + (respMill - reqMill) + "ms");
 	}
 
 }

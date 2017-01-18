@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.family.common.service.UserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -25,7 +26,6 @@ import cn.lfy.base.model.User;
 import cn.lfy.base.model.type.StateType;
 import cn.lfy.base.service.RoleMenuService;
 import cn.lfy.base.service.UserRoleService;
-import cn.lfy.base.service.UserService;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
