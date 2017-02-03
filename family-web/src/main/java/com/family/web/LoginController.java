@@ -1,26 +1,30 @@
 package com.family.web;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.family.common.service.UserService;
-import com.family.model.AccessToken;
-import com.family.model.CurrentUser;
-import com.family.service.TokenService;
-
 import cn.lfy.base.model.User;
-import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
 import cn.lfy.common.utils.MessageDigestUtil;
 import cn.lfy.common.utils.RequestUtil;
 import cn.lfy.common.utils.Strings;
+import cn.lfy.common.utils.UUIDUtil;
 import cn.lfy.common.utils.Validators;
+
+import com.family.common.service.UserService;
+import com.family.model.AccessToken;
+import com.family.model.CurrentUser;
+import com.family.service.TokenService;
+import com.family.service.VerifyCodeService;
 
 @Controller
 public class LoginController {
@@ -32,12 +36,12 @@ public class LoginController {
 	private TokenService tokenService;
 	
 	@Autowired
-	private RedisClient redisClient;
+	private VerifyCodeService verifyCodeService;
 	/**
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/login")
+	@RequestMapping("/oauth/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request) {
 		
@@ -68,7 +72,7 @@ public class LoginController {
 		return builder.build();
 	}
 	
-	@RequestMapping("/refresh_token")
+	@RequestMapping("oauth/refresh_token")
 	@ResponseBody
 	public Object refreshToken(HttpServletRequest request) {
 		String refreshToken = request.getParameter("access_token");
@@ -78,11 +82,27 @@ public class LoginController {
 		return Message.newBuilder().data(accessToken).build();
 	}
 	
-	@RequestMapping("/redis")
+	@RequestMapping("/register")
 	@ResponseBody
-	public Object redis(HttpServletRequest request) {
-		redisClient.set("test", "test");
-		String value = redisClient.get("test");
-		return Message.newBuilder().data(value).build();
+	public Object register(@RequestParam(name = "phone") String phone, 
+			@RequestParam(name = "code") String code, 
+			@RequestParam(name = "password") String password, 
+			HttpServletRequest request) {
+		User user = userService.findByUsername(phone);
+		Validators.isFalse(user != null, ErrorCode.EXIST);
+		verifyCodeService.verifyCodeAndDel("REG", phone, code);
+		User record = new User();
+		record.setUsername(phone);
+		String salt = UUIDUtil.salt();
+		record.setSalt(salt);
+		record.setPassword(MessageDigestUtil.getSHA256(password + salt));
+		record.setPhone(phone);
+		record.setNickname("");
+		record.setState(1);
+		record.setEmail("");
+		record.setCreateTime(new Date());
+		userService.add(record);
+		Message.Builder builder = Message.newBuilder();
+		return builder.build();
 	}
 }

@@ -34,6 +34,7 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/ueditor/**" location="/ueditor/" />
 	<mvc:resources mapping="/ued/**" location="/ued/" />
+	<mvc:resources mapping="/upload/**" location="/upload/" />
 	
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<mvc:annotation-driven>

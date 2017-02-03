@@ -35,6 +35,15 @@ public interface ErrorCode extends BaseErrorCode
      */
     static final int PARAM_OUT_OF_LENGTH = SERVER_ERROR + WEB + 6;
     /**
+     * 已发送过验证码，不要重复发送
+     */
+    static final int PHONE_VERIFY_CODE_TIP = SERVER_ERROR + WEB + 7;
+    /**
+     * 手机验证码无效
+     */
+    static final int PHONE_VERIFY_CODE_ILLEGAL = SERVER_ERROR + WEB + 8;
+    
+    /**
      * 用户名格式错误
      */
     static final int USERNAME_FORMAT_ERROR = SERVER_ERROR + ACCOUNT + 10;

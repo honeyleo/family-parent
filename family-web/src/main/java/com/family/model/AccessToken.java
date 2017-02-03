@@ -16,6 +16,8 @@ public class AccessToken implements Serializable {
 	private String refreshToken;
 	@JSONField(name = "expires_in")
 	private int expiresIn;
+	@JSONField(name = "user_id")
+	private long userId;
 	
 	public String getAccessToken() {
 		return accessToken;
@@ -40,6 +42,12 @@ public class AccessToken implements Serializable {
 	}
 	public void setExpiresIn(int expiresIn) {
 		this.expiresIn = expiresIn;
+	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	
 }

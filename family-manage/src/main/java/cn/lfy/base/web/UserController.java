@@ -72,7 +72,7 @@ public class UserController {
         Criteria criteria = new Criteria();
         PageInfo<User> result = userService.findListByCriteria(criteria, pageNum, pageSize);
         JSONObject json = new JSONObject();
-        json.put("code", 200);
+        json.put("ret", 0);
         json.put("total", result.getTotal());
         json.put("value", result.getData());
         return json;

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.NewsHomeDAO" >
+  <resultMap id="BaseResultMap" type="com.family.common.model.NewsHome" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="imgShowMode" property="imgShowMode" jdbcType="INTEGER" />
+    <result column="imgs" property="imgs" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="updateTime" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.type != null" >
+         and type = #{condition.type}
+      </if>
+      <if test="condition.titleLike != null" >
+         and title like '%${condition.titleLike}%'
+      </if>
+      <if test="condition.userId != null" >
+         and userId = #{condition.userId}
+      </if>
+    </trim>
+  </sql>
+  
+  <sql id="Example_Order_Clause">
+  	<trim prefix="order by" prefixOverrides="," >
+  		<if test="orderMap.id != null">
+  			,id #{orderMap.id}
+  		</if>
+  	</trim>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    id, title, intro, content, type, imgShowMode, imgs, userId, createTime, updateTime
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
+    select
+    <include refid="Base_Column_List" />
+    from news_home
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="_parameter != null" >
+      <include refid="Example_Order_Clause" />
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from news_home where id = #{id}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from news_home where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.NewsHome" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into news_home (title, intro, content, type, imgShowMode, imgs, createTime, updateTime,userId)
+    values (#{title}, #{intro}, #{content}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
+  </insert>
+  
+  <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from news_home
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.family.common.model.NewsHome" >
+    update news_home
+    <set >
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro},
+      </if>
+      <if test="content != null" >
+        content = #{content},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="imgShowMode != null" >
+        imgShowMode = #{imgShowMode},
+      </if>
+      <if test="imgs != null" >
+        imgs = #{imgs},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+</mapper>

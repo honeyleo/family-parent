@@ -743,9 +743,13 @@ var oTable = {
                         url: sUrl,
                         data: args,
                         success: function (result) {
-                            var currentPage= Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength );
-                            insertResultFun(result,currentPage);
-                            fnCallback(result);
+                        	if(result.ret != 0) {
+                        		asyncbox.alert(""+result.msg,"提示");
+                        	} else {
+                        		var currentPage= Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength );
+                                insertResultFun(result,currentPage);
+                                fnCallback(result);
+                        	}
                             util.request_end();
                         }
                     });

@@ -11,6 +11,7 @@ import com.family.model.TokenValue;
 import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
+import cn.lfy.common.utils.RedisKey;
 import cn.lfy.common.utils.UUIDUtil;
 import cn.lfy.common.utils.Validators;
 
@@ -41,11 +42,11 @@ public class TokenService {
 		
 		String token = tokenValue.value();
 		
-		String status = redisClient.setex(token, String.valueOf(currentUser.getId()), TOKEN_EXPIRES_IN);
+		String status = redisClient.setex(RedisKey.tokenKey(token), String.valueOf(currentUser.getId()), TOKEN_EXPIRES_IN);
 		
 		Validators.isFalse(!"OK".equalsIgnoreCase(status), ErrorCode.ERROR);
 		
-		String status2 = redisClient.setex(String.valueOf(currentUser.getId()), JSON.toJSONString(currentUser), 7*24*60*60);
+		String status2 = redisClient.setex(RedisKey.currentUserKey(currentUser.getId()), JSON.toJSONString(currentUser), 7*24*60*60);
 		if(!"OK".equalsIgnoreCase(status2)) {
 			redisClient.del(token);
 			throw ApplicationException.newInstance(ErrorCode.ERROR);
@@ -53,6 +54,7 @@ public class TokenService {
 		AccessToken accessToken = new AccessToken();
 		accessToken.setAccessToken(token);
 		accessToken.setExpiresIn(TOKEN_EXPIRES_IN - 1);
+		accessToken.setUserId(currentUser.getId());
 		return accessToken;
 	}
 	/**
@@ -60,8 +62,19 @@ public class TokenService {
 	 * @param accessToken
 	 */
 	public void verifyAccessToken(String accessToken) throws ApplicationException {
-		String uidString = redisClient.get(accessToken);
+		String uidString = redisClient.get(RedisKey.tokenKey(accessToken));
 		Validators.notEmptyAndNumeric(uidString, ErrorCode.ACCESS_TOKEN_INVALID);
+	}
+	
+	/**
+	 * 验证access_token
+	 * @param accessToken
+	 */
+	public CurrentUser getUser(String accessToken) throws ApplicationException {
+		String uidString = redisClient.get(RedisKey.tokenKey(accessToken));
+		Validators.notEmptyAndNumeric(uidString, ErrorCode.ACCESS_TOKEN_INVALID);
+		CurrentUser currentUser = userProxyService.getCurrentUser(Long.parseLong(uidString));
+		return currentUser;
 	}
 	/**
 	 * 刷新access_token
@@ -69,19 +82,20 @@ public class TokenService {
 	 * @return
 	 */
 	public AccessToken refreshToken(String accessToken) {
-		String uidString = redisClient.get(accessToken);
+		String uidString = redisClient.get(RedisKey.tokenKey(accessToken));
 		Validators.notEmptyAndNumeric(uidString, ErrorCode.ACCESS_TOKEN_INVALID);
 		TokenValue tokenValue = TokenValue.valueOf(accessToken);
 		Validators.notNull(tokenValue, ErrorCode.ACCESS_TOKEN_INVALID);
 		AccessToken token = null;
 		if(System.currentTimeMillis()/1000 - tokenValue.getT() < 24*60*60) {
-			CurrentUser currentUser = userProxyService.getCurrentUser();
+			CurrentUser currentUser = userProxyService.getCurrentUser(Long.parseLong(uidString));
 			token = token(currentUser);
 		} else {
 			token = new AccessToken();
 			token.setAccessToken(accessToken);
 			int t = (int)(System.currentTimeMillis()/1000 - tokenValue.getT());
 			token.setExpiresIn(TOKEN_EXPIRES_IN - 1 - t);
+			token.setUserId(Long.parseLong(uidString));
 		}
 		return token;
 	}

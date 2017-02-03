@@ -5,6 +5,7 @@ var users = {
     sourceArray: [],
     textCon:null,
     init: function () {
+    	UE.getEditor('editor');
         this.bindEvents();
         this.loadTable();
     },
@@ -24,16 +25,15 @@ var users = {
         }
         var value = result.value;
         for (var i = 0; i < value.length; i++) {
-            var createTime = new Date(value[i].createTime);
+            var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
 
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
             	'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
-                '<a href="#" class="operation dialog-roles" data-toggle="modal" data-target="#rolesDialog"  data-value=' + value[i].id + '>分配角色</a>' +
                 '</td>';
-            arr.push([users.sunNum,value[i].id,value[i].username,value[i].nickname, '<div class="text_l">'+ value[i].phone +'</div>', value[i].state,value[i].createTime, $opera]);
+            arr.push([users.sunNum,value[i].id,value[i].title, '<div class="text_l">'+ value[i].type +'</div>', value[i].createTime, $opera]);
         }
         self.num++;
         result.draw = self.num;
@@ -42,7 +42,7 @@ var users = {
         result.data = arr;
     },
     query: function (refresh) {
-        var action = "/manager/user/api/list", argument;
+        var action = "/manager/news_home/api/list", argument;
             argument = [
                 {test:"test"}
             ];
@@ -62,24 +62,7 @@ var users = {
         $('.J_search').click(function () {
             self.query(true);
         });
-        $('#table').delegate(".J_status", "click", function () {
-            //改变状态
-            var $this = $(this),
-                status = $this.attr("data-status"),
-                id = $this.attr("data-id");
-            $.get("/console/notice/modify_status", {"status": status, "id": id}, function (result) {
-                if (result.code == 200) {
-                    if (status == 1) {
-                        $this.attr("data-status", 0);
-                        $this.text("下线");
-                    } else {
-                        $this.attr("data-status", 1);
-                        $this.text("上线");
-                    }
-                    self.query();
-                }
-            });
-        }).delegate(".J_strategyInfo","click",function(){
+        $('#table').delegate(".J_strategyInfo","click",function(){
             //详情
             $('.modal-body').html($("#infoDialog").tmpl());
             var sure = $('.modal-footer .btn-primary');
@@ -116,85 +99,50 @@ var users = {
             $("#updContent").show();
             var id = $(this).attr("data-value");
             self.clearData();
-            $.getJSON("/manager/user/detail", {id: id}, function(result){
+            $.getJSON("/manager/news_home/detail", {id: id}, function(result){
             	if (result.ret == 0) {
-                    if (result.data.state == 1) {
-                        $('#search_dropDown-status1').attr("value", '1').text("有效");
-                    } else {
-                        $('#search_dropDown-status1').attr("value",'0').text("禁止");
-                    }
+            		$('#search_dropDown-status1').attr("value", result.data.type);
+            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(result.data.imgShowMode == 2 ? "三张图" : "单图");
                     $("#id").val(result.data.id);
-                    $("#username").val(result.data.username);
-                    $("#nickname").val(result.data.nickname);
-                    $("#phone").val(result.data.phone);
-            	}
-            });
-        }).on("click", ".dialog-roles", function(){
-        	$(".J_roles_sure").removeClass("none");
-            var id = $(this).attr("data-value");
-            $(".J_roles_sure").unbind().click(function () {
-            	var treeObj=$.fn.zTree.getZTreeObj("roleTree");
-                var nodes=treeObj.getCheckedNodes(true);
-                
-                var roleIds = [];
-                for(var i = 0; i < nodes.length; i++) {
-                	tmpNode = nodes[i];
-					if(i!=nodes.length-1){
-						roleIds += tmpNode.id+",";
-					}else{
-						roleIds += tmpNode.id;
-					}
-                }
-                $.get("/manager/user/role/save",{userId:id, roleIds : roleIds},function(result){
-                    if (result.ret == 0) {
-                        $('#rolesDialog').modal('hide');
+                    $("#title").val(result.data.title);
+                    $("#intro").val(result.data.intro);
+                    UE.getEditor('editor').setContent(result.data.content);
+                    
+                    var portrait_img = result.data.imgs;
+                    if (portrait_img == "" || portrait_img == undefined) {
+                        $(".vertical .modify_icon").hide();
+                        $("#uploadPortrait").html("").show();
                     } else {
-                        asyncbox.alert("分配权限失败！\n"+result.msg,"提示");
-                        $('#rolesDialog').modal('hide');
+                        $("#uploadPortrait").prevAll().remove();
+                        var temp = $("#iconTemplate").tmpl(portrait_img);
+                        $('#uploadPortrait').before(temp);
+                        $(".icon_img").attr("src", portrait_img);
+                        $("#iconM").val(portrait_img);
                     }
-                });
-            });
-            $.getJSON("/manager/user/role/tree", {id: id}, function(result){
-            	if (result.ret == 0) {
-            		var setting = {
-        				check: {
-        	        		chkboxType : { "Y" : "", "N" : "" },
-        	        		enable: true
-        	        	},
-        	            view: {
-        	                selectedMulti: false
-        	            },
-        	            data: {
-        	                simpleData: {
-        	                    enable: true,
-        	                    idKey: "id",
-        	    				pIdKey: "parentId",
-        	                }
-        	            },
-        	            callback: {
-        	            	
-        	            }
-        	        };
-            		var zNodes = result.data;
-        			$.fn.zTree.init($("#roleTree"), setting, zNodes);
-        			$('#rolesDialog').modal('show');
+                    
+                    $("#editorDialog").delegate(".J_del_img", "click", function () {
+                        $(this).parents("td").find(".browse_file").show();
+                        $(this).parent().remove();
+                    });
+                   util.uploadFile('uploadPortrait', self.completeIconImg);
+            	} else {
+            		asyncbox.alert(""+result.msg,"提示");
             	}
             });
         });
         $("#updContent").click(function(){
-        	var password = $("#password").val();
-        	if(password) {
-        		password = sha256(password);
-        	}
+        	var content = UE.getEditor('editor').getContent();
+        	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
             var param = {
                 id: $("#id").val(),
-                username: $("#username").val(),
-                password: password,
-                nickname: $("#nickname").val(),
-                phone: $("#phone").val(),
-                state:$("#search_dropDown-status1").attr("value")
+                title: $("#title").val(),
+                intro: $("#intro").val(),
+                content: content,
+                type: $("#search_dropDown-status1").attr("value"),
+                imgs : imgs,
+                imgShowMode : $("#search_dropDown-status2").attr("value")
             };
-            $.post("/manager/user/update", param, function(result){
+            $.post("/manager/news_home/update", param, function(result){
                 if ( result.ret == 0 ) {
                     self.query();
                     $(".btn-default").trigger("click");
@@ -210,9 +158,17 @@ var users = {
             sure.addClass("none");
             $(".J_add_sure").removeClass("none");
             self.clearData();
+            
+            $(".modify_icon").remove();
+            $("#uploadPortrait").html("").show();
+            util.uploadFile('uploadPortrait', self.completeIconImg);
         	self.addSure();
         });
-
+        
+        $("#editorDialog").delegate(".J_del_img", "click", function () {
+            $(this).parents("td").find(".browse_file").show();
+            $(this).parent().remove();
+        });
         $("#editorDialog .close,#editorDialog .J_close_sure").click(function(){
             //location.reload();
         });
@@ -242,14 +198,17 @@ var users = {
     },
     confirmSubmit:function(){
     	var self = this;
+    	var content = UE.getEditor('editor').getContent();
+    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
     	var param = {
-                username: $("#username").val(),
-                password: $("#password").val(),
-                nickname: $("#nickname").val(),
-                phone: $("#phone").val(),
-                state:$("#search_dropDown-status1").attr("value")
+                title: $("#title").val(),
+                intro: $("#intro").val(),
+                content: content,
+                type: $("#search_dropDown-status1").attr("value"),
+                imgShowMode: $("#search_dropDown-status2").attr("value"),
+                imgs : imgs
             };
-            $.post("/manager/user/add", param, function(result){
+            $.post("/manager/news_home/add", param, function(result){
                 if ( result.ret == 0 ) {
                     self.query();
                     $(".btn-default").trigger("click");
@@ -262,7 +221,7 @@ var users = {
         var self =this;
         $(".J_delete_sure").unbind('click');
         $(".J_delete_sure").click(function () {
-            $.get("/manager/user/del",{"id":id},function(result){
+            $.get("/manager/news_home/del",{"id":id},function(result){
                 if (result.ret == 0) {
                     $('#myModal').modal('hide');
                     self.query();
@@ -283,10 +242,32 @@ var users = {
         });
     },
     clearData:function(){
-    	$("#username").val("");
-        $("#password").val("");
-        $("#nickname").val("");
-        $("#phone").val("");
+    	$("#title").val("");
+        $("#intro").val("");
+        $("#content").val("");
+        this.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
+        this.dropDown('modify_search_status2', 'search_dropDown-status2', 'status2');
+    },
+    completeIconImg: function (data) {
+        var json = jQuery.parseJSON(data);
+        var imgUrl = '/upload/' + json.value[0].url;
+        var Img = new Image();
+        Img.src = imgUrl;
+        Img.onload = function () {
+            var _width = Img.width, _height = Img.height;
+                if (json.code == 200) {
+                    var tData = [
+                        {
+                            url: '/upload/' + json.value[0].url
+                        }
+                    ];
+                    var temp = $("#iconTemplate").tmpl(tData);
+                    $('#uploadPortrait').before(temp);
+                    $("#icon_name").text("");
+                } else {
+                    asyncbox.alert("上传失败，请重试","提示");
+                }
+        }
     },
 };
 $(function () {
