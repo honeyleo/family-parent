@@ -3,14 +3,12 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans     
-       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
-       http://www.springframework.org/schema/context     
-       http://www.springframework.org/schema/context/spring-context-3.2.xsd    
-       http://www.springframework.org/schema/tx     
-       http://www.springframework.org/schema/tx/spring-tx-3.2.xsd    
-       http://www.springframework.org/schema/aop     
-       http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd    
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd    
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
@@ -27,5 +25,23 @@
 		<property name="applicationContextSchedulerContextKey">
 			<value>applicationContext</value>
 		</property>
+	</bean>
+	
+	<!-- 上传静态资源到CDN路径配置 start -->
+	<bean id="resourceManager" class="cn.lfy.common.filehandler.ResourceManager">
+		<constructor-arg name="resourceHandlers" ref="resourceHandlers"></constructor-arg>
+	</bean>
+
+
+	<util:map id="resourceHandlers" map-class="java.util.HashMap">
+		<entry key="home_page_image" value-ref="home_page_image" />
+	</util:map>
+	
+	<!-- 聚合sdk目录 -->
+	<bean id="home_page_image"
+		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
+		<property name="baseDir" value="/mnt/family/fileserver/"></property>
+		<property name="childDir" value="home_page_image"></property>
+		<property name="baseURL" value="http://res.family.com/fileserver"></property>
 	</bean>
 </beans>

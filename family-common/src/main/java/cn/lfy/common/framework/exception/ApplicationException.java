@@ -95,7 +95,10 @@ public class ApplicationException extends RuntimeException implements Serializab
 	{
 		this.sendRedirectURL = sendRedirectURL;
 	}
-
+	
+	public ApplicationException(int errorCode) {
+		this.errorCode = errorCode;
+	}
 	public ApplicationException(boolean logged, Exception e, int errorCode, String privateKey, Object contextParams, String[] messageParams, String sendRedirectURL)
 	{
 		super(e);
