@@ -75,6 +75,29 @@ public class UserDetail implements Serializable {
 	 * 祖籍
 	 */
 	private String ancestral;
+	
+	public static UserDetail newDefaultInstance(Long id) {
+		UserDetail detail = new UserDetail();
+		detail.setId(id);
+		detail.setGender(0);
+		detail.setBirthday(0L);
+		detail.setBirthplace("");
+		detail.setCredit(0);
+		detail.setContribution(0);
+		detail.setZibei("");
+		detail.setBalance(0D);
+		detail.setAvatar("");
+		detail.setConstellation(0);
+		detail.setIndustry("");
+		detail.setJobField("");
+		detail.setCompany("");
+		detail.setWorkplace("");
+		detail.setHangOut("");
+		detail.setTel("");
+		detail.setRanking(0);
+		detail.setAncestral("");
+		return detail;
+	}
 	public Long getId() {
 		return id;
 	}

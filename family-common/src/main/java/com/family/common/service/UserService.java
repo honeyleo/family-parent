@@ -2,9 +2,11 @@ package com.family.common.service;
 
 import java.util.List;
 
-import cn.lfy.base.model.User;
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
+import cn.lfy.base.model.User;
+
+import com.family.common.model.UserDetail;
 
 public interface UserService {
     /**
@@ -43,5 +45,11 @@ public interface UserService {
      * @return
      */
     User findByUsername(String username);
+    /**
+     * 获取用户详细信息
+     * @param id
+     * @return
+     */
+    UserDetail getUserDetail(Long id);
     
 }

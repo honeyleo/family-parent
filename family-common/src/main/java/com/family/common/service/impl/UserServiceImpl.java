@@ -5,18 +5,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.family.common.dao.UserDAO;
-import com.family.common.service.UserService;
-
-import cn.lfy.base.model.User;
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
+import cn.lfy.base.model.User;
+
+import com.family.common.dao.UserDAO;
+import com.family.common.dao.UserDetailDAO;
+import com.family.common.model.UserDetail;
+import com.family.common.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+    
+    @Autowired
+    private UserDetailDAO userDetailDAO;
     
     @Override
     public int countByCriteria(Criteria criteria) {
@@ -25,7 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long add(User record) {
-        userDAO.insert(record);
+        int result = userDAO.insert(record);
+        if(result > 0) {
+        	UserDetail detail = UserDetail.newDefaultInstance(record.getId());
+        	userDetailDAO.insert(detail);
+        }
         return record.getId();
     }
 
@@ -61,5 +70,12 @@ public class UserServiceImpl implements UserService {
         res.setData(list);
         return res;
     }
+
+	@Override
+	public UserDetail getUserDetail(Long id) {
+		return userDetailDAO.selectByPrimaryKey(id);
+	}
+    
+    
     
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.lfy.common.model.Message;
 
+import com.family.common.model.UserDetail;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
 
@@ -21,10 +22,11 @@ public class UserController {
 	
 	@RequestMapping("/me")
 	@ResponseBody
-	public Object refreshToken(CurrentUser user, HttpServletRequest request) {
+	public Object me(CurrentUser user, HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder();
 		builder.put("basic", user);
-		builder.put("mine", user);
+		UserDetail mine = userProxyService.getUserDetail(user.getId());
+		builder.put("mine", mine);
 		return builder.build();
 	}
 }
