@@ -20,13 +20,13 @@ public class SmsVerifyCodeCotroller {
 	@ResponseBody
 	public Object get(@RequestParam(name = "type") String type, @RequestParam(name = "phone") String phone) {
 		verifyCodeService.generatVerifyCode(type, phone);
-		return Message.newBuilder().build();
+		return Message.newBuilder("/verify_code/get").build();
 	}
 	
 	@RequestMapping("/verify_code/check")
 	@ResponseBody
 	public Object check(@RequestParam(name = "type") String type, @RequestParam(name = "phone") String phone, @RequestParam(name = "code") String code) {
 		verifyCodeService.verifyCode(type, phone, code);
-		return Message.newBuilder().build();
+		return Message.newBuilder("/verify_code/check").build();
 	}
 }

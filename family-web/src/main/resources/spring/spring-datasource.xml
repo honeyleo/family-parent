@@ -57,7 +57,7 @@
 		<property name="mapperLocations">
 			<array>
 				<value>classpath:cn/lfy/base/dao/mybatis/*.xml</value>
-      			<value>classpath:com/family/dao/mybatis/*.xml</value>
+      			<value>classpath:com/family/common/dao/mybatis/*.xml</value>
     		</array>
 		</property>
 	</bean>
@@ -65,7 +65,7 @@
 	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory-admin"/>
-        <property name="basePackage" value="cn.lfy.base.dao,com.family.dao" />
+        <property name="basePackage" value="cn.lfy.base.dao,com.family.common.dao" />
     </bean>
 
 </beans>

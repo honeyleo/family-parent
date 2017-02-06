@@ -11,8 +11,13 @@ public class Message extends HashMap<String,Object> {
 		return new Builder();
 	}
 	
+	public static Builder newBuilder(String uri) {
+		return new Builder(uri);
+	}
+	
 	private Message(Builder builder) {
 		this.put("ret", builder.ret);
+		this.put("uri", builder.uri);
 		this.put("msg", builder.msg);
 		this.put("data", builder.data);
 		this.put("total", builder.total);
@@ -22,7 +27,9 @@ public class Message extends HashMap<String,Object> {
 		
 		private int ret;
 		
-		private String msg;
+		private String uri;
+		
+		private String msg = "OK";
 		
 		private Object data;
 		
@@ -32,12 +39,19 @@ public class Message extends HashMap<String,Object> {
 		
 		public Builder() {
 		}
+		public Builder(String uri) {
+			this.uri = uri;
+		}
 		
 		public Builder setRet(int ret) {
 			this.ret = ret;
 			return this;
 		}
-
+		
+		public Builder setUri(String uri) {
+			this.uri = uri;
+			return this;
+		}
 		public Builder setMsg(String msg) {
 			this.msg = msg;
 			return this;

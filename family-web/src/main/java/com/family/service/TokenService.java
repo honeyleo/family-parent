@@ -88,14 +88,14 @@ public class TokenService {
 		Validators.notNull(tokenValue, ErrorCode.ACCESS_TOKEN_INVALID);
 		AccessToken token = null;
 		if(System.currentTimeMillis()/1000 - tokenValue.getT() < 24*60*60) {
-			CurrentUser currentUser = userProxyService.getCurrentUser(Long.parseLong(uidString));
-			token = token(currentUser);
-		} else {
 			token = new AccessToken();
 			token.setAccessToken(accessToken);
 			int t = (int)(System.currentTimeMillis()/1000 - tokenValue.getT());
 			token.setExpiresIn(TOKEN_EXPIRES_IN - 1 - t);
 			token.setUserId(Long.parseLong(uidString));
+		} else {
+			CurrentUser currentUser = userProxyService.getCurrentUser(Long.parseLong(uidString));
+			token = token(currentUser);
 		}
 		return token;
 	}
