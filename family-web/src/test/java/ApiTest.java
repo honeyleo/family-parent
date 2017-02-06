@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +84,24 @@ public class ApiTest {
 		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3NTZiNjU2NzQyMTQyZGM4NTMwN2U3NWI0ZTkzZGM0IiwiciI6ImQxYTQzOWQwY2Q2YzRlNTdiODEwZGE2NTA3Nzk4MDFmIiwidCI6MTQ4NjM5MDY0MiwidSI6MX0=");
 		try {
 			String response = HttpClient.post(HOST + "/oauth/refresh_token", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void avatar() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3NTZiNjU2NzQyMTQyZGM4NTMwN2U3NWI0ZTkzZGM0IiwiciI6ImQxYTQzOWQwY2Q2YzRlNTdiODEwZGE2NTA3Nzk4MDFmIiwidCI6MTQ4NjM5MDY0MiwidSI6MX0=");
+		try {
+			Map<String, byte[]> files = new HashMap<String, byte[]>();
+			FileInputStream in = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\1.jpg");
+			byte[] bytes = new byte[in.available()];
+			in.read(bytes);
+			files.put("1.jpg", bytes);
+			in.close();
+			String response = HttpClient.postFile(HOST + "/app/user/avatar", reqParams, files);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
