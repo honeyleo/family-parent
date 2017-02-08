@@ -138,4 +138,13 @@
     where id = #{id}
   </update>
   
+  <update id="updateAvatar" >
+    update user_detail
+    <set >
+      <if test="avatar != null" >
+        avatar = #{avatar},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
 </mapper>

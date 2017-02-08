@@ -51,5 +51,12 @@ public interface UserService {
      * @return
      */
     UserDetail getUserDetail(Long id);
+    /**
+     * 更新用户头像
+     * @param id
+     * @param avatar
+     * @return
+     */
+    int updateAvatar(Long id, String avatar);
     
 }
