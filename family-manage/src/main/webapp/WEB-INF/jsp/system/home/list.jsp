@@ -20,6 +20,7 @@
     <link href="<%=basePath%>resources/plugins/uploadify/uploadify.css" rel="stylesheet" />
     <link href="<%=basePath%>resources/plugins/uploadify/html5uploader.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="<%=basePath %>resources/plugins/zTree/metroStyle.css"/>
+    <link type="text/css" rel="stylesheet" href="<%=basePath %>resources/plugins/ueditor/themes/default/css/ueditor.css"/>
 </head>
 <body>
 <div class="panel_con main_con">
@@ -165,7 +166,7 @@
                     <tr>
 	                    <th>内容：</th>
 	                    <td>
-	                        <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
+	                    	<div><script id="editor" type="text/plain" style="width:100%;height:300px;"></script></div>
 	                    </td>
 	                </tr>
                 </table>

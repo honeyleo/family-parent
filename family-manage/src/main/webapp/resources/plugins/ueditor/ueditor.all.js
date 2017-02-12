@@ -29063,7 +29063,7 @@ UE.ui = baidu.editor.ui = {};
                     while (container.tagName != "BODY") {
                         var position = baidu.editor.dom.domUtils.getComputedStyle(container, "position");
                         nodeStack.push(position);
-                        container.style.position = "static";
+//                        container.style.position = "static";
                         container = container.parentNode;
                     }
                     this._bakHtmlOverflow = document.documentElement.style.overflow;
