@@ -26,13 +26,13 @@ var users = {
         for (var i = 0; i < value.length; i++) {
             var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
-
+            
+            var status = value[i].state == 0 ? '下架' : '发布';
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
-            	'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
                 '</td>';
-            arr.push([users.sunNum,value[i].id,value[i].img, value[i].createTime, $opera]);
+            arr.push([users.sunNum,value[i].id,status, value[i].createTime, $opera]);
         }
         self.num++;
         result.draw = self.num;
@@ -103,7 +103,7 @@ var users = {
             		$('#search_dropDown-status1').attr("value", result.data.type);
                     $("#id").val(result.data.id);
                     
-                    var portrait_img = result.data.imgs;
+                    var portrait_img = result.data.img;
                     if (portrait_img == "" || portrait_img == undefined) {
                         $(".vertical .modify_icon").hide();
                         $("#uploadPortrait").html("").show();
@@ -111,6 +111,7 @@ var users = {
                         $("#uploadPortrait").prevAll().remove();
                         var temp = $("#iconTemplate").tmpl(portrait_img);
                         $('#uploadPortrait').before(temp);
+                        $("#uploadPortrait").hide();
                         $(".icon_img").attr("src", portrait_img);
                         $("#iconM").val(portrait_img);
                     }
@@ -244,6 +245,7 @@ var users = {
                     ];
                     var temp = $("#iconTemplate").tmpl(tData);
                     $('#uploadPortrait').before(temp);
+                    $("#uploadPortrait").hide();
                     $("#icon_name").text("");
                 } else {
                     asyncbox.alert("上传失败，请重试","提示");

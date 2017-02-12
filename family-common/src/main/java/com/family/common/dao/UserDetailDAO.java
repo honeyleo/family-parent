@@ -2,6 +2,8 @@ package com.family.common.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.lfy.base.model.Criteria;
 
 import com.family.common.model.UserDetail;
@@ -36,5 +38,11 @@ public interface UserDetailDAO {
      * 根据主键更新属性不为空的记录
      */
     int updateByPrimaryKeySelective(UserDetail record);
-    
+    /**
+     * 更新用户头像
+     * @param id
+     * @param avatar
+     * @return
+     */
+    int updateAvatar(@Param("id") Long id, @Param("avatar") String avatar);
 }

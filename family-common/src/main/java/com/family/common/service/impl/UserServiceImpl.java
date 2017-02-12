@@ -75,7 +75,10 @@ public class UserServiceImpl implements UserService {
 	public UserDetail getUserDetail(Long id) {
 		return userDetailDAO.selectByPrimaryKey(id);
 	}
-    
-    
+
+	@Override
+	public int updateAvatar(Long id, String avatar) {
+		return userDetailDAO.updateAvatar(id, avatar);
+	}
     
 }

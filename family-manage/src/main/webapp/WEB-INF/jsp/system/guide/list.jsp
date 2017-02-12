@@ -64,8 +64,7 @@
             <tr>
                 <th width="40px">序号</th>
                 <th>ID</th>
-                <th>标题</th>
-                <th>类型</th>
+                <th>状态</th>
                 <th width="180px">创建时间</th>
                 <th width="220px">操作</th>
             </tr>
@@ -107,6 +106,7 @@
                 	<tr>
                         <th>状态：</th>
                         <td>
+                        	<input type="hidden" class="form-control input_common" id="id">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
                                         id="search_dropDown-status1" value="1">发布</i></button>
