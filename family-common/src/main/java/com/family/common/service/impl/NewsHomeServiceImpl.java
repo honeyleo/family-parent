@@ -66,4 +66,14 @@ public class NewsHomeServiceImpl implements NewsHomeService {
         return res;
     }
 
+	@Override
+	public List<NewsHome> list(int type, int start, int limit) {
+		return newsHomeDAO.list(type, start, limit);
+	}
+
+	@Override
+	public int getNewestCount(int type, long lastUpdateTime) {
+		return newsHomeDAO.getNewestCount(type, lastUpdateTime);
+	}
+
 }

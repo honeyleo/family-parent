@@ -106,4 +106,22 @@
     where id = #{id}
   </update>
   
+  <select id="getNewestCount">
+    SELECT
+    COUNT(0)
+    FROM news_home
+    WHERE 1=1
+    AND type = #{type}
+    AND lastUpdateTime = #{lastUpdateTime}
+  </select>
+  
+  <select id="list" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM news_home
+    WHERE 1=1
+    AND type = #{type}
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  
 </mapper>

@@ -42,5 +42,20 @@ public interface NewsHomeService {
      * 根据条件查询记录集
      */
     PageInfo<NewsHome> findListByCriteria(Criteria criteria, int pageNo, int pageSize);
+    /**
+     * 首頁新聞列表
+     * @param type
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<NewsHome> list(int type, int start, int limit);
+    /**
+     * 最新新聞數量
+     * @param type
+     * @param lastUpdateTime
+     * @return
+     */
+    int getNewestCount(int type, long lastUpdateTime);
 
 }
