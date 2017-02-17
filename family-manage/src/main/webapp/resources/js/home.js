@@ -113,11 +113,22 @@ var users = {
                         $(".vertical .modify_icon").hide();
                         $("#uploadPortrait").html("").show();
                     } else {
-                        $("#uploadPortrait").prevAll().remove();
-                        var temp = $("#iconTemplate").tmpl(portrait_img);
-                        $('#uploadPortrait').before(temp);
-                        $(".icon_img").attr("src", portrait_img);
-                        $("#iconM").val(portrait_img);
+//                        $("#uploadPortrait").prevAll().remove();
+                        var imgs = new Array();
+                        imgs = portrait_img.split(",");
+                        for(var i = 0; i < imgs.length; i++) {
+                        	if(imgs[i]) {
+                        		var url = {url:imgs[i]};
+                        		var temp = $("#iconTemplate").tmpl(url);
+                                $('.icon').before(temp);
+                                $(".modify_icon").css("float","left");
+                        	}
+                        }
+                        $("#uploadPortrait").css("float", "left").show()
+//                        var temp = $("#iconTemplate").tmpl(portrait_img);
+//                        $('#uploadPortrait').before(temp);
+//                        $(".icon_img").attr("src", portrait_img);
+//                        $("#iconM").val(portrait_img);
                     }
                     
                     $("#editorDialog").delegate(".J_del_img", "click", function () {
@@ -132,14 +143,17 @@ var users = {
         });
         $("#updContent").click(function(){
         	var content = UE.getEditor('editor').getContent();
-        	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
+        	var imgsString = "";
+        	$(".vertical .modify_icon .icon_img").each(function(){
+        		imgsString +=this.src + ",";
+        	});
             var param = {
                 id: $("#id").val(),
                 title: $("#title").val(),
                 intro: $("#intro").val(),
                 content: content,
                 type: $("#search_dropDown-status1").attr("value"),
-                imgs : imgs,
+                imgs : imgsString,
                 imgShowMode : $("#search_dropDown-status2").attr("value")
             };
             $.post("/manager/news_home/update", param, function(result){
@@ -263,6 +277,7 @@ var users = {
                     ];
                     var temp = $("#iconTemplate").tmpl(tData);
                     $('#uploadPortrait').before(temp);
+                    $(".modify_icon").css("float","left");
                     $("#icon_name").text("");
                 } else {
                     asyncbox.alert("上传失败，请重试","提示");

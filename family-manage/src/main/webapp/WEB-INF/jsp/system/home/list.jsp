@@ -160,7 +160,7 @@
                         <th>图片：</th>
                         <td class="vertical">
                             <div id="uploadPortrait" class="icon browse_file"></div>
-                            <span class="ver_tips none" id="icon_name"></span>
+                            <span class="ver_tips none" id="icon_name" style="clear:both;display:block;"></span>
                         </td>
                     </tr>
                     <tr>

@@ -56,8 +56,8 @@
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<property name="mapperLocations">
 			<array>
+				<value>classpath:com/family/common/dao/mybatis/*.xml</value>
 				<value>classpath:cn/lfy/base/dao/mybatis/*.xml</value>
-      			<value>classpath:com/family/common/dao/mybatis/*.xml</value>
     		</array>
 		</property>
 	</bean>
