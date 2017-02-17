@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -142,6 +143,7 @@ public final class ConfigManager {
 				
 		}
 		
+		conf.put("fileserverImageUrl", jsonConfig.getString("fileserverImageUrl"));
 		conf.put( "savePath", savePath );
 		conf.put( "rootPath", this.rootPath );
 		
@@ -160,7 +162,6 @@ public final class ConfigManager {
 		this.parentPath = file.getParent();
 		
 		String configContent = this.readFile( this.getConfigPath() );
-		
 		try{
 			JSONObject jsonConfig = new JSONObject( configContent );
 			this.jsonConfig = jsonConfig;
@@ -194,8 +195,9 @@ public final class ConfigManager {
 		StringBuilder builder = new StringBuilder();
 		
 		try {
-			
-			InputStreamReader reader = new InputStreamReader( new FileInputStream( path ), "UTF-8" );
+			InputStream inputStream = ConfigManager.this.getClass().getClassLoader().getResourceAsStream("config.json");
+//			InputStreamReader reader = new InputStreamReader( new FileInputStream( path ), "UTF-8" );
+			InputStreamReader reader = new InputStreamReader( inputStream, "UTF-8" );
 			BufferedReader bfReader = new BufferedReader( reader );
 			
 			String tmpContent = null;

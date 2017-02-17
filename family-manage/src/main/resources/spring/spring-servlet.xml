@@ -6,11 +6,11 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-
+	
  	<context:component-scan base-package="cn.lfy.base.web">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan> 
-	
+	<context:property-placeholder location="classpath:conf/commons.properties" />
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="basenames">
@@ -35,6 +35,7 @@
 	<mvc:resources mapping="/ueditor/**" location="/ueditor/" />
 	<mvc:resources mapping="/ued/**" location="/ued/" />
 	<mvc:resources mapping="/upload/**" location="/upload/" />
+	<mvc:resources mapping="/fileserver/**" location="/fileserver/" />
 	
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<mvc:annotation-driven>
