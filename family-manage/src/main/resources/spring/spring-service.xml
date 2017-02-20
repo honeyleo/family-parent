@@ -35,14 +35,14 @@
 
 
 	<util:map id="resourceHandlers" map-class="java.util.HashMap">
-		<entry key="home_page_image" value-ref="home_page_image" />
+		<entry key="news" value-ref="news" />
 	</util:map>
 	
 	<!-- 聚合sdk目录 -->
-	<bean id="home_page_image"
+	<bean id="news"
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
 		<property name="baseDir" value="${fileserver.image.dir}"></property>
-		<property name="childDir" value="home_page_image"></property>
+		<property name="childDir" value="/news"></property>
 		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
 </beans>

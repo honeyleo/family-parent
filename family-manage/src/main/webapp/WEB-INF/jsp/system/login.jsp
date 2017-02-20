@@ -40,7 +40,7 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名" id = "username" name="username" value="admin"/>
+															<input type="text" class="form-control" placeholder="用户名" id = "username" name="username" value="dev"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>

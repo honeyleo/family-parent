@@ -5,10 +5,13 @@ public class ResourceIdentifier {
 	private String url;
 
 	private String canonicalPath;
+	
+	private String relativePath;
 
-	public ResourceIdentifier( String url, String canonicalPath ) {
+	public ResourceIdentifier( String url, String canonicalPath, String relativePath) {
 		this.url = url;
 		this.canonicalPath = canonicalPath;
+		this.relativePath = relativePath;
 	}
 
 	public String getUrl() {
@@ -25,5 +28,13 @@ public class ResourceIdentifier {
 
 	public void setCanonicalPath( String canonicalPath ) {
 		this.canonicalPath = canonicalPath;
+	}
+
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
 	}
 }

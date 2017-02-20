@@ -113,7 +113,7 @@ var users = {
                         $(".vertical .modify_icon").hide();
                         $("#uploadPortrait").html("").show();
                     } else {
-//                        $("#uploadPortrait").prevAll().remove();
+                        $("#uploadPortrait").prevAll().remove();
                         var imgs = new Array();
                         imgs = portrait_img.split(",");
                         for(var i = 0; i < imgs.length; i++) {
@@ -143,9 +143,9 @@ var users = {
         });
         $("#updContent").click(function(){
         	var content = UE.getEditor('editor').getContent();
-        	var imgsString = "";
+        	var imgs = "";
         	$(".vertical .modify_icon .icon_img").each(function(){
-        		imgsString +=this.src + ",";
+        		imgs +=$(this).attr("src") + ",";
         	});
             var param = {
                 id: $("#id").val(),
@@ -153,7 +153,7 @@ var users = {
                 intro: $("#intro").val(),
                 content: content,
                 type: $("#search_dropDown-status1").attr("value"),
-                imgs : imgsString,
+                imgs : imgs,
                 imgShowMode : $("#search_dropDown-status2").attr("value")
             };
             $.post("/manager/news_home/update", param, function(result){
@@ -213,7 +213,11 @@ var users = {
     confirmSubmit:function(){
     	var self = this;
     	var content = UE.getEditor('editor').getContent();
-    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
+//    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
+    	var imgs = "";
+    	$(".vertical .modify_icon .icon_img").each(function(){
+    		imgs +=$(this).attr("src") + ",";
+    	});
     	var param = {
                 title: $("#title").val(),
                 intro: $("#intro").val(),
@@ -276,7 +280,7 @@ var users = {
                         }
                     ];
                     var temp = $("#iconTemplate").tmpl(tData);
-                    $('#uploadPortrait').before(temp);
+                    $('#uploadPortrait').css("float", "left").before(temp);
                     $(".modify_icon").css("float","left");
                     $("#icon_name").text("");
                 } else {

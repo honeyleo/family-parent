@@ -49,7 +49,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 
 		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
 				+ childDir + "/" + dirNo + "/" + destFileName,
-				parentDirName + File.separatorChar + destFileName );
+				parentDirName + File.separatorChar + destFileName, childDir + "/" + dirNo + "/" + destFileName );
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 
 		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
 				+ childDir + "/" + dirNo + "/" + destFileName,
-				parentDirName + File.separatorChar + destFileName );
+				parentDirName + File.separatorChar + destFileName, childDir + "/" + dirNo + "/" + destFileName );
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 		FileUtils.copyInputStreamToFile( fileInputStream, destFile );
 
 		String url = baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" ) + childDir + "/" + newFileName;
-		return new ResourceIdentifier( url, parentDirName + File.separatorChar + newFileName );
+		return new ResourceIdentifier( url, parentDirName + File.separatorChar + newFileName, childDir + "/" + newFileName );
 	}
 
 	protected synchronized int currentDirNo() {
