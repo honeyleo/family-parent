@@ -36,6 +36,7 @@
 
 	<util:map id="resourceHandlers" map-class="java.util.HashMap">
 		<entry key="news" value-ref="news" />
+		<entry key="content_image" value-ref="content_image" />
 	</util:map>
 	
 	<!-- 聚合sdk目录 -->
@@ -43,6 +44,12 @@
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
 		<property name="baseDir" value="${fileserver.image.dir}"></property>
 		<property name="childDir" value="/news"></property>
+		<property name="baseURL" value="${fileserver.image.url}"></property>
+	</bean>
+	<bean id="content_image"
+		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
+		<property name="baseDir" value="${fileserver.image.dir}"></property>
+		<property name="childDir" value="/content_image"></property>
 		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
 </beans>

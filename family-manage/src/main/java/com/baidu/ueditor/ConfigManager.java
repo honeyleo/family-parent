@@ -143,7 +143,7 @@ public final class ConfigManager {
 				
 		}
 		
-		conf.put("fileserverImageUrl", jsonConfig.getString("fileserverImageUrl"));
+//		conf.put("fileserverImageUrl", jsonConfig.getString("fileserverImageUrl"));
 		conf.put( "savePath", savePath );
 		conf.put( "rootPath", this.rootPath );
 		

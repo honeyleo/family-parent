@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -115,6 +116,15 @@ public class NewsHomeController {
         	}
         	record.setImgs(Joiner.on(",").join(list));
         }
+        if(StringUtils.isNotBlank(record.getContent())) {
+        	Set<String> imgs = ManageHelper.getImgsFromText( record.getContent() );
+    		String content = record.getContent();
+    		for( String img : imgs ) {
+    			content = content.replace(img, imageUrl + img);
+    		}
+    		record.setContent(content);
+        }
+        
         builder.data(record);
         return builder.build();
     }
@@ -130,12 +140,13 @@ public class NewsHomeController {
     public Object add(NewsHome form, HttpServletRequest request) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
     	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
-        if(form.getImgs() != null) {
-        	String imgs = form.getImgs();
-        	String[] img = imgs.split(",");
+        if(StringUtils.isNotBlank(form.getImgs())) {
+        	Iterable<String> itb = Splitter.on(",").split(form.getImgs());
+        	Iterator<String> it = itb.iterator();
         	List<String> list = new ArrayList<String>();
-        	for(String im : img) {
-        		if(!StringUtils.isBlank(im)) {
+        	while(it.hasNext()) {
+        		String im = it.next();
+        		if(StringUtils.isNotBlank(im)) {
         			boolean isUpload = ManageHelper.isUpload(im);
         			if(isUpload) {
         				try {
@@ -148,10 +159,27 @@ public class NewsHomeController {
         		}
         	}
         	if(!list.isEmpty()) {
-        		imgs = Joiner.on(",").join(list);
-        		form.setImgs(imgs);
+        		form.setImgs(Joiner.on(",").join(list));
         	}
     	}
+        Set<String> imgs = ManageHelper.getImgsFromText( form.getContent() );
+		String content = form.getContent();
+		
+		for( String img : imgs ) {
+			// 如果是上传的
+			boolean isUpload = ManageHelper.isUeditor( img );
+			if( isUpload ) {
+				try {
+					String newFileName = img.replace("/ueditor/", "");
+					ResourceIdentifier dest = resourceManager.processResource(
+							"content_image", pathRoot + img, newFileName, false );
+					content = content.replace( img, dest.getRelativePath());
+				} catch( IOException e ) {
+					
+				}
+			}
+			form.setContent( content );
+		}
         newsHomeService.insert(form);
         return builder.build();
     }
@@ -168,9 +196,49 @@ public class NewsHomeController {
     public Object update(NewsHome form, HttpServletRequest request,
             HttpServletResponse response) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
-    	if(form.getImgs() == null) {
-    		form.setImgs("");
+    	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
+    	if(StringUtils.isNotBlank(form.getImgs())) {
+        	Iterable<String> itb = Splitter.on(",").split(form.getImgs());
+        	Iterator<String> it = itb.iterator();
+        	List<String> list = new ArrayList<String>();
+        	while(it.hasNext()) {
+        		String im = it.next();
+        		if(StringUtils.isNotBlank(im)) {
+        			boolean isUpload = ManageHelper.isUpload(im);
+        			if(isUpload) {
+        				try {
+        					ResourceIdentifier dest = resourceManager.processResource("news", pathRoot + im);
+        					list.add(dest.getRelativePath());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+        			}
+        		}
+        	}
+        	if(!list.isEmpty()) {
+        		form.setImgs(Joiner.on(",").join(list));
+        	} else {
+        		form.setImgs(null);
+        	}
     	}
+		String content = form.getContent();
+		content = content.replaceAll(imageUrl, "");
+		Set<String> imgs = ManageHelper.getImgsFromText( form.getContent() );
+		for( String img : imgs ) {
+			// 如果是上传的
+			boolean isUpload = ManageHelper.isUeditor( img );
+			if( isUpload ) {
+				try {
+					String newFileName = img.replace("/ueditor/", "");
+					ResourceIdentifier dest = resourceManager.processResource(
+							"content_image", pathRoot + img, newFileName, false );
+					content = content.replace( img, dest.getRelativePath());
+				} catch( IOException e ) {
+					
+				}
+			}
+			form.setContent( content );
+		}
     	newsHomeService.updateByIdSelective(form);
         return builder.build();
     }

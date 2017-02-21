@@ -29,10 +29,12 @@ public class UEditorController {
         
         String action = request.getParameter("action"); 
         try {
-        	if("test".equals(env)) {
-        		rootPath = request.getSession()
-                        .getServletContext().getRealPath("/") + "/fileserver";
-        	}
+//        	if("test".equals(env)) {
+//        		rootPath = request.getSession()
+//                        .getServletContext().getRealPath("/") + "/fileserver";
+//        	}
+        	rootPath = request.getSession()
+                    .getServletContext().getRealPath("/");
             String exec = new ActionEnter(request, rootPath).exec();
             PrintWriter writer = response.getWriter();
             if( action!=null && (action.equals("listfile") || action.equals("listimage") ) ){    

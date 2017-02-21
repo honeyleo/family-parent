@@ -75,6 +75,32 @@ public class ResourceHandlerImpl implements ResourceHandler {
 	}
 	
 	@Override
+	public ResourceIdentifier processResource( String fileName, String newFileName, boolean useDirNo) throws IOException {
+
+		File srcFile = new File( fileName );
+		if( null == srcFile || !srcFile.exists() ) {
+			throw new ApplicationException( 192000 );
+		}
+
+		int dirNo = currentDirNo();
+		String parentDirName = baseDir + childDir;
+		if(useDirNo) {
+			parentDirName = parentDirName + File.separatorChar + dirNo;
+		}
+		File parentDir = new File( parentDirName );
+		if( !parentDir.exists() ) {
+			parentDir.mkdir();
+		}
+		String destFileName = generateFileName( fileName, newFileName );
+		File destFile = new File( parentDir, destFileName );
+
+		FileUtils.copyFile( srcFile, destFile );
+
+		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
+				+ childDir + (useDirNo ? ("/" + dirNo) : "") + "/" + destFileName,
+				parentDirName + File.separatorChar + destFileName, childDir + (useDirNo ? ("/" + dirNo) : "") + "/" + destFileName );
+	}
+	@Override
 	public ResourceIdentifier processResource( byte[] file, String newFileName, boolean useDirNo, boolean sync ) throws IOException {
 
 		if( StringUtils.isEmpty( newFileName ) ) {

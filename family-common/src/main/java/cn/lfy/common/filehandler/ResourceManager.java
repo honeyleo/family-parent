@@ -32,6 +32,11 @@ public class ResourceManager {
 		return h.processResource( fileName, dirNo,newFileName );
 	}
 	
+	public ResourceIdentifier processResource(String handlerName,String fileName, String newFileName, boolean useDirNo)throws IOException  {
+		ResourceHandler h = resourceHandlers.get( handlerName );
+		return h.processResource( fileName, newFileName, useDirNo );
+	}
+	
 	public ResourceIdentifier processResource(String handlerName, byte[] file, String newFileName)throws IOException  {
 		ResourceHandler h = resourceHandlers.get( handlerName );
 		return h.processResource(file, newFileName, false, false);

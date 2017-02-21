@@ -41,4 +41,6 @@ public interface ResourceHandler {
 	 * @throws IOException
 	 */
 	ResourceIdentifier processResource( byte[] file, String newFileName, boolean useDirNo, boolean sync ) throws IOException;
+	
+	ResourceIdentifier processResource( String fileName, String newFileName, boolean useDirNo) throws IOException;
 }
