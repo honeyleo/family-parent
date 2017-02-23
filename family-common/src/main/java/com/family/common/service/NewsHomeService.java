@@ -57,5 +57,11 @@ public interface NewsHomeService {
      * @return
      */
     int getNewestCount(int type, long lastUpdateTime);
+    /**
+     * 评论数加1
+     * @param id
+     * @return
+     */
+    int incrComments(long id);
 
 }

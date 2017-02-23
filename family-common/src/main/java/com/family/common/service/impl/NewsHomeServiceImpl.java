@@ -76,4 +76,9 @@ public class NewsHomeServiceImpl implements NewsHomeService {
 		return newsHomeDAO.getNewestCount(type, lastUpdateTime);
 	}
 
+	@Override
+	public int incrComments(long id) {
+		return newsHomeDAO.incrComments(id);
+	}
+
 }

@@ -124,4 +124,9 @@
     <include refid="common.Mysql_Pagination_Limit" />
   </select>
   
+  <update id="incrComments">
+  	UPDATE news
+  		SET comments = comments + 1 
+  	WHERE id = #{id} 
+  </update>
 </mapper>

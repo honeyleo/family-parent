@@ -13,19 +13,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.family.common.model.Comment;
 import com.family.common.model.NewsHome;
+import com.family.common.service.CommentService;
 import com.family.common.service.NewsHomeService;
+import com.family.model.CurrentUser;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
 import cn.lfy.common.model.Message;
 
 @Controller
-public class NewHomeController {
+public class NewHomeController extends BaseController {
 
 	@Autowired
 	private NewsHomeService newsHomeService;
 	
+	@Autowired
+	private CommentService commentService;
+	
+	/**
+	 * 新闻列表
+	 * @param type
+	 * @param start
+	 * @param limit
+	 * @param lastUpdateTime
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/app/news_home/list")
 	@ResponseBody
 	public Object list(@RequestParam(name = "type", defaultValue = "1") int type, 
@@ -51,6 +66,7 @@ public class NewHomeController {
 			dto.put("type", newsHome.getType());
 			dto.put("imgShowMode", newsHome.getImgShowMode());
 			dto.put("createTime", newsHome.getCreateTime());
+			dto.put("comments", newsHome.getComments());
 			List<String> imgs = Lists.newArrayList();
 			if(StringUtils.isNotBlank(newsHome.getImgs())) {
 				Iterable<String> itb = Splitter.on(",").split(newsHome.getImgs());
@@ -75,13 +91,68 @@ public class NewHomeController {
 		return builder.build();
 	}
 	
-	protected boolean isMore(List<?> list, int limit ) {
-		boolean more = false;
-		if(list != null) {
-			more = list.size() > limit;
-		} else {
-			more = false;
+	/**
+	 * 评论列表
+	 * @param newsId
+	 * @param start
+	 * @param limit
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/news_home/comments")
+	@ResponseBody
+	public Object comments(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+			@RequestParam(name = "start") int start, 
+			@RequestParam(name = "limit", defaultValue = "10") int limit,
+			HttpServletRequest request) {
+		List<Comment> list = commentService.list(newsId, start, limit + 1);
+		boolean more = isMore(list, limit);
+		if(more) {
+			list = list.subList(0, limit);
 		}
-		return more;
+		Message.Builder builder = Message.newBuilder("/app/news_home/comments");
+		JSONObject data = new JSONObject();
+		data.put("more", more);
+		data.put("list", list);
+		return builder.build();
+	}
+	/**
+	 * 评论新闻
+	 * @param newsId
+	 * @param content
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/news_home/comment")
+	@ResponseBody
+	public Object comment(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+			@RequestParam(name = "content") String content, 
+			CurrentUser user,
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/news_home/comment");
+		Comment record = new Comment();
+		record.setContent(content);
+		record.setNewsId(newsId);
+		record.setType(1);
+		record.setUserId(user.getId());
+		record.setCreateTime(System.currentTimeMillis()/1000);
+		commentService.insert(record);
+		return builder.build();
+	}
+	
+	/**
+	 * 收藏新闻
+	 * @param newsId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/news_home/favor")
+	@ResponseBody
+	public Object favor(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+			CurrentUser user,
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/news_home/favor");
+		commentService.favor(user.getId(), newsId);
+		return builder.build();
 	}
 }

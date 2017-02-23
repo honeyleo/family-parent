@@ -18,9 +18,15 @@ public class NewsHome implements Serializable {
 	private String intro;
 	
 	private String content;
+	/**
+	 * 新闻类型：1-首页新闻；2-咨询页
+	 */
+	private Integer newsType;
 	
 	private Integer type;
-	
+	/**
+	 * 1-上文下一大图；2-上文下3小图；左文右一小图
+	 */
 	private Integer imgShowMode;
 	
 	private Long userId;
@@ -30,6 +36,10 @@ public class NewsHome implements Serializable {
 	private Long updateTime;
 	
 	private String imgs;
+	/**
+	 * 评论数
+	 */
+	private Integer comments;
 
 	public Long getId() {
 		return id;
@@ -109,5 +119,21 @@ public class NewsHome implements Serializable {
 
 	public void setImgs(String imgs) {
 		this.imgs = imgs;
+	}
+
+	public Integer getNewsType() {
+		return newsType;
+	}
+
+	public void setNewsType(Integer newsType) {
+		this.newsType = newsType;
+	}
+
+	public Integer getComments() {
+		return comments;
+	}
+
+	public void setComments(Integer comments) {
+		this.comments = comments;
 	}
 }

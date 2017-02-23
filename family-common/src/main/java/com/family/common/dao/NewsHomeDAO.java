@@ -53,4 +53,10 @@ public interface NewsHomeDAO {
      * @return
      */
     int getNewestCount(@Param("type")int type, @Param("lastUpdateTime")long lastUpdateTime);
+    /**
+     * 评论数加1
+     * @param id
+     * @return
+     */
+    int incrComments(long id);
 }
