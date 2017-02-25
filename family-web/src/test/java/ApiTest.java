@@ -15,7 +15,7 @@ public class ApiTest {
 	@Test
 	public void login() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("username", "dev");
+		reqParams.put("username", "admin");
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		try {
 			String response = HttpClient.post(HOST + "/oauth/login", reqParams);
@@ -102,6 +102,56 @@ public class ApiTest {
 			files.put("1.jpg", bytes);
 			in.close();
 			String response = HttpClient.postFile(HOST + "/app/user/avatar", reqParams, files);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void apply() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjdmMDU1YzVhNDhjNDRjYmNhYjI1ZTUyZmQ3YzY5ZjY2IiwiciI6IjEzNGE5NTExYTE1ZTRhZjliOTRmZDcyMDcxZTU4YTYwIiwidCI6MTQ4ODAwODcyNywidSI6MX0=");
+		reqParams.put("friend_id", "2");
+		try {
+			String response = HttpClient.post(HOST + "/app/user_friend/apply", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void agree() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3OWI5OGI5NGFlMTQ0YzZiNzM1MmJiMjkxNTA0NDgwIiwiciI6ImM1MTExNWE2NmM3NzQzMTdhZjJjZDliMmExN2IxYjVhIiwidCI6MTQ4ODAwODg5NCwidSI6Mn0=");
+		reqParams.put("friend_id", "1");
+		try {
+			String response = HttpClient.post(HOST + "/app/user_friend/agree", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void friendList() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3OWI5OGI5NGFlMTQ0YzZiNzM1MmJiMjkxNTA0NDgwIiwiciI6ImM1MTExNWE2NmM3NzQzMTdhZjJjZDliMmExN2IxYjVhIiwidCI6MTQ4ODAwODg5NCwidSI6Mn0=");
+		try {
+			String response = HttpClient.post(HOST + "/app/user_friend/list", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void friendNotifys() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3OWI5OGI5NGFlMTQ0YzZiNzM1MmJiMjkxNTA0NDgwIiwiciI6ImM1MTExNWE2NmM3NzQzMTdhZjJjZDliMmExN2IxYjVhIiwidCI6MTQ4ODAwODg5NCwidSI6Mn0=");
+		try {
+			String response = HttpClient.post(HOST + "/app/user_friend/notifys", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -58,7 +58,7 @@ public class UserController {
 			ResourceIdentifier dest = resourceManager.processResource("avatar_image", file.getBytes(), fileName);
 			data.put("avatar", dest.getUrl());
 			if(dest != null) {
-				userService.updateAvatar(user.getId(), dest.getUrl());
+				userService.updateAvatar(user.getId(), dest.getRelativePath());
 			}
 		} catch (IOException e) {
 			throw new ApplicationException(ErrorCode.SERVER_ERROR);

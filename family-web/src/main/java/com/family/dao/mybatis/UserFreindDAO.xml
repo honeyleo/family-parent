@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.dao.UserFriendDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, userId, friendId, status, createTime, updateTime
+  </sql>
+  
+  <sql id="Base_Column_List2" >
+    id, friendId AS userId, userId AS friendId, status, createTime, updateTime
+  </sql>
+  
+  <select id="get" resultType="com.family.model.UserFriend" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_friend where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from user_friend where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.model.UserFriend" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_friend (userId, friendId, status, createTime, updateTime, respondentUserId)
+    values (#{userId}, #{friendId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{respondentUserId})
+  </insert>
+  
+  <update id="update" parameterType="com.family.model.UserFriend" >
+    update user_friend
+    <set >
+      <if test="content != null" >
+        status = #{status},
+      </if>
+      updateTime = UNIX_TIMESTAMP()
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="list" resultType="com.family.model.UserFriend">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM user_friend
+    WHERE 1=1
+    AND userId = #{userId}
+    AND status = 2
+    UNION ALL
+    SELECT
+    <include refid="Base_Column_List2" />
+    FROM user_friend
+    WHERE 1=1
+    AND friendId = #{userId}
+    AND status = 2
+  </select>
+  
+  <select id="listOfFriendNotify" resultType="com.family.model.UserFriend">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM user_friend
+    WHERE 1=1
+    AND userId = #{userId}
+    AND status = 1 AND respondentUserId = #{userId}
+    UNION ALL
+    SELECT
+    <include refid="Base_Column_List2" />
+    FROM user_friend
+    WHERE 1=1
+    AND friendId = #{userId}
+    AND status = 1 AND respondentUserId = #{userId}
+  </select>
+  
+  <select id="isFriend" resultType="java.lang.Boolean" parameterType="java.lang.Long" >
+    select 
+    Count(0)
+    from user_friend where userId = #{userId} AND friendId = #{friendId}
+  </select>
+  
+  <update id="agree">
+  	UPDATE 
+  		user_friend 
+  	SET `status` = 2 
+  	WHERE respondentUserId = #{respondentUserId} AND userId = #{userId} AND friendId = #{friendId};
+  </update>
+</mapper>

@@ -43,7 +43,7 @@
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
     select
     <include refid="Base_Column_List" />
-    from news_home
+    from news
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -56,30 +56,30 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from news_home where id = #{id}
+    from news where id = #{id}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from news_home where id = #{id}
+    delete from news where id = #{id}
   </delete>
   
   <insert id="insert" parameterType="com.family.common.model.NewsHome" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into news_home (title, intro, content, type, imgShowMode, imgs, createTime, updateTime,userId)
+    insert into news (title, intro, content, type, imgShowMode, imgs, createTime, updateTime,userId)
     values (#{title}, #{intro}, #{content}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
-    select count(*) from news_home
+    select count(*) from news
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   
   <update id="updateByPrimaryKeySelective" parameterType="com.family.common.model.NewsHome" >
-    update news_home
+    update news
     <set >
       <if test="title != null" >
         title = #{title},
@@ -109,7 +109,7 @@
   <select id="getNewestCount">
     SELECT
     COUNT(0)
-    FROM news_home
+    FROM news
     WHERE 1=1
     AND type = #{type}
     AND lastUpdateTime = #{lastUpdateTime}
@@ -118,7 +118,7 @@
   <select id="list" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
-    FROM news_home
+    FROM news
     WHERE 1=1
     AND type = #{type}
     <include refid="common.Mysql_Pagination_Limit" />

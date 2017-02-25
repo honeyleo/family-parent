@@ -9,6 +9,7 @@ import com.family.common.model.UserDetail;
 import com.family.common.service.UserService;
 import com.family.model.CurrentUser;
 
+import cn.lfy.base.model.User;
 import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.utils.RedisKey;
 
@@ -27,10 +28,17 @@ public class UserProxyService {
 		if(StringUtils.isNotBlank(value)) {
 			CurrentUser user = JSON.parseObject(value, CurrentUser.class);
 			return user;
-		} else {
-			
-		}
-		return null;
+		} 
+		User user = userService.findById(uid);
+		CurrentUser currentUser = new CurrentUser();
+		currentUser.setId(user.getId());
+		currentUser.setUsername(user.getUsername());
+		currentUser.setNickname(user.getNickname());
+		currentUser.setPhone(user.getPhone());
+		currentUser.setRegTime(user.getCreateTime().getTime()/1000);
+		currentUser.setIp("");
+		redisClient.setex(RedisKey.currentUserKey(currentUser.getId()), JSON.toJSONString(currentUser), 7*24*60*60);
+		return currentUser;
 	}
 	
 	public UserDetail getUserDetail(long id) {

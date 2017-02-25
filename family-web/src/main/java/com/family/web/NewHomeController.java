@@ -8,16 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Comment;
 import com.family.common.model.NewsHome;
 import com.family.common.service.CommentService;
 import com.family.common.service.NewsHomeService;
 import com.family.model.CurrentUser;
+import com.family.service.UserProxyService;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
@@ -32,6 +35,8 @@ public class NewHomeController extends BaseController {
 	@Autowired
 	private CommentService commentService;
 	
+	@Autowired
+	private UserProxyService userproxyService;
 	/**
 	 * 新闻列表
 	 * @param type
@@ -99,6 +104,46 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@RequestMapping("/app/news_home/detail/{newsId}")
+	@ResponseBody
+	public Object detail(@PathVariable("newsId") long newsId, 
+			HttpServletRequest request) {
+		NewsHome newsHome = newsHomeService.getById(newsId);
+		Message.Builder builder = Message.newBuilder("/app/news_home/detail/" + newsId);
+		if(newsHome != null) {
+			JSONObject dto = new JSONObject();
+			dto.put("id", newsHome.getId());
+			dto.put("title", newsHome.getTitle());
+			dto.put("intro", newsHome.getIntro());
+			dto.put("type", newsHome.getType());
+			dto.put("imgShowMode", newsHome.getImgShowMode());
+			dto.put("createTime", newsHome.getCreateTime());
+			dto.put("content", newsHome.getContent());
+			dto.put("comments", newsHome.getComments());
+			List<String> imgs = Lists.newArrayList();
+			if(StringUtils.isNotBlank(newsHome.getImgs())) {
+				Iterable<String> itb = Splitter.on(",").split(newsHome.getImgs());
+				Iterator<String> it = itb.iterator();
+				while(it.hasNext()) {
+					String img = it.next();
+					if(StringUtils.isNotBlank(img)) {
+						imgs.add(img);
+					}
+				}
+			}
+			dto.put("imgs", imgs);
+			builder.data(dto);
+		}
+		return builder.build();
+	}
+	/**
+	 * 评论列表
+	 * @param newsId
+	 * @param start
+	 * @param limit
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/app/news_home/comments")
 	@ResponseBody
 	public Object comments(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
@@ -112,8 +157,20 @@ public class NewHomeController extends BaseController {
 		}
 		Message.Builder builder = Message.newBuilder("/app/news_home/comments");
 		JSONObject data = new JSONObject();
+		JSONArray array = new JSONArray();
+		for(Comment comment : list) {
+			JSONObject dto = new JSONObject();
+			dto.put("id", comment.getId());
+			dto.put("newsId", comment.getNewsId());
+			dto.put("content", comment.getContent());
+			dto.put("createTime", comment.getCreateTime());
+			CurrentUser user = userproxyService.getCurrentUser(comment.getUserId());
+			dto.put("username", user.getNickname());
+			dto.put("userId", comment.getUserId());
+			array.add(dto);
+		}
 		data.put("more", more);
-		data.put("list", list);
+		data.put("list", array);
 		return builder.build();
 	}
 	/**

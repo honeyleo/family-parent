@@ -29,7 +29,10 @@ public class ResourceIdentifier {
 	public void setCanonicalPath( String canonicalPath ) {
 		this.canonicalPath = canonicalPath;
 	}
-
+	/**
+	 * 文件服务器物理相对路径
+	 * @return
+	 */
 	public String getRelativePath() {
 		return relativePath;
 	}

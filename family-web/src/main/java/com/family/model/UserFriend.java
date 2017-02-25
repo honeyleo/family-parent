@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author honeyleo
  *
  */
-public class UserRelation implements Serializable {
+public class UserFriend implements Serializable {
 
 	/**
 	 * 
@@ -21,6 +21,16 @@ public class UserRelation implements Serializable {
 	private Long userId;
 	
 	private Long friendId;
+	
+	private Integer status;
+	/**
+	 * 被申请人用户ID
+	 */
+	private Long respondentUserId;
+	
+	private Long createTime;
+	
+	private Long updateTime;
 
 	public Long getId() {
 		return id;
@@ -45,6 +55,37 @@ public class UserRelation implements Serializable {
 	public void setFriendId(Long friendId) {
 		this.friendId = friendId;
 	}
-	
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Long getRespondentUserId() {
+		return respondentUserId;
+	}
+
+	public void setRespondentUserId(Long respondentUserId) {
+		this.respondentUserId = respondentUserId;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
+	}
 	
 }
