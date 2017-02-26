@@ -35,6 +35,9 @@ public class DistrictServiceImpl implements DistrictService{
 	public List<District> all() {
 		return districtDAO.all();
 	}
-	
-	
+
+	@Override
+	public List<District> list(Long pid) {
+		return districtDAO.list(pid);
+	}
 }

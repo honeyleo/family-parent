@@ -33,4 +33,10 @@ public interface DistrictDAO {
      * @return
      */
     List<District> all();
+    /**
+     * 通过pid查询其下所有子节点
+     * @param pid
+     * @return
+     */
+    List<District> list(Long pid);
 }

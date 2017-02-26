@@ -41,4 +41,11 @@
     FROM district
   </select>
   
+  <select id="list" resultType="cn.lfy.base.model.District">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district
+    WHERE pid = #{pid}
+  </select>
+  
 </mapper>

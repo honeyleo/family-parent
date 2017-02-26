@@ -21,6 +21,18 @@ public class DictTest {
 	}
 	
 	@Test
+	public void districtList() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("pid", "0");
+		try {
+			String response = HttpClient.post(HOST + "/district/list", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void dict() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		try {
