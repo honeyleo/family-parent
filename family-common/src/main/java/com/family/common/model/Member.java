@@ -2,11 +2,15 @@ package com.family.common.model;
 
 import java.io.Serializable;
 
-public class UserDetail implements Serializable {
+public class Member implements Serializable {
 
 	private static final long serialVersionUID = 8473464107515598298L;
 
 	private Long id;
+	/**
+	 * 姓名
+	 */
+	private String name;
 	/**
 	 * 性别：0-保密；1-男；2-女
 	 */
@@ -32,14 +36,6 @@ public class UserDetail implements Serializable {
 	 */
 	private Long birthplaceCountyId;
 	/**
-	 * 信誉
-	 */
-	private Integer credit;
-	/**
-	 * 贡献
-	 */
-	private Integer contribution;
-	/**
 	 * 字辈
 	 */
 	private String zibei;
@@ -47,43 +43,6 @@ public class UserDetail implements Serializable {
 	 * 头像
 	 */
 	private String avatar;
-	/**
-	 * 星座：1-水瓶座；2-双鱼座；3-白羊座；4-金牛座；5-双子座；6-巨蟹座；
-	 * 7-狮子座；8-处女座；9-天秤座；10-天蝎座；11-射手座；12-摩羯座
-	 */
-	private Integer constellation;
-	/**
-	 * 行业
-	 */
-	private Long industry;
-	/**
-	 * 工作领域
-	 */
-	private Long jobField;
-	/**
-	 * 公司
-	 */
-	private String company;
-	/**
-	 * 工作地
-	 */
-	private Long workplaceCountryId;
-	/**
-	 * 工作地（省）
-	 */
-	private Long workplaceProvinceId;
-	/**
-	 * 工作地（市）
-	 */
-	private Long workplaceCityId;
-	/**
-	 * 电话
-	 */
-	private String tel;
-	/**
-	 * JSON对象[{"phone":"18028761234","main":"true"},{"phone":"18028761235","main":"false"}]
-	 */
-	private String phone;
 	/**
 	 * 排行
 	 */
@@ -121,8 +80,8 @@ public class UserDetail implements Serializable {
 	 */
 	private Long ancestralCountyId;
 	
-	public static UserDetail newDefaultInstance(Long id) {
-		UserDetail detail = new UserDetail();
+	public static Member newDefaultInstance(Long id) {
+		Member detail = new Member();
 		detail.setId(id);
 		detail.setGender(0);
 		detail.setBirthday(0L);
@@ -130,19 +89,8 @@ public class UserDetail implements Serializable {
 		detail.setBirthplaceProvinceId(0L);
 		detail.setBirthplaceCityId(0L);
 		detail.setBirthplaceCountyId(0L);
-		detail.setCredit(0);
-		detail.setContribution(0);
 		detail.setZibei("");
 		detail.setAvatar("");
-		detail.setConstellation(0);
-		detail.setIndustry(0L);
-		detail.setJobField(0L);
-		detail.setCompany("");
-		detail.setWorkplaceCountryId(0L);
-		detail.setWorkplaceProvinceId(0L);
-		detail.setWorkplaceCityId(0L);
-		detail.setTel("");
-		detail.setPhone("");
 		detail.setRanking(0);
 		detail.setNativePlaceCountryId(0L);
 		detail.setNativePlaceProvinceId(0L);
@@ -161,6 +109,14 @@ public class UserDetail implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getGender() {
@@ -211,22 +167,6 @@ public class UserDetail implements Serializable {
 		this.birthplaceCountyId = birthplaceCountyId;
 	}
 
-	public Integer getCredit() {
-		return credit;
-	}
-
-	public void setCredit(Integer credit) {
-		this.credit = credit;
-	}
-
-	public Integer getContribution() {
-		return contribution;
-	}
-
-	public void setContribution(Integer contribution) {
-		this.contribution = contribution;
-	}
-
 	public String getZibei() {
 		return zibei;
 	}
@@ -241,78 +181,6 @@ public class UserDetail implements Serializable {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
-	}
-
-	public Integer getConstellation() {
-		return constellation;
-	}
-
-	public void setConstellation(Integer constellation) {
-		this.constellation = constellation;
-	}
-
-	public Long getIndustry() {
-		return industry;
-	}
-
-	public void setIndustry(Long industry) {
-		this.industry = industry;
-	}
-
-	public Long getJobField() {
-		return jobField;
-	}
-
-	public void setJobField(Long jobField) {
-		this.jobField = jobField;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public Long getWorkplaceCountryId() {
-		return workplaceCountryId;
-	}
-
-	public void setWorkplaceCountryId(Long workplaceCountryId) {
-		this.workplaceCountryId = workplaceCountryId;
-	}
-
-	public Long getWorkplaceProvinceId() {
-		return workplaceProvinceId;
-	}
-
-	public void setWorkplaceProvinceId(Long workplaceProvinceId) {
-		this.workplaceProvinceId = workplaceProvinceId;
-	}
-
-	public Long getWorkplaceCityId() {
-		return workplaceCityId;
-	}
-
-	public void setWorkplaceCityId(Long workplaceCityId) {
-		this.workplaceCityId = workplaceCityId;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public Integer getRanking() {
@@ -387,4 +255,6 @@ public class UserDetail implements Serializable {
 		this.ancestralCountyId = ancestralCountyId;
 	}
 	
+	
+
 }

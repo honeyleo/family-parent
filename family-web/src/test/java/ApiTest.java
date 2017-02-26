@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +68,7 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		reqParams.put("phone", "18028763997");
-		reqParams.put("code", "345305");
+		reqParams.put("verify_code", "345305");
 		reqParams.put("surname", "廖");
 		reqParams.put("name", "鹏");
 		try {

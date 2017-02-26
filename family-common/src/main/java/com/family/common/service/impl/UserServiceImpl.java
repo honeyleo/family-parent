@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.lfy.base.model.Criteria;
-import cn.lfy.base.model.PageInfo;
-import cn.lfy.base.model.User;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.family.common.dao.UserDAO;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.UserDetail;
 import com.family.common.service.UserService;
+
+import cn.lfy.base.model.Criteria;
+import cn.lfy.base.model.PageInfo;
+import cn.lfy.base.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +37,12 @@ public class UserServiceImpl implements UserService {
         int result = userDAO.insert(record);
         if(result > 0) {
         	UserDetail detail = UserDetail.newDefaultInstance(record.getId());
+        	JSONArray phones = new JSONArray();
+        	JSONObject phone = new JSONObject();
+        	phone.put("phone", record.getPhone());
+        	phone.put("main", true);
+        	phones.add(phone);
+        	detail.setPhone(phones.toJSONString());
         	userDetailDAO.insert(detail);
         }
         return record.getId();

@@ -49,7 +49,7 @@ public class RegisterController {
 		record.setPhone(phone);
 		record.setSurname(surname);
 		record.setName(name);
-		record.setNickname("");
+		record.setNickname(phone);
 		record.setState(1);
 		record.setEmail("");
 		record.setCreateTime(new Date());
