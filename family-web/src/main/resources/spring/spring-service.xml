@@ -48,7 +48,7 @@
 			<value>applicationContext</value>
 		</property>
 	</bean>
-	
+	<bean class="com.family.util.SmsUtil"/>
 	<!-- 上传静态资源到CDN路径配置 start -->
 	<bean id="resourceManager" class="cn.lfy.common.filehandler.ResourceManager">
 		<constructor-arg name="resourceHandlers" ref="resourceHandlers"></constructor-arg>

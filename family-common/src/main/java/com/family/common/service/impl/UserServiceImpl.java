@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Long add(User record) {
         int result = userDAO.insert(record);
         if(result > 0) {

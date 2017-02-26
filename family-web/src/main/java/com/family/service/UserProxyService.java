@@ -36,6 +36,8 @@ public class UserProxyService {
 		currentUser.setNickname(user.getNickname());
 		currentUser.setPhone(user.getPhone());
 		currentUser.setRegTime(user.getCreateTime().getTime()/1000);
+		currentUser.setSurname(user.getSurname());
+		currentUser.setName(user.getName());
 		currentUser.setIp("");
 		redisClient.setex(RedisKey.currentUserKey(currentUser.getId()), JSON.toJSONString(currentUser), 7*24*60*60);
 		return currentUser;

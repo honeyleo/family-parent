@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.family.common.dao.DictDAO;
 import com.family.common.service.DictService;
+import com.google.common.collect.Lists;
 
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.Dict;
@@ -46,6 +47,22 @@ public class DictServiceImpl implements DictService {
 	@Override
 	public int delete(Long id) {
 		return dictDAO.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public Dict getDictRootByType(String type) {
+		return dictDAO.getDictRootByType(type);
+	}
+
+	@Override
+	public List<Dict> list(String type) {
+		Dict dict = dictDAO.getDictRootByType(type);
+		if(dict == null) {
+			List<Dict> list = Lists.newArrayList();
+			return list;
+		}
+		List<Dict> list = dictDAO.list(type, dict.getId());
+		return list;
 	}
 
 }

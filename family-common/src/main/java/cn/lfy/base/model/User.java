@@ -49,6 +49,14 @@ public class User implements Serializable {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 姓氏
+     */
+    private String surname = "";
+    /**
+     * 名
+     */
+    private String name = "";
     
     /**
      * @return 主键
@@ -177,5 +185,21 @@ public class User implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

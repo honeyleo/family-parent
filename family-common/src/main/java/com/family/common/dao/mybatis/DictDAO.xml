@@ -105,4 +105,20 @@
     	</foreach>
     </if>
   </select>
+  
+  <select id="getDictRootByType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dict
+    WHERE type=#{type} AND parentId = 0
+    LIMIT 1
+  </select>
+  
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dict
+    WHERE type=#{type} AND parentId = #{parentId}
+    ORDER BY parentIdPath, `seq`
+  </select>
 </mapper>

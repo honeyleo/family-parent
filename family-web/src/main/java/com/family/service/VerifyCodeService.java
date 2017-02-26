@@ -3,6 +3,8 @@ package com.family.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.family.util.SmsUtil;
+
 import cn.lfy.common.cache.RedisClient;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.utils.RedisKey;
@@ -25,6 +27,7 @@ public class VerifyCodeService {
 		//设置超时时间
 		redisClient.expire(key, 300);
 		//发送短信验证码给用户手机
+		SmsUtil.sendSms(phone, "验证码【" + code + "】");
 	}
 	
 	public void verifyCode(String type, String phone, String code) {

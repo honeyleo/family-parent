@@ -58,6 +58,8 @@ public class LoginController {
 		currentUser.setPhone(user.getPhone());
 		currentUser.setRegTime(user.getCreateTime().getTime()/1000);
 		currentUser.setIp(RequestUtil.getUserIpAddr(request));
+		currentUser.setSurname(user.getSurname());
+		currentUser.setName(user.getName());
 		
 		AccessToken accessToken = tokenService.token(currentUser);
 		Message.Builder builder = Message.newBuilder("/oauth/login");

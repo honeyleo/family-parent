@@ -16,7 +16,6 @@
     <result column="jobField" property="jobField" jdbcType="VARCHAR" />
     <result column="company" property="company" jdbcType="VARCHAR" />
     <result column="workplace" property="workplace" jdbcType="VARCHAR" />
-    <result column="hangOut" property="hangOut" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="ranking" property="ranking" jdbcType="VARCHAR" />
     <result column="ancestral" property="ancestral" jdbcType="VARCHAR" />
@@ -69,8 +68,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user_detail (id, gender, birthday, birthplace, credit, contribution, zibei, balance, avatar, constellation, industry, jobField, company, workplace, hangOut, tel, ranking, ancestral)
-    values (#{id}, #{gender}, #{birthday}, #{birthplace}, #{credit}, #{contribution}, #{zibei}, #{balance}, #{avatar}, #{constellation}, #{industry}, #{jobField}, #{company}, #{workplace}, #{hangOut}, #{tel}, #{ranking}, #{ancestral})
+    insert into user_detail (id, gender, birthday, birthplace, credit, contribution, zibei, balance, avatar, constellation, industry, jobField, company, workplace, tel, ranking, ancestral)
+    values (#{id}, #{gender}, #{birthday}, #{birthplace}, #{credit}, #{contribution}, #{zibei}, #{balance}, #{avatar}, #{constellation}, #{industry}, #{jobField}, #{company}, #{workplace}, #{tel}, #{ranking}, #{ancestral})
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >

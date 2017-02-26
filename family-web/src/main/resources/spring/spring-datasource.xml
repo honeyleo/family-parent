@@ -47,8 +47,13 @@
         <property name="removeAbandoned" value="true" /> <!-- 打开removeAbandoned功能 -->
         <property name="removeAbandonedTimeout" value="1200" /> <!-- 1200秒，也就是20分钟 -->
         <property name="logAbandoned" value="true" /> <!-- 关闭abanded连接时输出错误日志 -->
-        
     </bean>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- enable transaction annotation support -->
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<!-- myibatis配置，使其支持注解和配置文件形式 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

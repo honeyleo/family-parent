@@ -44,5 +44,19 @@ public interface DictDAO {
      * @param list
      */
     List<Dict> getDicts(@Param("list")Collection<Long> list);
+    /**
+     * 通过类型获取根字典
+     * @param type
+     * @return
+     */
+    Dict getDictRootByType(String type);
+    
+    /**
+     * 根据类型和父节点获取列表
+     * @param type
+     * @param parentId
+     * @return
+     */
+    List<Dict> list(@Param("type")String type, @Param("parentId")Long parentId);
 
 }

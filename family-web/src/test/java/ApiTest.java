@@ -54,8 +54,8 @@ public class ApiTest {
 	public void checkVerifyCode() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("type", "REG");
-		reqParams.put("phone", "18028763997");
-		reqParams.put("code", "432430");
+		reqParams.put("phone", "18948714536");
+		reqParams.put("code", "345305");
 		try {
 			String response = HttpClient.post(HOST + "/verify_code/check", reqParams);
 			System.out.println(response);
@@ -69,7 +69,9 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		reqParams.put("phone", "18028763997");
-		reqParams.put("code", "034522");
+		reqParams.put("code", "345305");
+		reqParams.put("surname", "廖");
+		reqParams.put("name", "鹏");
 		try {
 			String response = HttpClient.post(HOST + "/register", reqParams);
 			System.out.println(response);

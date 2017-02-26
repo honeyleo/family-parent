@@ -60,10 +60,6 @@ public class UserDetail implements Serializable {
 	 */
 	private String workplace;
 	/**
-	 * 常出没地
-	 */
-	private String hangOut;
-	/**
 	 * 电话
 	 */
 	private String tel;
@@ -92,7 +88,6 @@ public class UserDetail implements Serializable {
 		detail.setJobField("");
 		detail.setCompany("");
 		detail.setWorkplace("");
-		detail.setHangOut("");
 		detail.setTel("");
 		detail.setRanking(0);
 		detail.setAncestral("");
@@ -181,12 +176,6 @@ public class UserDetail implements Serializable {
 	}
 	public void setWorkplace(String workplace) {
 		this.workplace = workplace;
-	}
-	public String getHangOut() {
-		return hangOut;
-	}
-	public void setHangOut(String hangOut) {
-		this.hangOut = hangOut;
 	}
 	public String getTel() {
 		return tel;

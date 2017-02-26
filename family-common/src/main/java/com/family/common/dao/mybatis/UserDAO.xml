@@ -11,6 +11,8 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="surname" property="surname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   <sql id="Example_Where_Clause" >
@@ -54,7 +56,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    id, username, password, salt, nickname, email, phone, state, createTime
+    id, username, password, salt, nickname, email, phone, state, createTime, surname, name
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
@@ -84,8 +86,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (username, password, salt, nickname, email, phone, state)
-    values (#{username}, #{password}, #{salt}, #{nickname}, #{email}, #{phone}, #{state})
+    insert into user (username, password, salt, nickname, email, phone, state, surname, name)
+    values (#{username}, #{password}, #{salt}, #{nickname}, #{email}, #{phone}, #{state}, surname, name)
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >

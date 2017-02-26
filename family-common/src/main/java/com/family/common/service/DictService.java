@@ -35,5 +35,19 @@ public interface DictService {
      * 根据主键删除记录
      */
     int delete(Long id);
+    
+    /**
+     * 通过类型获取根字典
+     * @param type
+     * @return
+     */
+    Dict getDictRootByType(String type);
+    
+    /**
+     * 根据类型
+     * @param type
+     * @return
+     */
+    List<Dict> list(String type);
 
 }

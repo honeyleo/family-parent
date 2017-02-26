@@ -8,6 +8,10 @@ public class CurrentUser implements Serializable {
 
 	private long id;
 	
+	private String surname;
+	
+	private String name;
+	
 	private String username;
 	
 	private String nickname;
@@ -64,6 +68,22 @@ public class CurrentUser implements Serializable {
 
 	public void setRegTime(long regTime) {
 		this.regTime = regTime;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
