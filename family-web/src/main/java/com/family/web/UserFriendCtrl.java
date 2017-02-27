@@ -79,8 +79,12 @@ public class UserFriendCtrl extends BaseController {
 			CurrentUser friend = userProxyService.getCurrentUser(uf.getFriendId());
 			JSONObject dto = new JSONObject();
 			dto.put("id", friend.getId());
+			dto.put("gender", friend.getGender());
+			dto.put("avatar", friend.getAvatar());
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
+			dto.put("surname", friend.getSurname());
+			dto.put("name", friend.getName());
 			friendList.add(dto);
 		}
 		JSONObject data = new JSONObject();
@@ -108,6 +112,10 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("id", friend.getId());
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
+			dto.put("gender", friend.getGender());
+			dto.put("avatar", friend.getAvatar());
+			dto.put("surname", friend.getSurname());
+			dto.put("name", friend.getName());
 			notifyList.add(dto);
 		}
 		JSONObject data = new JSONObject();

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.InterestDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, pid, name
+  </sql>
+  
+  <select id="get" resultType="cn.lfy.base.model.District" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from interest where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from interest where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.Interest" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into interest (pid, name)
+    values (#{pid}, #{name})
+  </insert>
+  
+  <update id="update" parameterType="com.family.common.model.Interest" >
+    update interest
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="all" resultType="com.family.common.model.Interest">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM interest
+  </select>
+  
+  <select id="list" resultType="com.family.common.model.Interest">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM interest
+    WHERE pid = #{pid}
+  </select>
+  
+  <select id="getUserInterests" resultType="com.family.common.model.UserInterest">
+    SELECT
+    	id, userId, interestId, createTime
+    FROM user_interest
+    WHERE userId = #{userId}
+  </select>
+  
+  <insert id="addUserInterests">
+    insert into user_interest (userId, interestId, createTime)
+    VALUES
+    <foreach collection="list" item="id" separator=",">
+    	(#{userId}, #{id}, UNIX_TIMESTAMP())
+    </foreach>
+  </insert>
+  
+  <delete id="deleteUserInterests">
+  	DELETE 
+  		FROM user_interest 
+  	WHERE
+  		userId = #{userId} AND interestId in
+  	<foreach collection="list" item="interestId" open="(" close=")" separator=",">
+  		#{interestId}
+  	</foreach>
+  </delete>
+</mapper>

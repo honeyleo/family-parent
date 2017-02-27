@@ -18,7 +18,7 @@ public class UserDetail implements Serializable {
 	/**
 	 * 出生地（国家）
 	 */
-	private Long birthplaceCountryId;
+	private Long birthplaceCountryId; 
 	/**
 	 * 出生地（省）
 	 */

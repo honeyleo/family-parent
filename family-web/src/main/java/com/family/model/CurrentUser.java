@@ -16,6 +16,10 @@ public class CurrentUser implements Serializable {
 	
 	private String nickname;
 	
+	private int gender;
+	
+	private String avatar;
+	
 	private String phone;
 	
 	private String ip;
@@ -44,6 +48,22 @@ public class CurrentUser implements Serializable {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getPhone() {

@@ -5,7 +5,7 @@
   
   <sql id="Base_Column_List" >
     id, gender, birthday, birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, 
-    birthplaceCounty, credit, contribution, zibei, avatar, constellation, industry, jobField, company, 
+    birthplaceCountyId, credit, contribution, zibei, avatar, constellation, industry, jobField, company, 
     workplaceCountryId, workplaceProvinceId, workplaceCityId, tel, ranking, 
     nativePlaceCountryId, nativePlaceProvinceId, nativePlaceCityId, nativePlaceCountyId, 
     ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId
@@ -32,26 +32,26 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.family.common.model.UserDetail" >
     update user_detail
     <set >
+      <if test="zibei != null" >
+        zibei = #{zibei},
+      </if>
       <if test="gender != null" >
         gender = #{gender},
       </if>
       <if test="birthday != null" >
         birthday = #{birthday},
       </if>
-      <if test="birthplace != null" >
-        birthplace = #{birthplace},
+      <if test="birthplaceCountryId != null" >
+        birthplaceCountryId = #{birthplaceCountryId},
       </if>
-      <if test="credit != null" >
-        credit = #{credit},
+      <if test="birthplaceProvinceId != null" >
+        birthplaceProvinceId = #{birthplaceProvinceId},
       </if>
-      <if test="contribution != null" >
-        contribution = #{contribution},
+      <if test="birthplaceCityId != null" >
+        birthplaceCityId = #{birthplaceCityId},
       </if>
-      <if test="avatar != null" >
-        avatar = #{avatar},
-      </if>
-      <if test="constellation != null" >
-        constellation = #{constellation},
+      <if test="birthplaceCountyId != null" >
+        birthplaceCountyId = #{birthplaceCountyId},
       </if>
       <if test="constellation != null" >
         constellation = #{constellation},
@@ -65,8 +65,17 @@
       <if test="company != null" >
         company = #{company},
       </if>
-      <if test="workplace != null" >
-        workplace = #{workplace},
+      <if test="workplaceCountryId != null" >
+        workplaceCountryId = #{workplaceCountryId},
+      </if>
+      <if test="workplaceProvinceId != null" >
+        workplaceProvinceId = #{workplaceProvinceId},
+      </if>
+      <if test="workplaceCityId != null" >
+        workplaceCityId = #{workplaceCityId},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
       </if>
       <if test="tel != null" >
         tel = #{tel},
@@ -74,8 +83,29 @@
       <if test="ranking != null" >
         ranking = #{ranking},
       </if>
-      <if test="tel != null" >
-        ancestral = #{ancestral},
+      <if test="nativePlaceCountryId != null" >
+        nativePlaceCountryId = #{nativePlaceCountryId},
+      </if>
+      <if test="nativePlaceProvinceId != null" >
+        nativePlaceProvinceId = #{nativePlaceProvinceId},
+      </if>
+      <if test="nativePlaceCityId != null" >
+        nativePlaceCityId = #{nativePlaceCityId},
+      </if>
+      <if test="nativePlaceCountyId != null" >
+        nativePlaceCountyId = #{nativePlaceCountyId},
+      </if>
+      <if test="ancestralCountryId != null" >
+        ancestralCountryId = #{ancestralCountryId},
+      </if>
+      <if test="ancestralProvinceId != null" >
+        ancestralProvinceId = #{ancestralProvinceId},
+      </if>
+      <if test="ancestralCityId != null" >
+        ancestralCityId = #{ancestralCityId},
+      </if>
+      <if test="ancestralCountyId != null" >
+        ancestralCountyId = #{ancestralCountyId},
       </if>
     </set>
     where id = #{id}

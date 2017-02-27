@@ -42,4 +42,27 @@ public class DictTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void interest() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		try {
+			String response = HttpClient.post(HOST + "/interest/all", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void interestList() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("pid", "0");
+		try {
+			String response = HttpClient.post(HOST + "/interest/list", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
