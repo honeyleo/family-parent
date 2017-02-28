@@ -22,7 +22,7 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into appeal (content, userId, imgs, createTime, updateTime, lng, lat, phone, status)
-    values (#{content}, #{userId}, #{imgs}, #{createTime}, #{upateTime}, #{lng}, #{lat}, #{phone}, #{status})
+    values (#{content}, #{userId}, #{imgs}, #{createTime}, #{updateTime}, #{lng}, #{lat}, #{phone}, #{status})
   </insert>
   
   <update id="update" parameterType="com.family.common.model.Appeal" >
@@ -38,13 +38,13 @@
     where id = #{id}
   </update>
   
-  <select id="list" resultType="com.family.common.model.Comment">
+  <select id="list" resultType="com.family.common.model.Appeal">
     SELECT
     <include refid="Base_Column_List" />
     FROM appeal
     WHERE 1=1
     AND userId = #{userId}
-    <include refid="common.Mysql_Pagination_Limit" />
+    LIMIT #{start}, #{limit}
   </select>
   
 </mapper>

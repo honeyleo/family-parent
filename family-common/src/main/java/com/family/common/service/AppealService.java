@@ -32,7 +32,7 @@ public interface AppealService {
     int update(Appeal record);
     /**
      * 新聞评论列表
-     * @param newsId
+     * @param userId
      * @param start
      * @param limit
      * @return

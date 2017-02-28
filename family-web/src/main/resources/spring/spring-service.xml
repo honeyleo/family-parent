@@ -58,6 +58,7 @@
 	<util:map id="resourceHandlers" map-class="java.util.HashMap">
 		<entry key="home_page_image" value-ref="home_page_image" />
 		<entry key="avatar_image" value-ref="avatar_image" />
+		<entry key="appeal_image" value-ref="appeal_image" />
 	</util:map>
 	
 	<!-- 聚合sdk目录 -->
@@ -72,6 +73,12 @@
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
 		<property name="baseDir" value="/mnt/family/fileserver/"></property>
 		<property name="childDir" value="avatar"></property>
+		<property name="baseURL" value="http://res.family.com/fileserver"></property>
+	</bean>
+	<bean id="appeal_image"
+		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
+		<property name="baseDir" value="/mnt/family/fileserver/"></property>
+		<property name="childDir" value="appeal_image"></property>
 		<property name="baseURL" value="http://res.family.com/fileserver"></property>
 	</bean>
 </beans>

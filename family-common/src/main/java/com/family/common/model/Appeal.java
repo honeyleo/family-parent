@@ -30,6 +30,10 @@ public class Appeal implements Serializable {
 	private String phone;
 	
 	private Integer status;
+	
+	private Long createTime;
+	
+	private Long updateTime;
 
 	public Long getId() {
 		return id;
@@ -93,6 +97,22 @@ public class Appeal implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	

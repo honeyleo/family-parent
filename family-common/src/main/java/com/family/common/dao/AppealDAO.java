@@ -29,10 +29,10 @@ public interface AppealDAO {
     int update(Appeal record);
     /**
      * 用户求助消息列表列表
-     * @param newsId
+     * @param userId
      * @param start
      * @param limit
      * @return
      */
-    List<Appeal> list(@Param("userId")long userId, @Param("start")int start, @Param("limt")int limit);
+    List<Appeal> list(@Param("userId")long userId, @Param("start")int start, @Param("limit")int limit);
 }
