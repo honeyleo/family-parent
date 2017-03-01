@@ -3,7 +3,6 @@ package com.family.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.family.model.AccessToken;
 import com.family.model.CurrentUser;
 import com.family.model.TokenValue;
@@ -41,16 +40,11 @@ public class TokenService {
 		tokenValue.setL(UUIDUtil.uuid());
 		
 		String token = tokenValue.value();
-		
-		String status = redisClient.setex(RedisKey.tokenKey(token), String.valueOf(currentUser.getId()), TOKEN_EXPIRES_IN);
+		String key = RedisKey.tokenKey(token);
+		String status = redisClient.setex(key, String.valueOf(currentUser.getId()), TOKEN_EXPIRES_IN);
 		
 		Validators.isFalse(!"OK".equalsIgnoreCase(status), ErrorCode.ERROR);
 		
-		String status2 = redisClient.setex(RedisKey.currentUserKey(currentUser.getId()), JSON.toJSONString(currentUser), 7*24*60*60);
-		if(!"OK".equalsIgnoreCase(status2)) {
-			redisClient.del(token);
-			throw ApplicationException.newInstance(ErrorCode.ERROR);
-		}
 		AccessToken accessToken = new AccessToken();
 		accessToken.setAccessToken(token);
 		accessToken.setExpiresIn(TOKEN_EXPIRES_IN - 1);

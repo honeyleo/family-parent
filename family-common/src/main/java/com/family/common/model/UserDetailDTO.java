@@ -1,12 +1,50 @@
 package com.family.common.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class UserDetail implements Serializable {
+public class UserDetailDTO implements Serializable {
 
-	private static final long serialVersionUID = 8473464107515598298L;
-
+	private static final long serialVersionUID = 5553027590594336009L;
+	
 	private Long id;
+	/**
+     * 登录名
+     */
+    private String username;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
+     * 公司的个人邮箱，邮件提醒功能
+     */
+    private String email;
+
+    /**
+     * 联系电话
+     */
+    private String phone;
+
+    /**
+     * 数据状态
+     */
+    private Integer state;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 姓氏
+     */
+    private String surname = "";
+    /**
+     * 名
+     */
+    private String name = "";
 	/**
 	 * 性别：0-保密；1-男；2-女
 	 */
@@ -121,39 +159,7 @@ public class UserDetail implements Serializable {
 	 */
 	private Long ancestralCountyId;
 	
-	public static UserDetail newDefaultInstance(Long id) {
-		UserDetail detail = new UserDetail();
-		detail.setId(id);
-		detail.setGender(0);
-		detail.setBirthday(0L);
-		detail.setBirthplaceCountryId(0L);
-		detail.setBirthplaceProvinceId(0L);
-		detail.setBirthplaceCityId(0L);
-		detail.setBirthplaceCountyId(0L);
-		detail.setCredit(0);
-		detail.setContribution(0);
-		detail.setZibei("");
-		detail.setAvatar("");
-		detail.setConstellation(0);
-		detail.setIndustry(0L);
-		detail.setJobField(0L);
-		detail.setCompany("");
-		detail.setWorkplaceCountryId(0L);
-		detail.setWorkplaceProvinceId(0L);
-		detail.setWorkplaceCityId(0L);
-		detail.setTel("");
-		detail.setPhones("");
-		detail.setRanking(0);
-		detail.setNativePlaceCountryId(0L);
-		detail.setNativePlaceProvinceId(0L);
-		detail.setNativePlaceCityId(0L);
-		detail.setNativePlaceCountyId(0L);
-		detail.setAncestralCountryId(0L);
-		detail.setAncestralProvinceId(0L);
-		detail.setAncestralCityId(0L);
-		detail.setAncestralCountyId(0L);
-		return detail;
-	}
+	
 
 	public Long getId() {
 		return id;
@@ -161,6 +167,70 @@ public class UserDetail implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getGender() {

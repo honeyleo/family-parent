@@ -4,11 +4,11 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   
   <sql id="Base_Column_List" >
-    id, gender, birthday, birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, 
-    birthplaceCountyId, credit, contribution, zibei, avatar, constellation, industry, jobField, company, 
-    workplaceCountryId, workplaceProvinceId, workplaceCityId, tel, ranking, 
-    nativePlaceCountryId, nativePlaceProvinceId, nativePlaceCityId, nativePlaceCountyId, 
-    ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId
+    ud.id, ud.gender, ud.birthday, ud.birthplaceCountryId, ud.birthplaceProvinceId, ud.birthplaceCityId, 
+    ud.birthplaceCountyId, ud.credit, ud.contribution, ud.zibei, ud.avatar, ud.constellation, ud.industry, ud.jobField, ud.company, 
+    ud.workplaceCountryId, ud.workplaceProvinceId, ud.workplaceCityId, ud.phones, ud.tel, ud.ranking, 
+    ud.nativePlaceCountryId, ud.nativePlaceProvinceId, ud.nativePlaceCityId, ud.nativePlaceCountyId, 
+    ud.ancestralCountryId, ud.ancestralProvinceId, ud.ancestralCityId, ud.ancestralCountyId
   </sql>
   
   <select id="selectByPrimaryKey" resultType="com.family.common.model.UserDetail" parameterType="java.lang.Long" >
@@ -25,8 +25,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user_detail (id, phone)
-    values (#{id}, #{phone})
+    insert into user_detail (id, phones)
+    values (#{id}, #{phones})
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="com.family.common.model.UserDetail" >
@@ -120,4 +120,16 @@
     </set>
     where id = #{id}
   </update>
+  
+  <select id="getUserDetailDTOList" resultType="com.family.common.model.UserDetailDTO">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state
+  	FROM `user` u INNER JOIN user_detail ud
+  	ON u.id = ud.id
+  	WHERE u.id IN
+  	<foreach collection="list" item="id" open="(" separator="," close=")">
+  		#{id}
+  	</foreach>
+  </select>
 </mapper>

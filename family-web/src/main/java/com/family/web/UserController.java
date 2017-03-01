@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.family.common.model.UserDetail;
 import com.family.common.service.UserDetailService;
-import com.family.common.service.UserService;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
 
@@ -34,9 +33,6 @@ public class UserController {
 	
 	@Autowired
 	private ResourceManager resourceManager;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private UserDetailService userDetailService;
@@ -61,7 +57,7 @@ public class UserController {
 			ResourceIdentifier dest = resourceManager.processResource("avatar_image", file.getBytes(), fileName);
 			data.put("avatar", dest.getUrl());
 			if(dest != null) {
-				userService.updateAvatar(user.getId(), dest.getRelativePath());
+				userDetailService.updateAvatar(user.getId(), dest.getRelativePath());
 			}
 		} catch (IOException e) {
 			throw new ApplicationException(ErrorCode.SERVER_ERROR);

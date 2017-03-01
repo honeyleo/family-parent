@@ -16,6 +16,7 @@ import com.family.model.CurrentUser;
 import com.family.model.UserFriend;
 import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
+import com.family.web.core.BaseController;
 
 import cn.lfy.common.model.Message;
 

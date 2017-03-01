@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         	phone.put("phone", record.getPhone());
         	phone.put("main", true);
         	phones.add(phone);
-        	detail.setPhone(phones.toJSONString());
+        	detail.setPhones(phones.toJSONString());
         	userDetailDAO.insert(detail);
         }
         return record.getId();
@@ -80,15 +80,5 @@ public class UserServiceImpl implements UserService {
         res.setData(list);
         return res;
     }
-
-	@Override
-	public UserDetail getUserDetail(Long id) {
-		return userDetailDAO.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public int updateAvatar(Long id, String avatar) {
-		return userDetailDAO.updateAvatar(id, avatar);
-	}
     
 }

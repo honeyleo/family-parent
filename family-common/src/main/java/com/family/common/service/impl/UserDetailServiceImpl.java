@@ -1,10 +1,13 @@
 package com.family.common.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.UserDetail;
+import com.family.common.model.UserDetailDTO;
 import com.family.common.service.UserDetailService;
 
 import cn.lfy.common.framework.exception.ErrorCode;
@@ -43,6 +46,11 @@ public class UserDetailServiceImpl implements UserDetailService {
 		userDetail.setId(id);
 		int ret = userDetailDAO.updateByPrimaryKeySelective(userDetail);
 		return ret;
+	}
+
+	@Override
+	public List<UserDetailDTO> getUserDetailDTOList(List<Long> userIdList) {
+		return userDetailDAO.getUserDetailDTOList(userIdList);
 	}
 	
 	

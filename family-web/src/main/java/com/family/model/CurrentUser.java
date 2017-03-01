@@ -22,6 +22,12 @@ public class CurrentUser implements Serializable {
 	
 	private String phone;
 	
+	private int credit;
+	
+	private int contribution;
+	
+	private String zibei;
+	
 	private String ip;
 	
 	private long regTime;
@@ -72,6 +78,30 @@ public class CurrentUser implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public int getCredit() {
+		return credit;
+	}
+
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+
+	public int getContribution() {
+		return contribution;
+	}
+
+	public void setContribution(int contribution) {
+		this.contribution = contribution;
+	}
+
+	public String getZibei() {
+		return zibei;
+	}
+
+	public void setZibei(String zibei) {
+		this.zibei = zibei;
 	}
 
 	public String getIp() {

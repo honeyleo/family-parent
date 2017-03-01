@@ -6,8 +6,6 @@ import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
 import cn.lfy.base.model.User;
 
-import com.family.common.model.UserDetail;
-
 public interface UserService {
     /**
      * 根据条件查询记录总数
@@ -45,18 +43,5 @@ public interface UserService {
      * @return
      */
     User findByUsername(String username);
-    /**
-     * 获取用户详细信息
-     * @param id
-     * @return
-     */
-    UserDetail getUserDetail(Long id);
-    /**
-     * 更新用户头像
-     * @param id
-     * @param avatar
-     * @return
-     */
-    int updateAvatar(Long id, String avatar);
     
 }

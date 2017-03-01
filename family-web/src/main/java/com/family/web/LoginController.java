@@ -8,27 +8,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.family.common.service.UserService;
 import com.family.model.AccessToken;
-import com.family.model.CurrentUser;
 import com.family.service.TokenService;
+import com.family.service.UserProxyService;
 
-import cn.lfy.base.model.User;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
-import cn.lfy.common.utils.MessageDigestUtil;
 import cn.lfy.common.utils.RequestUtil;
-import cn.lfy.common.utils.Strings;
 import cn.lfy.common.utils.Validators;
 
 @Controller
 public class LoginController {
 
 	@Autowired
-	private UserService userService;
+	private TokenService tokenService;
 	
 	@Autowired
-	private TokenService tokenService;
+	private UserProxyService userProxyService;
 	
 	/**
 	 * 
@@ -44,24 +40,8 @@ public class LoginController {
 		Validators.isFalse(StringUtils.isBlank(username) || StringUtils.isBlank(password), 
 				ErrorCode.ERROR_USERNAME_OR_PASSWORD);
 		
-		User user = userService.findByUsername(username);
-		Validators.notNull(user, ErrorCode.ERROR_USERNAME_OR_PASSWORD);
-		
-		password = MessageDigestUtil.getSHA256(password + user.getSalt());
-		Validators.isFalse(!Strings.slowEquals(password, user.getPassword()), 
-				ErrorCode.ERROR_USERNAME_OR_PASSWORD);
-		
-		CurrentUser currentUser = new CurrentUser();
-		currentUser.setId(user.getId());
-		currentUser.setUsername(user.getUsername());
-		currentUser.setNickname(user.getNickname());
-		currentUser.setPhone(user.getPhone());
-		currentUser.setRegTime(user.getCreateTime().getTime()/1000);
-		currentUser.setIp(RequestUtil.getUserIpAddr(request));
-		currentUser.setSurname(user.getSurname());
-		currentUser.setName(user.getName());
-		
-		AccessToken accessToken = tokenService.token(currentUser);
+		String ip = RequestUtil.getUserIpAddr(request);
+		AccessToken accessToken = userProxyService.login(username, password, ip);
 		Message.Builder builder = Message.newBuilder("/oauth/login");
 		builder.data(accessToken);
 		return builder.build();

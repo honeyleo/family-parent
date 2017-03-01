@@ -21,6 +21,7 @@ import com.family.common.service.CommentService;
 import com.family.common.service.NewsHomeService;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
+import com.family.web.core.BaseController;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 

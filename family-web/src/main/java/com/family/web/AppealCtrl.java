@@ -20,6 +20,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Appeal;
 import com.family.common.service.AppealService;
 import com.family.model.CurrentUser;
+import com.family.service.UserProxyService;
+import com.family.web.core.BaseController;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -38,6 +40,9 @@ public class AppealCtrl extends BaseController {
 	
 	@Autowired
 	private ResourceManager resourceManager;
+	
+	@Autowired
+	private UserProxyService userProxyService;
 	
 	@RequestMapping("/app/appeal/publish")
 	@ResponseBody
@@ -103,4 +108,37 @@ public class AppealCtrl extends BaseController {
 		data.put("list", list);
 		return Message.newBuilder("/app/appeal/mylist").data(data).build();
 	}
+	
+	@RequestMapping("/app/appeal/list")
+	@ResponseBody
+	public Object list(CurrentUser user, 
+			@RequestParam(name = "start") int start,
+			@RequestParam(name = "limit") int limit,
+			HttpServletRequest request) {
+		List<Appeal> list = appealService.list(user.getId(), start, limit + 1);
+		boolean more = isMore(list, limit);
+		if(more) {
+			list = list.subList(0, limit);
+		}
+		List<JSONObject> wrapperList = Lists.newArrayList();
+		if(!list.isEmpty()) {
+			List<Long> userIdList = Lists.newArrayList();
+			for(Appeal appeal : list) {
+				userIdList.add(appeal.getUserId());
+			}
+			Map<Long, CurrentUser> map = userProxyService.getCurrentUsers(userIdList);
+			for(Appeal appeal : list) {
+				JSONObject obj = new JSONObject();
+				obj.put("appeal", appeal);
+				CurrentUser cu = map.get(appeal.getUserId());
+				obj.put("user", cu);
+				wrapperList.add(obj);
+			}
+		}
+		JSONObject data = new JSONObject();
+		data.put("more", more);
+		data.put("list", userProxyService);
+		return Message.newBuilder("/app/appeal/list").data(data).build();
+	}
+	
 }

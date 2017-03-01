@@ -1,8 +1,11 @@
 package com.family.common.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.family.common.model.UserDetail;
+import com.family.common.model.UserDetailDTO;
 
 public interface UserDetailDAO {
 
@@ -32,4 +35,10 @@ public interface UserDetailDAO {
      * @return
      */
     int updateAvatar(@Param("id") Long id, @Param("avatar") String avatar);
+    /**
+     * 关联查出用户ID列表中的所有用户详情
+     * @param userIdList
+     * @return
+     */
+    List<UserDetailDTO> getUserDetailDTOList(@Param("list") List<Long> userIdList);
 }

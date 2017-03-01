@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.service.DistrictService;
+import com.family.web.core.BaseController;
 
 import cn.lfy.base.model.District;
 import cn.lfy.common.model.Message;

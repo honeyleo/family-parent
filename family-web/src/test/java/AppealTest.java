@@ -48,4 +48,17 @@ public class AppealTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void userList() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("start", "0");
+		reqParams.put("limit", "10");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/user/list", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
