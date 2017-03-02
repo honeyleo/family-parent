@@ -2,14 +2,18 @@ package cn.lfy.common.utils;
 
 public class RedisKey {
 
-	private static String KEY_TOKEN = "token:%s";
+	private static String PREFIX = "F:";
 	
-	private static String KEY_CURRENT_USER = "cu:%d";
+	private static String KEY_TOKEN = PREFIX + "token:%d";
 	
-	private static String KEY_VERIFY_CODE = "vc:%s:%s";
+	private static String KEY_CURRENT_USER = PREFIX + "user:%d";
 	
-	public static String tokenKey(String token) {
-		return String.format(KEY_TOKEN, token);
+	private static String KEY_VERIFY_CODE = PREFIX + "vc:%s:%s";
+	
+	private static final String NEARBY_SURNAME_PEOPLE = PREFIX + "neaby:surname:%s:people";
+	
+	public static String tokenKey(long uid) {
+		return String.format(KEY_TOKEN, uid);
 	}
 	
 	public static String currentUserKey(long uid) {
@@ -18,5 +22,9 @@ public class RedisKey {
 	
 	public static String verifyCodeKey(String type, String phone) {
 		return String.format(KEY_VERIFY_CODE, type, phone);
+	}
+	
+	public static String nearbySurnamePeopleKey(String surname) {
+		return String.format(NEARBY_SURNAME_PEOPLE, surname);
 	}
 }

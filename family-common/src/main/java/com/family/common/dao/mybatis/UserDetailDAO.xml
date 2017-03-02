@@ -14,7 +14,7 @@
   <select id="selectByPrimaryKey" resultType="com.family.common.model.UserDetail" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from user_detail where id = #{id}
+    from user_detail ud where id = #{id}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

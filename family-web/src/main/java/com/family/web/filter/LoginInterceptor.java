@@ -25,11 +25,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String requestUrl = request.getRequestURI();
 
 		if (!(ignoreUrl.contains(requestUrl))) {
-			String accessToken = request.getHeader("access_token");
-			if(accessToken == null) {
-				accessToken = request.getParameter("access_token");
+			Object currentUser = request.getSession().getAttribute("CURRENT_USER");
+			if(currentUser == null) {
+				String accessToken = request.getHeader("access_token");
+				if(accessToken == null) {
+					accessToken = request.getParameter("access_token");
+				}
+				currentUser = tokenService.verifyAccessToken(accessToken);
+				request.getSession().setAttribute("CURRENT_USER", currentUser);
 			}
-			tokenService.verifyAccessToken(accessToken);
 		}
 		return super.preHandle(request, response, handler);
 	}

@@ -18,16 +18,16 @@ public class AppealTest {
 		reqParams.put("phone", "123456789");
 		try {
 			Map<String, byte[]> files = new HashMap<String, byte[]>();
-			FileInputStream in = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\1.jpg");
-			byte[] bytes = new byte[in.available()];
-			in.read(bytes);
-			in.close();
-			files.put("1.jpg", bytes);
-			FileInputStream in2 = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\2.jpg");
-			byte[] bytes2 = new byte[in2.available()];
-			in2.read(bytes2);
-			files.put("2.jpg", bytes2);
-			in2.close();
+//			FileInputStream in = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\1.jpg");
+//			byte[] bytes = new byte[in.available()];
+//			in.read(bytes);
+//			in.close();
+//			files.put("1.jpg", bytes);
+//			FileInputStream in2 = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\2.jpg");
+//			byte[] bytes2 = new byte[in2.available()];
+//			in2.read(bytes2);
+//			files.put("2.jpg", bytes2);
+//			in2.close();
 			String response = HttpClient.postFile(Constant.HOST + "/app/appeal/publish", reqParams, files);
 			System.out.println(response);
 		} catch (Exception e) {

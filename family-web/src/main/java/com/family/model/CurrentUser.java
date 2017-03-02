@@ -31,6 +31,8 @@ public class CurrentUser implements Serializable {
 	private String ip;
 	
 	private long regTime;
+	
+	private int distance;
 
 	public long getId() {
 		return id;
@@ -134,6 +136,14 @@ public class CurrentUser implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 	
 }
