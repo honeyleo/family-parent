@@ -46,7 +46,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 		File destFile = new File( parentDir, destFileName );
 
 		FileUtils.copyFile( srcFile, destFile );
-
+		FileUtils.forceDelete(srcFile);
 		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
 				+ childDir + "/" + dirNo + "/" + destFileName,
 				parentDirName + File.separatorChar + destFileName, childDir + "/" + dirNo + "/" + destFileName );
@@ -68,7 +68,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 		File destFile = new File( parentDir, destFileName );
 
 		FileUtils.copyFile( srcFile, destFile );
-
+		FileUtils.forceDelete(srcFile);
 		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
 				+ childDir + "/" + dirNo + "/" + destFileName,
 				parentDirName + File.separatorChar + destFileName, childDir + "/" + dirNo + "/" + destFileName );
@@ -95,7 +95,7 @@ public class ResourceHandlerImpl implements ResourceHandler {
 		File destFile = new File( parentDir, destFileName );
 
 		FileUtils.copyFile( srcFile, destFile );
-
+		FileUtils.forceDelete(srcFile);
 		return new ResourceIdentifier( baseURL + ( baseURL.endsWith( "/" ) ? "" : "/" )
 				+ childDir + (useDirNo ? ("/" + dirNo) : "") + "/" + destFileName,
 				parentDirName + File.separatorChar + destFileName, childDir + (useDirNo ? ("/" + dirNo) : "") + "/" + destFileName );

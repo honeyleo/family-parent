@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.lfy.common.utils.UUIDUtil;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import cn.lfy.common.utils.PathFormat;
 
 /**
  * 上传组件
@@ -70,9 +70,12 @@ public abstract class UploadBase {
 	}
 
 	protected String generateFileName( String fileName ) {
-		String newName = UUIDUtil.uuid()
-				+ FilenameUtils.EXTENSION_SEPARATOR
-				+ FilenameUtils.getExtension( fileName );
+		String suffix = FilenameUtils.getExtension( fileName );
+		String savePath = "{yyyy}/{mm}/{dd}/{time}{rand:6}" + FilenameUtils.EXTENSION_SEPARATOR + suffix;
+    	String newName = PathFormat.parse(savePath, fileName);
+//		String newName = UUIDUtil.uuid()
+//				+ FilenameUtils.EXTENSION_SEPARATOR
+//				+ FilenameUtils.getExtension( fileName );
 		return newName;
 	}
 }

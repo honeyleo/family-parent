@@ -26,6 +26,7 @@ import com.google.common.base.Splitter;
 
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
+import cn.lfy.base.web.core.BaseController;
 import cn.lfy.common.filehandler.ResourceIdentifier;
 import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
@@ -35,7 +36,7 @@ import cn.lfy.common.utils.RequestUtil;
 
 @Controller
 @RequestMapping("/manager/news_home")
-public class NewsHomeController {
+public class NewsHomeController extends BaseController {
 
 	@Value("${fileserver.image.dir}")
 	private String imageDir;
@@ -150,11 +151,15 @@ public class NewsHomeController {
         			boolean isUpload = ManageHelper.isUpload(im);
         			if(isUpload) {
         				try {
-        					ResourceIdentifier dest = resourceManager.processResource("news", pathRoot + im);
+        					String newFileName = im.replace("/upload/", "");
+        					ResourceIdentifier dest = resourceManager.processResource("news", pathRoot + im, newFileName, false );
         					list.add(dest.getRelativePath());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+        			} else {
+        				im = im.replaceAll(imageUrl, "");
+        				list.add(im);
         			}
         		}
         	}
@@ -207,11 +212,15 @@ public class NewsHomeController {
         			boolean isUpload = ManageHelper.isUpload(im);
         			if(isUpload) {
         				try {
-        					ResourceIdentifier dest = resourceManager.processResource("news", pathRoot + im);
+        					String newFileName = im.replace("/upload/", "");
+        					ResourceIdentifier dest = resourceManager.processResource("news", pathRoot + im, newFileName, false);
         					list.add(dest.getRelativePath());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+        			} else {
+        				im = im.replaceAll(imageUrl, "");
+        				list.add(im);
         			}
         		}
         	}

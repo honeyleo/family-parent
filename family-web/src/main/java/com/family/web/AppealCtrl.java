@@ -30,7 +30,6 @@ import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
-import cn.lfy.common.utils.PathFormat;
 
 @Controller
 public class AppealCtrl extends BaseController {
@@ -74,11 +73,7 @@ public class AppealCtrl extends BaseController {
             	if(f != null) {
                     try {
                     	String originFileName = f.getOriginalFilename();
-                    	String suffix = getSuffixByFilename(originFileName);
-                    	originFileName = originFileName.substring(0,
-            					originFileName.length() - suffix.length());
-            			String savePath = "{yyyy}/{mm}/{dd}/{time}{rand:6}" + suffix;
-                    	String fileName = PathFormat.parse(savePath, originFileName);
+                    	String fileName = getNewFileName(originFileName);
             			ResourceIdentifier dest = resourceManager.processResource("appeal_image", f.getBytes(), fileName);
             			imgs.add(dest.getRelativePath());
             		} catch (IOException e) {

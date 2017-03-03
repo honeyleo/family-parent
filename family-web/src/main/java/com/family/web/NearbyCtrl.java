@@ -39,8 +39,8 @@ public class NearbyCtrl extends BaseController {
 	public Object list(CurrentUser currentUser, 
 			@RequestParam(name = "lng") double lng,
 			@RequestParam(name = "lat") double lat,
-			@RequestParam(name = "start") int start,
-			@RequestParam(name = "limit") int limit,
+			@RequestParam(name = "start", defaultValue = "0") int start,
+			@RequestParam(name = "limit", defaultValue = "10") int limit,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/nearby/list");
 		List<CurrentUser> list = nearbyService.list(currentUser, lng, lat, start, limit);

@@ -14,6 +14,7 @@
        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+	<context:property-placeholder location="classpath:conf/commons.properties" />
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"> 
 		<property name="maxTotal" value="32"></property> 
 		<property name="maxIdle" value="6"></property> 
@@ -56,29 +57,20 @@
 
 
 	<util:map id="resourceHandlers" map-class="java.util.HashMap">
-		<entry key="home_page_image" value-ref="home_page_image" />
 		<entry key="avatar_image" value-ref="avatar_image" />
 		<entry key="appeal_image" value-ref="appeal_image" />
 	</util:map>
 	
-	<!-- 聚合sdk目录 -->
-	<bean id="home_page_image"
-		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
-		<property name="baseDir" value="/mnt/family/fileserver/"></property>
-		<property name="childDir" value="home_page_image"></property>
-		<property name="baseURL" value="http://res.family.com/fileserver"></property>
-	</bean>
-	
 	<bean id="avatar_image"
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
-		<property name="baseDir" value="/mnt/family/fileserver/"></property>
+		<property name="baseDir" value="${fileserver.image.dir}"></property>
 		<property name="childDir" value="avatar"></property>
-		<property name="baseURL" value="http://res.family.com/fileserver"></property>
+		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
 	<bean id="appeal_image"
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
-		<property name="baseDir" value="/mnt/family/fileserver/"></property>
+		<property name="baseDir" value="${fileserver.image.dir}"></property>
 		<property name="childDir" value="appeal_image"></property>
-		<property name="baseURL" value="http://res.family.com/fileserver"></property>
+		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
 </beans>

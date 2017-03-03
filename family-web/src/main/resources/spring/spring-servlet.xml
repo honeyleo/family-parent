@@ -10,7 +10,7 @@
  	<context:component-scan base-package="com.family.web">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan> 
-	
+	<context:property-placeholder location="classpath:conf/commons.properties" />
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="basenames">
