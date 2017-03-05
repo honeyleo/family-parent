@@ -16,6 +16,9 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   <sql id="Example_Where_Clause" >
     <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.newsType != null" >
+         and newsType = #{condition.newsType}
+      </if>
       <if test="condition.type != null" >
          and type = #{condition.type}
       </if>
@@ -67,8 +70,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into news (title, intro, content, type, imgShowMode, imgs, createTime, updateTime,userId)
-    values (#{title}, #{intro}, #{content}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
+    insert into news (title, intro, content, newsType, type, imgShowMode, imgs, createTime, updateTime,userId)
+    values (#{title}, #{intro}, #{content}, #{newsType}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
@@ -120,8 +123,9 @@
     <include refid="Base_Column_List" />
     FROM news
     WHERE 1=1
+    AND newsType = #{newsType}
     AND type = #{type}
-    <include refid="common.Mysql_Pagination_Limit" />
+    LIMIT #{start}, #{limit}
   </select>
   
   <update id="incrComments">

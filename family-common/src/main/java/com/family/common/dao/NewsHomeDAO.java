@@ -45,7 +45,7 @@ public interface NewsHomeDAO {
      * @param limit
      * @return
      */
-    List<NewsHome> list(@Param("type")int type, @Param("start")int start, @Param("limt")int limit);
+    List<NewsHome> list(@Param("newsType") int newsType, @Param("type")int type, @Param("start")int start, @Param("limit")int limit);
     /**
      * 最新新聞數量
      * @param type

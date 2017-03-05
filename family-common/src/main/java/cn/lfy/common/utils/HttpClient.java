@@ -261,8 +261,29 @@ public class HttpClient {
         // return in.toString();
     }
 
+    public static class FileInfo {
+    	private String name;
+    	private String filename;
+    	public FileInfo(String name, String filename) {
+    		this.name = name;
+    		this.filename = filename;
+    	}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getFilename() {
+			return filename;
+		}
+		public void setFilename(String filename) {
+			this.filename = filename;
+		}
+    	
+    }
     //以数据流的形式传参
-    public static String postFile(String actionUrl, Map<String, String> params, Map<String, byte[]> files)
+    public static String postFile(String actionUrl, Map<String, String> params, Map<FileInfo, byte[]> files)
             throws Exception
     {
         String BOUNDARY = java.util.UUID.randomUUID().toString();
@@ -302,13 +323,13 @@ public class HttpClient {
         // 发送文件数据
         if (files != null)
         {
-            for (Map.Entry<String, byte[]> file : files.entrySet())
+            for (Map.Entry<FileInfo, byte[]> file : files.entrySet())
             {
                 StringBuilder sb1 = new StringBuilder();
                 sb1.append(PREFIX);
                 sb1.append(BOUNDARY);
                 sb1.append(LINEND);
-                sb1.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getKey() + "\"" + LINEND);
+                sb1.append("Content-Disposition: form-data; name=\"" + file.getKey().getName() + "\"; filename=\"" + file.getKey().getFilename() + "\"" + LINEND);
                 sb1.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINEND);
                 sb1.append(LINEND);
                 outStream.write(sb1.toString().getBytes());

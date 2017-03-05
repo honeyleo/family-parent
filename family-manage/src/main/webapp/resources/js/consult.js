@@ -5,6 +5,7 @@ var users = {
     sourceArray: [],
     textCon:null,
     init: function () {
+    	UE.getEditor('editor');
         this.bindEvents();
         this.loadTable();
     },
@@ -26,13 +27,13 @@ var users = {
         for (var i = 0; i < value.length; i++) {
             var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
-            
-            var status = Map.GuideState[value[i].state];
+            value[i].type = Map.NewsSubType[value[i].type];
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
+            	//'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
                 '</td>';
-            arr.push([users.sunNum,value[i].id,status, value[i].createTime, $opera]);
+            arr.push([users.sunNum,value[i].id,value[i].title, '<div class="text_l">'+ value[i].type +'</div>', value[i].createTime, $opera]);
         }
         self.num++;
         result.draw = self.num;
@@ -41,10 +42,14 @@ var users = {
         result.data = arr;
     },
     query: function (refresh) {
-        var action = "/manager/guide/api/list", argument;
+        var action = "/manager/news_consult/api/list", argument;
             argument = [
-                {test:"test"}
+                
             ];
+        var type = $("#search_dropDown-status").attr("value");
+        if(type) {
+        	argument.push({name : "type", value : type});
+        }
         this.load(action, argument, refresh);
     },
     dropDown: function (id, text, inp) {
@@ -57,6 +62,7 @@ var users = {
     },
     bindEvents: function () {
         var self = this;
+        self.dropDown('modify_search_status', 'search_dropDown-status', 'status');
         self.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         $('.J_search').click(function () {
             self.query(true);
@@ -98,22 +104,36 @@ var users = {
             $("#updContent").show();
             var id = $(this).attr("data-value");
             self.clearData();
-            $.getJSON("/manager/guide/detail", {id: id}, function(result){
+            $.getJSON("/manager/news_consult/detail", {id: id}, function(result){
             	if (result.ret == 0) {
-            		$('#search_dropDown-status1').attr("value", result.data.state).text(Map.GuideState[result.data.state]);
+            		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsSubType[result.data.type]);
+            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode]);
                     $("#id").val(result.data.id);
+                    $("#title").val(result.data.title);
+                    $("#intro").val(result.data.intro);
+                    UE.getEditor('editor').setContent(result.data.content);
                     
-                    var portrait_img = result.data.img;
+                    var portrait_img = result.data.imgs;
                     if (portrait_img == "" || portrait_img == undefined) {
                         $(".vertical .modify_icon").hide();
                         $("#uploadPortrait").html("").show();
                     } else {
                         $("#uploadPortrait").prevAll().remove();
-                        var temp = $("#iconTemplate").tmpl(portrait_img);
-                        $('#uploadPortrait').before(temp);
-                        $("#uploadPortrait").hide();
-                        $(".icon_img").attr("src", portrait_img);
-                        $("#iconM").val(portrait_img);
+                        var imgs = new Array();
+                        imgs = portrait_img.split(",");
+                        for(var i = 0; i < imgs.length; i++) {
+                        	if(imgs[i]) {
+                        		var url = {url:imgs[i]};
+                        		var temp = $("#iconTemplate").tmpl(url);
+                                $('.icon').before(temp);
+                                $(".modify_icon").css("float","left");
+                        	}
+                        }
+                        $("#uploadPortrait").css("float", "left").show()
+//                        var temp = $("#iconTemplate").tmpl(portrait_img);
+//                        $('#uploadPortrait').before(temp);
+//                        $(".icon_img").attr("src", portrait_img);
+//                        $("#iconM").val(portrait_img);
                     }
                     
                     $("#editorDialog").delegate(".J_del_img", "click", function () {
@@ -127,13 +147,21 @@ var users = {
             });
         });
         $("#updContent").click(function(){
-        	var img = $(".vertical .modify_icon .icon_img").attr("src");
+        	var content = UE.getEditor('editor').getContent();
+        	var imgs = "";
+        	$(".vertical .modify_icon .icon_img").each(function(){
+        		imgs +=$(this).attr("src") + ",";
+        	});
             var param = {
                 id: $("#id").val(),
-                state: $("#search_dropDown-status1").attr("value"),
-                img : img,
+                title: $("#title").val(),
+                intro: $("#intro").val(),
+                content: content,
+                type: $("#search_dropDown-status1").attr("value"),
+                imgs : imgs,
+                imgShowMode : $("#search_dropDown-status2").attr("value")
             };
-            $.post("/manager/guide/update", param, function(result){
+            $.post("/manager/news_consult/update", param, function(result){
                 if ( result.ret == 0 ) {
                     self.query();
                     $(".btn-default").trigger("click");
@@ -189,12 +217,21 @@ var users = {
     },
     confirmSubmit:function(){
     	var self = this;
-    	var img = $(".vertical .modify_icon .icon_img").attr("src");
+    	var content = UE.getEditor('editor').getContent();
+//    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
+    	var imgs = "";
+    	$(".vertical .modify_icon .icon_img").each(function(){
+    		imgs +=$(this).attr("src") + ",";
+    	});
     	var param = {
-                state: $("#search_dropDown-status1").attr("value"),
-                img : img
+                title: $("#title").val(),
+                intro: $("#intro").val(),
+                content: content,
+                type: $("#search_dropDown-status1").attr("value"),
+                imgShowMode: $("#search_dropDown-status2").attr("value"),
+                imgs : imgs
             };
-            $.post("/manager/guide/add", param, function(result){
+            $.post("/manager/news_consult/add", param, function(result){
                 if ( result.ret == 0 ) {
                     self.query();
                     $(".btn-default").trigger("click");
@@ -207,7 +244,7 @@ var users = {
         var self =this;
         $(".J_delete_sure").unbind('click');
         $(".J_delete_sure").click(function () {
-            $.get("/manager/guide/del",{"id":id},function(result){
+            $.get("/manager/news_consult/del",{"id":id},function(result){
                 if (result.ret == 0) {
                     $('#myModal').modal('hide');
                     self.query();
@@ -228,7 +265,11 @@ var users = {
         });
     },
     clearData:function(){
+    	$("#title").val("");
+        $("#intro").val("");
+        $("#content").val("");
         this.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
+        this.dropDown('modify_search_status2', 'search_dropDown-status2', 'status2');
     },
     completeIconImg: function (data) {
         var json = jQuery.parseJSON(data);
@@ -244,8 +285,8 @@ var users = {
                         }
                     ];
                     var temp = $("#iconTemplate").tmpl(tData);
-                    $('#uploadPortrait').before(temp);
-                    $("#uploadPortrait").hide();
+                    $('#uploadPortrait').css("float", "left").before(temp);
+                    $(".modify_icon").css("float","left");
                     $("#icon_name").text("");
                 } else {
                     asyncbox.alert("上传失败，请重试","提示");

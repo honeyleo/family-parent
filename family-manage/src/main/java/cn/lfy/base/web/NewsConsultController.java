@@ -28,8 +28,8 @@ import cn.lfy.common.utils.RequestUtil;
 import cn.lfy.common.web.BaseController;
 
 @Controller
-@RequestMapping("/manager/news_home")
-public class NewsHomeController extends BaseController {
+@RequestMapping("/manager/news_consult")
+public class NewsConsultController extends BaseController {
 
 	@Value("${fileserver.image.dir}")
 	private String imageDir;
@@ -52,7 +52,7 @@ public class NewsHomeController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(HttpServletRequest request) throws ApplicationException {
-        return new ModelAndView("/system/home/list");
+        return new ModelAndView("/system/consult/list");
     }
     
     @RequestMapping(value = "/api/list")
@@ -61,7 +61,7 @@ public class NewsHomeController extends BaseController {
         Integer pageNum = RequestUtil.getInteger(request, "currentPage");
         Integer pageSize = RequestUtil.getInteger(request, "pageSize");
         Criteria criteria = new Criteria();
-        criteria.put("newsType", NewsType.NEWS_HOME.getValue());
+        criteria.put("newsType", NewsType.NEWS_CONSULT.getValue());
         Integer type = RequestUtil.getInteger(request, "type");
         if(type != 0) {
         	criteria.put("type", type);
@@ -121,9 +121,12 @@ public class NewsHomeController extends BaseController {
     public Object add(NewsHome form, HttpServletRequest request) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
     	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
-        List<String> list = uploadImageHandle(form.getImgs(), pathRoot, resourceManager, imageUrl);
+        
+        List<String> list = uploadImageHandle(form.getImgs(), pathRoot, resourceManager, pathRoot);
         form.setImgs(Joiner.on(",").join(list));
-        form.setContent(ueditorContentImgHandle(form.getContent(), pathRoot, resourceManager));
+		String content = form.getContent();
+		form.setContent(ueditorContentImgHandle(content, pathRoot, resourceManager));
+		form.setNewsType(NewsType.NEWS_CONSULT.getValue());
         newsHomeService.insert(form);
         return builder.build();
     }

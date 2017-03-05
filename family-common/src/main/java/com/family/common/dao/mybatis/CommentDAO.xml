@@ -42,7 +42,7 @@
     WHERE 1=1
     AND newsId = #{newsId}
     AND type = 1
-    <include refid="common.Mysql_Pagination_Limit" />
+    LIMIT #{start}, #{limit}
   </select>
   
 </mapper>

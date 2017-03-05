@@ -2,10 +2,11 @@ package com.family.common.service;
 
 import java.util.List;
 
+import com.family.common.enums.NewsType;
+import com.family.common.model.NewsHome;
+
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
-
-import com.family.common.model.NewsHome;
 
 public interface NewsHomeService {
     /**
@@ -44,12 +45,13 @@ public interface NewsHomeService {
     PageInfo<NewsHome> findListByCriteria(Criteria criteria, int pageNo, int pageSize);
     /**
      * 首頁新聞列表
+     * @param newsType
      * @param type
      * @param start
      * @param limit
      * @return
      */
-    List<NewsHome> list(int type, int start, int limit);
+    List<NewsHome> list(NewsType newsType, int type, int start, int limit);
     /**
      * 最新新聞數量
      * @param type

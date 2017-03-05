@@ -9,6 +9,7 @@ import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
 
 import com.family.common.dao.NewsHomeDAO;
+import com.family.common.enums.NewsType;
 import com.family.common.model.NewsHome;
 import com.family.common.service.NewsHomeService;
 
@@ -67,8 +68,8 @@ public class NewsHomeServiceImpl implements NewsHomeService {
     }
 
 	@Override
-	public List<NewsHome> list(int type, int start, int limit) {
-		return newsHomeDAO.list(type, start, limit);
+	public List<NewsHome> list(NewsType newsType, int type, int start, int limit) {
+		return newsHomeDAO.list(newsType.getValue(), type, start, limit);
 	}
 
 	@Override

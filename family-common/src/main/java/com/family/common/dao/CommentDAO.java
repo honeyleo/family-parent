@@ -34,5 +34,5 @@ public interface CommentDAO {
      * @param limit
      * @return
      */
-    List<Comment> list(@Param("newsId")long newsId, @Param("start")int start, @Param("limt")int limit);
+    List<Comment> list(@Param("newsId")long newsId, @Param("start")int start, @Param("limit")int limit);
 }

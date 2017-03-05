@@ -2,6 +2,8 @@ package com.family.common.model;
 
 import java.io.Serializable;
 
+import com.family.common.enums.NewsType;
+
 /**
  * 首页新闻
  * @author honeyleo
@@ -21,11 +23,11 @@ public class NewsHome implements Serializable {
 	/**
 	 * 新闻类型：1-首页新闻；2-咨询页
 	 */
-	private Integer newsType;
+	private Integer newsType = NewsType.NEWS_HOME.getValue();
 	
 	private Integer type;
 	/**
-	 * 1-上文下一大图；2-上文下3小图；左文右一小图
+	 * 0-无图；1-上文下一大图；2-上文下3小图；左文右一小图
 	 */
 	private Integer imgShowMode;
 	

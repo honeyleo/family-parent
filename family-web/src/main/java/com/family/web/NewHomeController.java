@@ -1,12 +1,11 @@
 package com.family.web;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +14,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.family.common.enums.NewsType;
 import com.family.common.model.Comment;
 import com.family.common.model.NewsHome;
 import com.family.common.service.CommentService;
 import com.family.common.service.NewsHomeService;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
-import com.family.web.core.BaseController;
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
 import cn.lfy.common.model.Message;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 public class NewHomeController extends BaseController {
 
+	@Value("${domain.name}")
+	private String domainName;
+	
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
+	
 	@Autowired
 	private NewsHomeService newsHomeService;
 	
@@ -47,14 +52,15 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/app/news_home/list")
+	@RequestMapping("/app/{news_type}/list")
 	@ResponseBody
-	public Object list(@RequestParam(name = "type", defaultValue = "1") int type, 
+	public Object list(@PathVariable("news_type") String newsType, 
+			@RequestParam(name = "type", defaultValue = "1") int type, 
 			@RequestParam(name = "start") int start, 
 			@RequestParam(name = "limit", defaultValue = "10") int limit,
 			@RequestParam(name = "last_update_time", defaultValue = "0") long lastUpdateTime,
 			HttpServletRequest request) {
-		List<NewsHome> list = newsHomeService.list(type, start, limit + 1);
+		List<NewsHome> list = newsHomeService.list(NewsType.parse(newsType), type, start, limit + 1);
 		int count = 0;
 		if(start == 0 && lastUpdateTime > 0) {
 			count = newsHomeService.getNewestCount(type, lastUpdateTime);
@@ -73,19 +79,9 @@ public class NewHomeController extends BaseController {
 			dto.put("imgShowMode", newsHome.getImgShowMode());
 			dto.put("createTime", newsHome.getCreateTime());
 			dto.put("comments", newsHome.getComments());
-			List<String> imgs = Lists.newArrayList();
-			if(StringUtils.isNotBlank(newsHome.getImgs())) {
-				Iterable<String> itb = Splitter.on(",").split(newsHome.getImgs());
-				Iterator<String> it = itb.iterator();
-				while(it.hasNext()) {
-					String img = it.next();
-					if(StringUtils.isNotBlank(img)) {
-						imgs.add(img);
-					}
-				}
-			}
+			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
 			dto.put("imgs", imgs);
-			dto.put("detail_url", "");
+			dto.put("detail_url", domainName + "/app/news_home/detail/" + newsHome.getId() + ".html");
 			jsonList.add(dto);
 		}
 		Message.Builder builder = Message.newBuilder("/app/news_home/list");
@@ -105,9 +101,10 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/app/news_home/detail/{newsId}")
+	@RequestMapping("/app/{news_type}/detail/{newsId}")
 	@ResponseBody
-	public Object detail(@PathVariable("newsId") long newsId, 
+	public Object detail(@PathVariable("news_type") String newsType, 
+			@PathVariable("newsId") long newsId, 
 			HttpServletRequest request) {
 		NewsHome newsHome = newsHomeService.getById(newsId);
 		Message.Builder builder = Message.newBuilder("/app/news_home/detail/" + newsId);
@@ -119,23 +116,40 @@ public class NewHomeController extends BaseController {
 			dto.put("type", newsHome.getType());
 			dto.put("imgShowMode", newsHome.getImgShowMode());
 			dto.put("createTime", newsHome.getCreateTime());
-			dto.put("content", newsHome.getContent());
+			dto.put("content", htmlContentImageAppendDomain(newsHome.getContent(), imageUrl));
 			dto.put("comments", newsHome.getComments());
-			List<String> imgs = Lists.newArrayList();
-			if(StringUtils.isNotBlank(newsHome.getImgs())) {
-				Iterable<String> itb = Splitter.on(",").split(newsHome.getImgs());
-				Iterator<String> it = itb.iterator();
-				while(it.hasNext()) {
-					String img = it.next();
-					if(StringUtils.isNotBlank(img)) {
-						imgs.add(img);
-					}
-				}
-			}
+			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
 			dto.put("imgs", imgs);
 			builder.data(dto);
 		}
 		return builder.build();
+	}
+	/**
+	 * 评论详情
+	 * @param newsId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/{news_type}/detail/{newsId}.html")
+	public String detailHtml(@PathVariable("news_type") String newsType, 
+			@PathVariable("newsId") long newsId, 
+			HttpServletRequest request) {
+		NewsHome newsHome = newsHomeService.getById(newsId);
+		if(newsHome != null) {
+			JSONObject dto = new JSONObject();
+			dto.put("id", newsHome.getId());
+			dto.put("title", newsHome.getTitle());
+			dto.put("intro", newsHome.getIntro());
+			dto.put("type", newsHome.getType());
+			dto.put("imgShowMode", newsHome.getImgShowMode());
+			dto.put("createTime", newsHome.getCreateTime());
+			dto.put("content", htmlContentImageAppendDomain(newsHome.getContent(), imageUrl));
+			dto.put("comments", newsHome.getComments());
+			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
+			dto.put("imgs", imgs);
+			request.setAttribute("news", dto);
+		}
+		return "/news/detail";
 	}
 	/**
 	 * 评论列表
@@ -145,9 +159,10 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/app/news_home/comments")
+	@RequestMapping("/app/{news_type}/comments")
 	@ResponseBody
-	public Object comments(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+	public Object comments(@PathVariable("news_type") String newsType, 
+			@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
 			@RequestParam(name = "start") int start, 
 			@RequestParam(name = "limit", defaultValue = "10") int limit,
 			HttpServletRequest request) {
@@ -172,6 +187,7 @@ public class NewHomeController extends BaseController {
 		}
 		data.put("more", more);
 		data.put("list", array);
+		builder.data(data);
 		return builder.build();
 	}
 	/**
@@ -181,9 +197,10 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/app/news_home/comment")
+	@RequestMapping("/app/{news_type}/comment")
 	@ResponseBody
-	public Object comment(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+	public Object comment(@PathVariable("news_type") String newsType, 
+			@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
 			@RequestParam(name = "content") String content, 
 			CurrentUser user,
 			HttpServletRequest request) {
@@ -204,9 +221,10 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/app/news_home/favor")
+	@RequestMapping("/app/{news_type}/favor")
 	@ResponseBody
-	public Object favor(@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
+	public Object favor(@PathVariable("news_type") String newsType, 
+			@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
 			CurrentUser user,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/news_home/favor");

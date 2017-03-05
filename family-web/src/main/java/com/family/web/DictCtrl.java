@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.service.DictService;
-import com.family.web.core.BaseController;
 
 import cn.lfy.base.model.Dict;
 import cn.lfy.common.model.Message;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 public class DictCtrl extends BaseController {

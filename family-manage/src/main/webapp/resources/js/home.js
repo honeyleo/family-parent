@@ -27,10 +27,10 @@ var users = {
         for (var i = 0; i < value.length; i++) {
             var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
-
+            value[i].type = Map.NewsSubType[value[i].type];
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
-            	'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
+            	//'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
                 '</td>';
             arr.push([users.sunNum,value[i].id,value[i].title, '<div class="text_l">'+ value[i].type +'</div>', value[i].createTime, $opera]);
@@ -44,8 +44,11 @@ var users = {
     query: function (refresh) {
         var action = "/manager/news_home/api/list", argument;
             argument = [
-                {test:"test"}
             ];
+        var type = $("#search_dropDown-status").attr("value");
+        if(type) {
+        	argument.push({name : "type", value : type});
+        }
         this.load(action, argument, refresh);
     },
     dropDown: function (id, text, inp) {
@@ -58,6 +61,7 @@ var users = {
     },
     bindEvents: function () {
         var self = this;
+        self.dropDown('modify_search_status', 'search_dropDown-status', 'status');
         self.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         $('.J_search').click(function () {
             self.query(true);
@@ -101,8 +105,8 @@ var users = {
             self.clearData();
             $.getJSON("/manager/news_home/detail", {id: id}, function(result){
             	if (result.ret == 0) {
-            		$('#search_dropDown-status1').attr("value", result.data.type);
-            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(result.data.imgShowMode == 2 ? "三张图" : "单图");
+            		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsSubType[result.data.type]);
+            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode]);
                     $("#id").val(result.data.id);
                     $("#title").val(result.data.title);
                     $("#intro").val(result.data.intro);

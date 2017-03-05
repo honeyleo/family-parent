@@ -14,9 +14,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Interest;
 import com.family.common.service.InterestService;
 import com.family.model.CurrentUser;
-import com.family.web.core.BaseController;
 
 import cn.lfy.common.model.Message;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 public class InterestCtrl extends BaseController {

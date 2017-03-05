@@ -96,11 +96,11 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjY3NTZiNjU2NzQyMTQyZGM4NTMwN2U3NWI0ZTkzZGM0IiwiciI6ImQxYTQzOWQwY2Q2YzRlNTdiODEwZGE2NTA3Nzk4MDFmIiwidCI6MTQ4NjM5MDY0MiwidSI6MX0=");
 		try {
-			Map<String, byte[]> files = new HashMap<String, byte[]>();
+			Map<HttpClient.FileInfo, byte[]> files = new HashMap<HttpClient.FileInfo, byte[]>();
 			FileInputStream in = new FileInputStream("C:\\Users\\wendy\\Desktop\\轮播\\img\\1.jpg");
 			byte[] bytes = new byte[in.available()];
 			in.read(bytes);
-			files.put("1.jpg", bytes);
+			files.put(new HttpClient.FileInfo("file", "1.jpg"), bytes);
 			in.close();
 			String response = HttpClient.postFile(HOST + "/app/user/avatar", reqParams, files);
 			System.out.println(response);

@@ -57,6 +57,10 @@ public class User implements Serializable {
      * 名
      */
     private String name = "";
+    /**
+     * 认证状态：0-未认证；1-已认证；
+     */
+    private int cert;
     
     /**
      * @return 主键
@@ -200,6 +204,14 @@ public class User implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getCert() {
+		return cert;
+	}
+
+	public void setCert(int cert) {
+		this.cert = cert;
 	}
 
 }

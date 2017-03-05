@@ -32,7 +32,11 @@
 		<constructor-arg value="1000"></constructor-arg> 
 	
 	</bean> 
-
+	
+	<bean id="userCertExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="20" />
+	</bean>
 	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
 		<property name="maxPoolSize" value="200" />
@@ -59,6 +63,7 @@
 	<util:map id="resourceHandlers" map-class="java.util.HashMap">
 		<entry key="avatar_image" value-ref="avatar_image" />
 		<entry key="appeal_image" value-ref="appeal_image" />
+		<entry key="cert_image" value-ref="cert_image" />
 	</util:map>
 	
 	<bean id="avatar_image"
@@ -71,6 +76,12 @@
 		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
 		<property name="baseDir" value="${fileserver.image.dir}"></property>
 		<property name="childDir" value="appeal_image"></property>
+		<property name="baseURL" value="${fileserver.image.url}"></property>
+	</bean>
+	<bean id="cert_image"
+		class="cn.lfy.common.filehandler.ResourceHandlerImpl">
+		<property name="baseDir" value="${fileserver.image.dir}"></property>
+		<property name="childDir" value="cert_image"></property>
 		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
 </beans>

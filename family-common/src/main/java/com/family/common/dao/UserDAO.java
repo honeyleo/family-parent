@@ -43,4 +43,10 @@ public interface UserDAO {
      */
     User selectByUsername(String username);
 
+    /**
+     * 更新为已认证
+     * @param id
+     * @return
+     */
+    int updateCerted(Long id);
 }

@@ -31,6 +31,10 @@ public class CurrentUser implements Serializable {
 	private String ip;
 	
 	private long regTime;
+	/**
+	 * 0-未认证；1-已认证
+	 */
+	private int cert;
 	
 	private int distance;
 
@@ -144,6 +148,14 @@ public class CurrentUser implements Serializable {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public int getCert() {
+		return cert;
+	}
+
+	public void setCert(int cert) {
+		this.cert = cert;
 	}
 	
 }

@@ -13,6 +13,7 @@
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="surname" property="surname" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cert" property="cert" jdbcType="INTEGER" />
   </resultMap>
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   <sql id="Example_Where_Clause" >
@@ -56,7 +57,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    id, username, password, salt, nickname, email, phone, state, createTime, surname, name
+    id, username, password, salt, nickname, email, phone, state, createTime, surname, name, cert
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
@@ -127,5 +128,7 @@
     <include refid="Base_Column_List" />
     from user where username = #{username} limit 1
   </select>
-  
+  <update id="updateCerted">
+  	UPDATE `user` SET cert = 1 WHERE id = #{id}
+  </update>
 </mapper>

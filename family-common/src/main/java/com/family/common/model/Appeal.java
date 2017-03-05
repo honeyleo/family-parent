@@ -1,6 +1,7 @@
 package com.family.common.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 求助消息
@@ -18,6 +19,8 @@ public class Appeal implements Serializable {
 	private Long userId;
 	
 	private String imgs;
+	
+	private List<String> imgsList;
 	/**
 	 * 经度
 	 */
@@ -113,6 +116,14 @@ public class Appeal implements Serializable {
 
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<String> getImgsList() {
+		return imgsList;
+	}
+
+	public void setImgsList(List<String> imgsList) {
+		this.imgsList = imgsList;
 	}
 	
 	

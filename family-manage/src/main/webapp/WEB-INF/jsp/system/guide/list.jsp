@@ -44,10 +44,10 @@
                             <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu modify_search_status scrollBar" role="menu">
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">全部</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">民俗文化</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">百家姓文化</a></li>
-                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="3">新闻</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="">全部</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">待发布</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">已发布</a></li>
+                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">已下架</a></li>
                         </ul>
                     </div>
                     <input type="hidden" value="50" name="type" />
@@ -109,14 +109,14 @@
                         	<input type="hidden" class="form-control input_common" id="id">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                        id="search_dropDown-status1" value="1">发布</i></button>
+                                        id="search_dropDown-status1" value="1">待发布</i></button>
                                 <button type="button"
                                         class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                         data-toggle="dropdown">
                                     <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu modify_search_status1 scrollBar" role="menu">
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">发布</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">发布</a></li>
                                     <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">下架</a></li>
                                 </ul>
                             </div>
@@ -150,6 +150,7 @@
     </div>
 </script>
 <script src="<%=basePath%>resources/js/common/common.js"></script>
+<script src="<%=basePath%>resources/js/common/cache.js"></script>
 <script src="<%=basePath%>resources/js/common/bootstrap.js"></script>
 <script src="<%=basePath%>resources/plugins/zTree/jquery.ztree.all.js"></script>
 <script src="<%=basePath%>resources/js/common/bootstrap-typeahead.js"></script>

@@ -38,7 +38,7 @@
                     <span class="label_style">新闻类型：</span>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                id="search_dropDown-status" value="0">全部</i></button>
+                                id="search_dropDown-status" value="">全部</i></button>
                         <button type="button"
                                 class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                 data-toggle="dropdown">
@@ -46,9 +46,8 @@
                         </button>
                         <ul class="dropdown-menu modify_search_status scrollBar" role="menu">
                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">全部</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">民俗文化</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">百家姓文化</a></li>
-                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="3">新闻</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="11">家族新闻</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="12">家族活动</a></li>
                         </ul>
                     </div>
                     <input type="hidden" value="50" name="type" />
@@ -110,16 +109,15 @@
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                        id="search_dropDown-status1" value="1">民俗文化</i></button>
+                                        id="search_dropDown-status1" value="1">家族新闻</i></button>
                                 <button type="button"
                                         class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                         data-toggle="dropdown">
                                     <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu modify_search_status1 scrollBar" role="menu">
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">民俗文化</a></li>
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">百家姓文化</a></li>
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="3">百家姓文化</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="11">家族新闻</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="12">家族活动</a></li>
                                 </ul>
                             </div>
                             <input type="hidden" value="50" name="type1" />
@@ -206,6 +204,6 @@
 <script type="text/javascript" charset="utf-8" src="<%=basePath%>resources/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script src="<%=basePath%>resources/plugins/uploadify/jquery-uploadify.min.js"></script>
 <script src="<%=basePath%>resources/plugins/uploadify/jquery.html5uploader.js"></script>
-<script src="<%=basePath%>resources/js/home.js"></script>
+<script src="<%=basePath%>resources/js/consult.js"></script>
 </body>
 </html>

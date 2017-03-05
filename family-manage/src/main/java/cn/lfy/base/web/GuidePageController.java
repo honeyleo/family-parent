@@ -1,29 +1,40 @@
 package cn.lfy.base.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.lfy.base.model.Criteria;
-import cn.lfy.base.model.PageInfo;
-import cn.lfy.common.framework.exception.ApplicationException;
-import cn.lfy.common.model.Message;
-import cn.lfy.common.utils.RequestUtil;
-
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.GuidePage;
 import com.family.common.service.GuidePageService;
 
+import cn.lfy.base.model.Criteria;
+import cn.lfy.base.model.PageInfo;
+import cn.lfy.common.filehandler.ResourceManager;
+import cn.lfy.common.framework.exception.ApplicationException;
+import cn.lfy.common.model.Message;
+import cn.lfy.common.utils.RequestUtil;
+import cn.lfy.common.web.BaseController;
+
 @Controller
 @RequestMapping("/manager/guide")
-public class GuidePageController {
+public class GuidePageController extends BaseController {
 
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
+	
+	@Autowired
+	private ResourceManager resourceManager;
+	
 	@Autowired
     private GuidePageService guidePageService;
 
@@ -82,6 +93,10 @@ public class GuidePageController {
     	Message.Builder builder = Message.newBuilder();
         Long id = RequestUtil.getLong(request, "id");
         GuidePage record = guidePageService.getById(id);
+        List<String> list = getImgsList(record.getImg(), imageUrl);
+        if(!list.isEmpty()) {
+        	record.setImg(list.get(0));
+        }
         builder.data(record);
         return builder.build();
     }
@@ -96,6 +111,11 @@ public class GuidePageController {
     @ResponseBody
     public Object add(GuidePage form, HttpServletRequest request) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
+    	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
+    	List<String> list = uploadImageHandle(form.getImg(), pathRoot, resourceManager, imageUrl);
+    	if(!list.isEmpty()) {
+    		form.setImg(list.get(0));
+    	}
     	guidePageService.insert(form);
         return builder.build();
     }
@@ -112,6 +132,11 @@ public class GuidePageController {
     public Object update(GuidePage form, HttpServletRequest request,
             HttpServletResponse response) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
+    	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
+    	List<String> list = uploadImageHandle(form.getImg(), pathRoot, resourceManager, "guide", imageUrl);
+    	if(!list.isEmpty()) {
+    		form.setImg(list.get(0));
+    	}
     	guidePageService.updateByIdSelective(form);
         return builder.build();
     }

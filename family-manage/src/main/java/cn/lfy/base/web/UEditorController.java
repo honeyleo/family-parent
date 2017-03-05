@@ -16,9 +16,6 @@ import com.baidu.ueditor.ActionEnter;
 @RequestMapping("/ued")
 public class UEditorController {
  
-	@Value("${env}")
-	private String env;
-	
 	@Value("${fileserver.image.dir}")
 	private String rootPath;
 	

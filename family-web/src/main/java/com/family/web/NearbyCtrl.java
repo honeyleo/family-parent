@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.family.model.CurrentUser;
 import com.family.service.NearbyService;
-import com.family.web.core.BaseController;
 
 import cn.lfy.common.model.Message;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 public class NearbyCtrl extends BaseController {

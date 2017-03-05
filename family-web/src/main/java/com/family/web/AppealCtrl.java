@@ -1,7 +1,6 @@
 package com.family.web;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +21,6 @@ import com.family.common.model.Appeal;
 import com.family.common.service.AppealService;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
-import com.family.web.core.BaseController;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -30,10 +29,14 @@ import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 public class AppealCtrl extends BaseController {
 
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
+	
 	@Autowired
 	private AppealService appealService;
 	
@@ -63,7 +66,6 @@ public class AppealCtrl extends BaseController {
 		long time = System.currentTimeMillis()/1000;
 		record.setCreateTime(time);
 		record.setUpdateTime(time);
-		Map<String, Object> data = new HashMap<String, Object>();
 		 CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
 	                request.getSession().getServletContext());
         //检查form中是否有enctype="multipart/form-data"
@@ -84,7 +86,8 @@ public class AppealCtrl extends BaseController {
             record.setImgs(Joiner.on(",").join(imgs));
         }
         appealService.insert(record);
-		return builder.data(data).build();
+        record.setImgsList(getImgsList(record.getImgs(), imageUrl));
+		return builder.data(record).build();
 	}
 	
 	@RequestMapping("/app/appeal/mylist")
@@ -97,6 +100,10 @@ public class AppealCtrl extends BaseController {
 		boolean more = isMore(list, limit);
 		if(more) {
 			list = list.subList(0, limit);
+		}
+		for(Appeal record : list) {
+			record.setImgsList(getImgsList(record.getImgs(), imageUrl));
+        	record.setImgs(null);
 		}
 		JSONObject data = new JSONObject();
 		data.put("more", more);
@@ -124,6 +131,7 @@ public class AppealCtrl extends BaseController {
 			Map<Long, CurrentUser> map = userProxyService.getCurrentUsers(userIdList);
 			for(Appeal appeal : list) {
 				JSONObject obj = new JSONObject();
+				appeal.setImgsList(getImgsList(appeal.getImgs(), imageUrl));
 				obj.put("appeal", appeal);
 				CurrentUser cu = map.get(appeal.getUserId());
 				obj.put("user", cu);

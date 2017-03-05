@@ -154,6 +154,7 @@ public class UserProxyService {
 		currentUser.setIp(ip);
 		currentUser.setSurname(user.getSurname());
 		currentUser.setName(user.getName());
+		currentUser.setCert(user.getCert());
 		String key = RedisKey.currentUserKey(currentUser.getId());
 		try {
 			redisClient.setex(key, JSON.toJSONString(currentUser), EXPIRE_CURRENT_USER);

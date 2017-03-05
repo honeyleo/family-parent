@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.UserCertDAO" >
+  
+  <sql id="Base_Column_List" >
+    id, userId, name, idCardNo, frontImg, backImg, handImg, status, createTime, updateTime
+  </sql>
+  
+  <select id="get" resultType="com.family.common.model.UserCert" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_cert where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from user_cert where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.UserCert" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_cert (name, idCardNo, userId, frontImg, backImg, handImg, status, createTime, updateTime)
+    values (#{name}, #{idCardNo}, #{userId}, #{frontImg}, #{backImg}, #{handImg}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+  </insert>
+  
+  <update id="update" parameterType="com.family.common.model.UserCert" >
+    update user_cert
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="idCardNo != null" >
+        idCardNo = #{idCardNo},
+      </if>
+      <if test="frontImg != null" >
+        frontImg = #{frontImg},
+      </if>
+      <if test="backImg != null" >
+        backImg = #{backImg},
+      </if>
+      <if test="handImg != null" >
+        handImg = #{handImg},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      updateTime = UNIX_TIMESTAMP()
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateStatus">
+  	UPDATE user_cert SET status = #{status} WHERE id = #{id}
+  </update>
+  <select id="getByUserId" resultType="com.family.common.model.UserCert" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_cert where userId = #{userId}
+  </select>
+</mapper>
