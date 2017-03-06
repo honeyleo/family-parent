@@ -67,4 +67,11 @@ public class GuidePageServiceImpl implements GuidePageService {
         return res;
     }
 
+	@Override
+	public List<GuidePage> getAvariableGuidePage() {
+		Criteria criteria = new Criteria();
+		criteria.put("state", 2);
+		return this.getByCriteria(criteria);
+	}
+
 }

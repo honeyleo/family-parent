@@ -42,5 +42,10 @@ public interface GuidePageService {
      * 根据条件查询记录集
      */
     PageInfo<GuidePage> findListByCriteria(Criteria criteria, int pageNo, int pageSize);
+    /**
+     * 获取可用的引导页列表
+     * @return
+     */
+    List<GuidePage> getAvariableGuidePage();
 
 }

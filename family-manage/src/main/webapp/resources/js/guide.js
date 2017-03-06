@@ -43,8 +43,10 @@ var users = {
     query: function (refresh) {
         var action = "/manager/guide/api/list", argument;
             argument = [
-                {test:"test"}
+                
             ];
+        var state = $("#search_dropDown-status").attr("value"); 
+        argument.push({name : "state", value : state});
         this.load(action, argument, refresh);
     },
     dropDown: function (id, text, inp) {
@@ -57,6 +59,7 @@ var users = {
     },
     bindEvents: function () {
         var self = this;
+        self.dropDown('modify_search_status', 'search_dropDown-status', 'status');
         self.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         $('.J_search').click(function () {
             self.query(true);

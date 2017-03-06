@@ -14,7 +14,9 @@ public class GuidePage implements Serializable {
 	private String img;
 	
 	private String url;
-	
+	/**
+	 * 0-已下架；1-待发布；2-已发布
+	 */
 	private Integer state;
 	
 	private Long createTime;

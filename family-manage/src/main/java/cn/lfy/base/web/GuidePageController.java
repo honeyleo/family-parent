@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -52,10 +53,14 @@ public class GuidePageController extends BaseController {
     
     @RequestMapping(value = "/api/list")
     @ResponseBody
-    public Object api_list(HttpServletRequest request) throws ApplicationException {
+    public Object api_list(@RequestParam(name = "state", defaultValue = "-1") Integer state, 
+    		HttpServletRequest request) throws ApplicationException {
         Integer pageNum = RequestUtil.getInteger(request, "currentPage");
         Integer pageSize = RequestUtil.getInteger(request, "pageSize");
         Criteria criteria = new Criteria();
+        if(state != -1) {
+        	criteria.put("state", state);
+        }
         PageInfo<GuidePage> result = guidePageService.findListByCriteria(criteria, pageNum, pageSize);
         JSONObject json = new JSONObject();
         json.put("ret", 0);

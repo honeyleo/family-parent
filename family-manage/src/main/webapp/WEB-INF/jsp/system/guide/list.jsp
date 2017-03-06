@@ -37,14 +37,14 @@
                     <span class="label_style">新闻类型：</span>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                id="search_dropDown-status" value="">全部</i></button>
+                                id="search_dropDown-status" value="-1">全部</i></button>
                         <button type="button"
                                 class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                 data-toggle="dropdown">
                             <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu modify_search_status scrollBar" role="menu">
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="">全部</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="-1">全部</a></li>
                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">待发布</a></li>
                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">已发布</a></li>
                              <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">已下架</a></li>
