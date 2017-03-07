@@ -13,7 +13,7 @@ public class HanyuPinyinHelper {
      * 将文字转为汉语拼音
      * @param chineselanguage 要转成拼音的中文
      */
-    public String toHanyuPinyin(String ChineseLanguage){
+    public static String toHanyuPinyin(String ChineseLanguage){
         char[] cl_chars = ChineseLanguage.trim().toCharArray();
         String hanyupinyin = "";
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
@@ -125,7 +125,11 @@ public class HanyuPinyinHelper {
     }
     
     public static void main(String[] args) {
-        HanyuPinyinHelper hanyuPinyinHelper = new HanyuPinyinHelper() ;
-        System.out.println(hanyuPinyinHelper.toHanyuPinyin("黄波锦"));
+    	System.out.println(HanyuPinyinHelper.getFirstLettersLo("黄波锦"));
+    	System.out.println(HanyuPinyinHelper.getFirstLettersUp("黄波锦"));
+    	System.out.println(HanyuPinyinHelper.getFirstLetter("黄波锦"));
+        System.out.println(HanyuPinyinHelper.toHanyuPinyin("黄波锦"));
+        System.out.println(HanyuPinyinHelper.getPinyinString("黄波锦"));
+        System.out.println(HanyuPinyinHelper.getFirstLettersLo("欧阳"));
     }
 }

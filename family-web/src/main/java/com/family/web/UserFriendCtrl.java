@@ -18,6 +18,7 @@ import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
 
 import cn.lfy.common.model.Message;
+import cn.lfy.common.pinyin.HanyuPinyinHelper;
 import cn.lfy.common.web.BaseController;
 
 @Controller
@@ -86,6 +87,13 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("nickname", friend.getNickname());
 			dto.put("surname", friend.getSurname());
 			dto.put("name", friend.getName());
+			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+			dto.put("namePinyin", HanyuPinyinHelper.getPinyinString(friend.getName()));
+			dto.put("surnameAndNamePinyin", HanyuPinyinHelper.getPinyinString(friend.getSurname() + friend.getName()));
+			dto.put("surnameAndNamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+			dto.put("credit", friend.getCredit());
+			dto.put("contribution", friend.getContribution());
+			dto.put("cert", friend.getCert());
 			friendList.add(dto);
 		}
 		JSONObject data = new JSONObject();
@@ -117,6 +125,13 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("avatar", friend.getAvatar());
 			dto.put("surname", friend.getSurname());
 			dto.put("name", friend.getName());
+			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+			dto.put("namePinyin", HanyuPinyinHelper.getPinyinString(friend.getName()));
+			dto.put("surnameAndNamePinyin", HanyuPinyinHelper.getPinyinString(friend.getSurname() + friend.getName()));
+			dto.put("surnameAndNamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+			dto.put("credit", friend.getCredit());
+			dto.put("contribution", friend.getContribution());
+			dto.put("cert", friend.getCert());
 			notifyList.add(dto);
 		}
 		JSONObject data = new JSONObject();
