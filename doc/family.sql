@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50618
 File Encoding         : 65001
 
-Date: 2017-02-26 23:55:25
+Date: 2017-03-08 00:01:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,11 +53,12 @@ CREATE TABLE `comment` (
   UNIQUE KEY `idx_user_news_type` (`userId`,`newsId`,`type`) USING BTREE,
   KEY `idx_user_type` (`userId`,`type`) USING BTREE,
   KEY `idx_news_type` (`newsId`,`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评论表（收藏）';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='评论表（收藏）';
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
+INSERT INTO `comment` VALUES ('1', '评论咯', '1', '8', '10', '1488690561');
 
 -- ----------------------------
 -- Table structure for dict
@@ -3533,10 +3534,10 @@ INSERT INTO `district` VALUES ('3430', '3427', '东盖村', '2');
 INSERT INTO `district` VALUES ('3427', '1231', '第什营乡', '2');
 
 -- ----------------------------
--- Table structure for guide
+-- Table structure for guide_page
 -- ----------------------------
-DROP TABLE IF EXISTS `guide`;
-CREATE TABLE `guide` (
+DROP TABLE IF EXISTS `guide_page`;
+CREATE TABLE `guide_page` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `img` varchar(255) NOT NULL DEFAULT '' COMMENT '引导页图片',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '引导页跳转地址',
@@ -3544,11 +3545,12 @@ CREATE TABLE `guide` (
   `updateTime` bigint(20) NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='引导页表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='引导页表';
 
 -- ----------------------------
--- Records of guide
+-- Records of guide_page
 -- ----------------------------
+INSERT INTO `guide_page` VALUES ('1', 'guide/2017/03/06/1488808712955013488.jpg', '', '1488724623', '1488724623', '2');
 
 -- ----------------------------
 -- Table structure for interest
@@ -3560,11 +3562,39 @@ CREATE TABLE `interest` (
   `pid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父标签ID',
   PRIMARY KEY (`id`),
   KEY `idx_pid` (`pid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='兴趣爱好表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='兴趣爱好表';
 
 -- ----------------------------
 -- Records of interest
 -- ----------------------------
+INSERT INTO `interest` VALUES ('1', '运动', '0');
+INSERT INTO `interest` VALUES ('2', '旅行', '0');
+INSERT INTO `interest` VALUES ('3', '艺术', '0');
+INSERT INTO `interest` VALUES ('4', '美食', '0');
+INSERT INTO `interest` VALUES ('5', '游戏', '0');
+INSERT INTO `interest` VALUES ('6', '娱乐', '0');
+INSERT INTO `interest` VALUES ('7', '金融', '0');
+INSERT INTO `interest` VALUES ('8', '语言', '0');
+INSERT INTO `interest` VALUES ('9', '乐器', '0');
+INSERT INTO `interest` VALUES ('10', '瑜伽', '1');
+INSERT INTO `interest` VALUES ('11', '舞蹈', '1');
+INSERT INTO `interest` VALUES ('12', '国内游', '2');
+INSERT INTO `interest` VALUES ('13', '境外游', '2');
+INSERT INTO `interest` VALUES ('14', '绘画', '3');
+INSERT INTO `interest` VALUES ('15', '书法', '3');
+INSERT INTO `interest` VALUES ('16', '亨饪', '4');
+INSERT INTO `interest` VALUES ('17', '中餐', '4');
+INSERT INTO `interest` VALUES ('18', '网络游戏', '5');
+INSERT INTO `interest` VALUES ('19', '手机游戏', '5');
+INSERT INTO `interest` VALUES ('20', '聚会', '6');
+INSERT INTO `interest` VALUES ('21', '追星', '6');
+INSERT INTO `interest` VALUES ('22', '股票', '7');
+INSERT INTO `interest` VALUES ('23', '基金', '7');
+INSERT INTO `interest` VALUES ('24', '英语', '8');
+INSERT INTO `interest` VALUES ('25', '日语', '8');
+INSERT INTO `interest` VALUES ('26', '吉他', '9');
+INSERT INTO `interest` VALUES ('27', '口琴', '9');
+INSERT INTO `interest` VALUES ('28', '钢琴', '9');
 
 -- ----------------------------
 -- Table structure for member
@@ -3617,7 +3647,7 @@ CREATE TABLE `menu` (
   `onMenu` tinyint(4) DEFAULT '1' COMMENT '是否显示在菜单',
   `icon` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of menu
@@ -3663,6 +3693,16 @@ INSERT INTO `menu` VALUES ('89', '新闻删除', '1', '78', '$1$77$78$', '/manag
 INSERT INTO `menu` VALUES ('90', '删除词典', '1', '79', '$1$2$79$', '/manager/dict/del', '5', '', '1', '2017-01-24 21:24:43', '0', null);
 INSERT INTO `menu` VALUES ('91', '引导页管理', '1', '77', '$1$77$', '/manager/guide/list', '1', '', '1', '2017-01-26 23:02:48', '1', null);
 INSERT INTO `menu` VALUES ('92', '引导页列表', '1', '91', '$1$77$91$', '/manager/guide/api/list', '1', '', '1', '2017-01-26 23:03:17', '0', null);
+INSERT INTO `menu` VALUES ('93', '咨询页', '1', '77', '$1$77$', '/manager/news_consult/list', '3', '', '1', '2017-03-05 18:22:54', '1', null);
+INSERT INTO `menu` VALUES ('94', '咨询页列表', '1', '93', '$1$77$93$', '/manager/news_consult/api/list', '1', '', '1', '2017-03-05 18:24:07', '0', null);
+INSERT INTO `menu` VALUES ('95', '添加咨询页', '1', '93', '$1$77$93$', '/manager/news_consult/add', '2', '', '1', '2017-03-05 18:24:43', '0', null);
+INSERT INTO `menu` VALUES ('96', '新闻详情', '1', '93', '$1$77$93$', '/manager/news_consult/detail', '3', '', '1', '2017-03-05 18:25:12', '0', null);
+INSERT INTO `menu` VALUES ('97', '新闻更新', '1', '93', '$1$77$93$', '/manager/news_consult/update', '4', '', '1', '2017-03-05 18:25:39', '0', null);
+INSERT INTO `menu` VALUES ('98', '新闻删除', '1', '93', '$1$77$93$', '/manager/news_consult/del', '5', '', '1', '2017-03-05 18:26:05', '0', null);
+INSERT INTO `menu` VALUES ('99', '添加引导页', '1', '91', '$1$77$91$', '/manager/guide/add', '2', '', '1', '2017-03-05 22:35:17', '0', null);
+INSERT INTO `menu` VALUES ('100', '引导页详情', '1', '91', '$1$77$91$', '/manager/guide/detail', '3', '', '1', '2017-03-05 22:37:43', '0', null);
+INSERT INTO `menu` VALUES ('101', '引导页更新', '1', '91', '$1$77$91$', '/manager/guide/update', '4', '', '1', '2017-03-05 22:38:07', '0', null);
+INSERT INTO `menu` VALUES ('102', '引导页删除', '1', '91', '$1$77$91$', '/manager/guide/del', '5', '', '1', '2017-03-05 22:38:33', '0', null);
 
 -- ----------------------------
 -- Table structure for news
@@ -3675,7 +3715,7 @@ CREATE TABLE `news` (
   `content` text NOT NULL COMMENT '内容',
   `newsType` tinyint(255) NOT NULL DEFAULT '1' COMMENT '1-首页；2-咨询页',
   `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1-民俗文化；2-百家姓文化；3-新闻',
-  `imgShowMode` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '图片显示模式',
+  `imgShowMode` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '图片显示模式：0-无图；1-上文下一大图；2-上文下三小图；3-左文右一小图',
   `imgs` varchar(500) NOT NULL DEFAULT '' COMMENT '新闻图片路径',
   `comments` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评论数',
   `userId` bigint(20) NOT NULL COMMENT '发布新闻的作者',
@@ -3683,13 +3723,17 @@ CREATE TABLE `news` (
   `updateTime` bigint(20) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_updateTime` (`updateTime`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='首页新闻表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='首页新闻表';
 
 -- ----------------------------
 -- Records of news
 -- ----------------------------
-INSERT INTO `news` VALUES ('8', 'ss', 'ss', '<p><img src=\"/content_image/2017/02/21/1487688279396043429.jpg\" title=\"1487688279396043429.jpg\" alt=\"baokuan-1.jpg\" width=\"512\" height=\"370\"/></p>', '1', '1', '1', '/news/1/bbd3e9e71a7d424c9cd5408bb893cc5f.jpg,/news/1/20dab7f5db0a41a7a3e39d520a681901.jpg,', '0', '1', '1487605987', '1487688293');
-INSERT INTO `news` VALUES ('9', 'ddfdf', '', '<p><img src=\"/content_image/2017/02/21/1487687467293078441.jpg\" title=\"1487687467293078441.jpg\" alt=\"index-fenlei-5.jpg\"/>efsdfds大幅度发给</p>', '1', '1', '1', '/news/1/a20cc68a3e784908818e15fcb85d4955.jpg', '0', '1', '1487687468', '1487688349');
+INSERT INTO `news` VALUES ('8', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542');
+INSERT INTO `news` VALUES ('9', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362');
+INSERT INTO `news` VALUES ('10', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790');
+INSERT INTO `news` VALUES ('11', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595');
+INSERT INTO `news` VALUES ('12', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021');
+INSERT INTO `news` VALUES ('13', '活动', '地方', '', '2', '12', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1488727052');
 
 -- ----------------------------
 -- Table structure for role
@@ -3780,6 +3824,16 @@ INSERT INTO `role_menu` VALUES ('1', '89');
 INSERT INTO `role_menu` VALUES ('1', '90');
 INSERT INTO `role_menu` VALUES ('1', '91');
 INSERT INTO `role_menu` VALUES ('1', '92');
+INSERT INTO `role_menu` VALUES ('1', '93');
+INSERT INTO `role_menu` VALUES ('1', '94');
+INSERT INTO `role_menu` VALUES ('1', '95');
+INSERT INTO `role_menu` VALUES ('1', '96');
+INSERT INTO `role_menu` VALUES ('1', '97');
+INSERT INTO `role_menu` VALUES ('1', '98');
+INSERT INTO `role_menu` VALUES ('1', '99');
+INSERT INTO `role_menu` VALUES ('1', '100');
+INSERT INTO `role_menu` VALUES ('1', '101');
+INSERT INTO `role_menu` VALUES ('1', '102');
 INSERT INTO `role_menu` VALUES ('2', '1');
 INSERT INTO `role_menu` VALUES ('2', '2');
 INSERT INTO `role_menu` VALUES ('2', '3');
@@ -3856,6 +3910,1077 @@ INSERT INTO `role_menu` VALUES ('11', '26');
 INSERT INTO `role_menu` VALUES ('11', '27');
 
 -- ----------------------------
+-- Table structure for surname
+-- ----------------------------
+DROP TABLE IF EXISTS `surname`;
+CREATE TABLE `surname` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `surname` varchar(6) NOT NULL DEFAULT '',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_surname` (`surname`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1056 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of surname
+-- ----------------------------
+INSERT INTO `surname` VALUES ('1', '赵', '1');
+INSERT INTO `surname` VALUES ('2', '钱', '1');
+INSERT INTO `surname` VALUES ('3', '孙', '1');
+INSERT INTO `surname` VALUES ('4', '李', '1');
+INSERT INTO `surname` VALUES ('5', '周', '1');
+INSERT INTO `surname` VALUES ('6', '吴', '1');
+INSERT INTO `surname` VALUES ('7', '郑', '1');
+INSERT INTO `surname` VALUES ('8', '王', '1');
+INSERT INTO `surname` VALUES ('9', '冯', '1');
+INSERT INTO `surname` VALUES ('10', '陈', '1');
+INSERT INTO `surname` VALUES ('11', '褚', '1');
+INSERT INTO `surname` VALUES ('12', '卫', '1');
+INSERT INTO `surname` VALUES ('13', '蒋', '1');
+INSERT INTO `surname` VALUES ('14', '沈', '1');
+INSERT INTO `surname` VALUES ('15', '韩', '1');
+INSERT INTO `surname` VALUES ('16', '杨', '1');
+INSERT INTO `surname` VALUES ('17', '朱', '1');
+INSERT INTO `surname` VALUES ('18', '秦', '1');
+INSERT INTO `surname` VALUES ('19', '尤', '1');
+INSERT INTO `surname` VALUES ('20', '许', '1');
+INSERT INTO `surname` VALUES ('21', '何', '1');
+INSERT INTO `surname` VALUES ('22', '吕', '1');
+INSERT INTO `surname` VALUES ('23', '施', '1');
+INSERT INTO `surname` VALUES ('24', '张', '1');
+INSERT INTO `surname` VALUES ('25', '孔', '1');
+INSERT INTO `surname` VALUES ('26', '曹', '1');
+INSERT INTO `surname` VALUES ('27', '严', '1');
+INSERT INTO `surname` VALUES ('28', '华', '1');
+INSERT INTO `surname` VALUES ('29', '金', '1');
+INSERT INTO `surname` VALUES ('30', '魏', '1');
+INSERT INTO `surname` VALUES ('31', '陶', '1');
+INSERT INTO `surname` VALUES ('32', '姜', '1');
+INSERT INTO `surname` VALUES ('33', '戚', '1');
+INSERT INTO `surname` VALUES ('34', '谢', '1');
+INSERT INTO `surname` VALUES ('35', '邹', '1');
+INSERT INTO `surname` VALUES ('36', '喻', '1');
+INSERT INTO `surname` VALUES ('37', '柏', '1');
+INSERT INTO `surname` VALUES ('38', '水', '1');
+INSERT INTO `surname` VALUES ('39', '窦', '1');
+INSERT INTO `surname` VALUES ('40', '章', '1');
+INSERT INTO `surname` VALUES ('41', '云', '1');
+INSERT INTO `surname` VALUES ('42', '苏', '1');
+INSERT INTO `surname` VALUES ('43', '潘', '1');
+INSERT INTO `surname` VALUES ('44', '葛', '1');
+INSERT INTO `surname` VALUES ('45', '奚', '1');
+INSERT INTO `surname` VALUES ('46', '范', '1');
+INSERT INTO `surname` VALUES ('47', '彭', '1');
+INSERT INTO `surname` VALUES ('48', '郎', '1');
+INSERT INTO `surname` VALUES ('49', '鲁', '1');
+INSERT INTO `surname` VALUES ('50', '韦', '1');
+INSERT INTO `surname` VALUES ('51', '昌', '1');
+INSERT INTO `surname` VALUES ('52', '马', '1');
+INSERT INTO `surname` VALUES ('53', '苗', '1');
+INSERT INTO `surname` VALUES ('54', '凤', '1');
+INSERT INTO `surname` VALUES ('55', '花', '1');
+INSERT INTO `surname` VALUES ('56', '方', '1');
+INSERT INTO `surname` VALUES ('57', '俞', '1');
+INSERT INTO `surname` VALUES ('58', '任', '1');
+INSERT INTO `surname` VALUES ('59', '袁', '1');
+INSERT INTO `surname` VALUES ('60', '柳', '1');
+INSERT INTO `surname` VALUES ('61', '酆', '1');
+INSERT INTO `surname` VALUES ('62', '鲍', '1');
+INSERT INTO `surname` VALUES ('63', '史', '1');
+INSERT INTO `surname` VALUES ('64', '唐', '1');
+INSERT INTO `surname` VALUES ('65', '费', '1');
+INSERT INTO `surname` VALUES ('66', '廉', '1');
+INSERT INTO `surname` VALUES ('67', '岑', '1');
+INSERT INTO `surname` VALUES ('68', '薛', '1');
+INSERT INTO `surname` VALUES ('69', '雷', '1');
+INSERT INTO `surname` VALUES ('70', '贺', '1');
+INSERT INTO `surname` VALUES ('71', '倪', '1');
+INSERT INTO `surname` VALUES ('72', '汤', '1');
+INSERT INTO `surname` VALUES ('73', '滕', '1');
+INSERT INTO `surname` VALUES ('74', '殷', '1');
+INSERT INTO `surname` VALUES ('75', '罗', '1');
+INSERT INTO `surname` VALUES ('76', '毕', '1');
+INSERT INTO `surname` VALUES ('77', '郝', '1');
+INSERT INTO `surname` VALUES ('78', '邬', '1');
+INSERT INTO `surname` VALUES ('79', '安', '1');
+INSERT INTO `surname` VALUES ('80', '常', '1');
+INSERT INTO `surname` VALUES ('81', '乐', '1');
+INSERT INTO `surname` VALUES ('82', '于', '1');
+INSERT INTO `surname` VALUES ('83', '时', '1');
+INSERT INTO `surname` VALUES ('84', '傅', '1');
+INSERT INTO `surname` VALUES ('85', '皮', '1');
+INSERT INTO `surname` VALUES ('86', '卞', '1');
+INSERT INTO `surname` VALUES ('87', '齐', '1');
+INSERT INTO `surname` VALUES ('88', '康', '1');
+INSERT INTO `surname` VALUES ('89', '伍', '1');
+INSERT INTO `surname` VALUES ('90', '余', '1');
+INSERT INTO `surname` VALUES ('91', '元', '1');
+INSERT INTO `surname` VALUES ('92', '卜', '1');
+INSERT INTO `surname` VALUES ('93', '顾', '1');
+INSERT INTO `surname` VALUES ('94', '孟', '1');
+INSERT INTO `surname` VALUES ('95', '平', '1');
+INSERT INTO `surname` VALUES ('96', '黄', '1');
+INSERT INTO `surname` VALUES ('97', '和', '1');
+INSERT INTO `surname` VALUES ('98', '穆', '1');
+INSERT INTO `surname` VALUES ('99', '萧', '1');
+INSERT INTO `surname` VALUES ('100', '尹', '1');
+INSERT INTO `surname` VALUES ('101', '姚', '1');
+INSERT INTO `surname` VALUES ('102', '邵', '1');
+INSERT INTO `surname` VALUES ('103', '湛', '1');
+INSERT INTO `surname` VALUES ('104', '汪', '1');
+INSERT INTO `surname` VALUES ('105', '祁', '1');
+INSERT INTO `surname` VALUES ('106', '毛', '1');
+INSERT INTO `surname` VALUES ('107', '禹', '1');
+INSERT INTO `surname` VALUES ('108', '狄', '1');
+INSERT INTO `surname` VALUES ('109', '米', '1');
+INSERT INTO `surname` VALUES ('110', '贝', '1');
+INSERT INTO `surname` VALUES ('111', '明', '1');
+INSERT INTO `surname` VALUES ('112', '臧', '1');
+INSERT INTO `surname` VALUES ('113', '计', '1');
+INSERT INTO `surname` VALUES ('114', '伏', '1');
+INSERT INTO `surname` VALUES ('115', '成', '1');
+INSERT INTO `surname` VALUES ('116', '戴', '1');
+INSERT INTO `surname` VALUES ('117', '谈', '1');
+INSERT INTO `surname` VALUES ('118', '宋', '1');
+INSERT INTO `surname` VALUES ('119', '茅', '1');
+INSERT INTO `surname` VALUES ('120', '庞', '1');
+INSERT INTO `surname` VALUES ('121', '熊', '1');
+INSERT INTO `surname` VALUES ('122', '纪', '1');
+INSERT INTO `surname` VALUES ('123', '舒', '1');
+INSERT INTO `surname` VALUES ('124', '屈', '1');
+INSERT INTO `surname` VALUES ('125', '项', '1');
+INSERT INTO `surname` VALUES ('126', '祝', '1');
+INSERT INTO `surname` VALUES ('127', '董', '1');
+INSERT INTO `surname` VALUES ('128', '梁', '1');
+INSERT INTO `surname` VALUES ('129', '杜', '1');
+INSERT INTO `surname` VALUES ('130', '阮', '1');
+INSERT INTO `surname` VALUES ('131', '蓝', '1');
+INSERT INTO `surname` VALUES ('132', '闵', '1');
+INSERT INTO `surname` VALUES ('133', '席', '1');
+INSERT INTO `surname` VALUES ('134', '季', '1');
+INSERT INTO `surname` VALUES ('135', '麻', '1');
+INSERT INTO `surname` VALUES ('136', '强', '1');
+INSERT INTO `surname` VALUES ('137', '贾', '1');
+INSERT INTO `surname` VALUES ('138', '路', '1');
+INSERT INTO `surname` VALUES ('139', '娄', '1');
+INSERT INTO `surname` VALUES ('140', '危', '1');
+INSERT INTO `surname` VALUES ('141', '江', '1');
+INSERT INTO `surname` VALUES ('142', '童', '1');
+INSERT INTO `surname` VALUES ('143', '颜', '1');
+INSERT INTO `surname` VALUES ('144', '郭', '1');
+INSERT INTO `surname` VALUES ('145', '梅', '1');
+INSERT INTO `surname` VALUES ('146', '盛', '1');
+INSERT INTO `surname` VALUES ('147', '林', '1');
+INSERT INTO `surname` VALUES ('148', '刁', '1');
+INSERT INTO `surname` VALUES ('149', '锺', '1');
+INSERT INTO `surname` VALUES ('150', '徐', '1');
+INSERT INTO `surname` VALUES ('151', '邱', '1');
+INSERT INTO `surname` VALUES ('152', '骆', '1');
+INSERT INTO `surname` VALUES ('153', '高', '1');
+INSERT INTO `surname` VALUES ('154', '夏', '1');
+INSERT INTO `surname` VALUES ('155', '蔡', '1');
+INSERT INTO `surname` VALUES ('156', '田', '1');
+INSERT INTO `surname` VALUES ('157', '樊', '1');
+INSERT INTO `surname` VALUES ('158', '胡', '1');
+INSERT INTO `surname` VALUES ('159', '凌', '1');
+INSERT INTO `surname` VALUES ('160', '霍', '1');
+INSERT INTO `surname` VALUES ('161', '虞', '1');
+INSERT INTO `surname` VALUES ('162', '万', '1');
+INSERT INTO `surname` VALUES ('163', '支', '1');
+INSERT INTO `surname` VALUES ('164', '柯', '1');
+INSERT INTO `surname` VALUES ('165', '昝', '1');
+INSERT INTO `surname` VALUES ('166', '管', '1');
+INSERT INTO `surname` VALUES ('167', '卢', '1');
+INSERT INTO `surname` VALUES ('168', '莫', '1');
+INSERT INTO `surname` VALUES ('169', '经', '1');
+INSERT INTO `surname` VALUES ('170', '房', '1');
+INSERT INTO `surname` VALUES ('171', '裘', '1');
+INSERT INTO `surname` VALUES ('172', '缪', '1');
+INSERT INTO `surname` VALUES ('173', '干', '1');
+INSERT INTO `surname` VALUES ('174', '解', '1');
+INSERT INTO `surname` VALUES ('175', '应', '1');
+INSERT INTO `surname` VALUES ('176', '宗', '1');
+INSERT INTO `surname` VALUES ('177', '丁', '1');
+INSERT INTO `surname` VALUES ('178', '宣', '1');
+INSERT INTO `surname` VALUES ('179', '贲', '1');
+INSERT INTO `surname` VALUES ('180', '邓', '1');
+INSERT INTO `surname` VALUES ('181', '郁', '1');
+INSERT INTO `surname` VALUES ('182', '单', '1');
+INSERT INTO `surname` VALUES ('183', '杭', '1');
+INSERT INTO `surname` VALUES ('184', '洪', '1');
+INSERT INTO `surname` VALUES ('185', '包', '1');
+INSERT INTO `surname` VALUES ('186', '诸', '1');
+INSERT INTO `surname` VALUES ('187', '左', '1');
+INSERT INTO `surname` VALUES ('188', '石', '1');
+INSERT INTO `surname` VALUES ('189', '崔', '1');
+INSERT INTO `surname` VALUES ('190', '吉', '1');
+INSERT INTO `surname` VALUES ('191', '钮', '1');
+INSERT INTO `surname` VALUES ('192', '龚', '1');
+INSERT INTO `surname` VALUES ('193', '程', '1');
+INSERT INTO `surname` VALUES ('194', '嵇', '1');
+INSERT INTO `surname` VALUES ('195', '邢', '1');
+INSERT INTO `surname` VALUES ('196', '滑', '1');
+INSERT INTO `surname` VALUES ('197', '裴', '1');
+INSERT INTO `surname` VALUES ('198', '陆', '1');
+INSERT INTO `surname` VALUES ('199', '荣', '1');
+INSERT INTO `surname` VALUES ('200', '翁', '1');
+INSERT INTO `surname` VALUES ('201', '荀', '1');
+INSERT INTO `surname` VALUES ('202', '羊', '1');
+INSERT INTO `surname` VALUES ('203', '於', '1');
+INSERT INTO `surname` VALUES ('204', '惠', '1');
+INSERT INTO `surname` VALUES ('205', '甄', '1');
+INSERT INTO `surname` VALUES ('206', '麴', '1');
+INSERT INTO `surname` VALUES ('207', '家', '1');
+INSERT INTO `surname` VALUES ('208', '封', '1');
+INSERT INTO `surname` VALUES ('209', '芮', '1');
+INSERT INTO `surname` VALUES ('210', '羿', '1');
+INSERT INTO `surname` VALUES ('211', '储', '1');
+INSERT INTO `surname` VALUES ('212', '靳', '1');
+INSERT INTO `surname` VALUES ('213', '汲', '1');
+INSERT INTO `surname` VALUES ('214', '邴', '1');
+INSERT INTO `surname` VALUES ('215', '糜', '1');
+INSERT INTO `surname` VALUES ('216', '松', '1');
+INSERT INTO `surname` VALUES ('217', '井', '1');
+INSERT INTO `surname` VALUES ('218', '段', '1');
+INSERT INTO `surname` VALUES ('219', '富', '1');
+INSERT INTO `surname` VALUES ('220', '巫', '1');
+INSERT INTO `surname` VALUES ('221', '乌', '1');
+INSERT INTO `surname` VALUES ('222', '焦', '1');
+INSERT INTO `surname` VALUES ('223', '巴', '1');
+INSERT INTO `surname` VALUES ('224', '弓', '1');
+INSERT INTO `surname` VALUES ('225', '牧', '1');
+INSERT INTO `surname` VALUES ('226', '隗', '1');
+INSERT INTO `surname` VALUES ('227', '山', '1');
+INSERT INTO `surname` VALUES ('228', '谷', '1');
+INSERT INTO `surname` VALUES ('229', '车', '1');
+INSERT INTO `surname` VALUES ('230', '侯', '1');
+INSERT INTO `surname` VALUES ('231', '宓', '1');
+INSERT INTO `surname` VALUES ('232', '蓬', '1');
+INSERT INTO `surname` VALUES ('233', '全', '1');
+INSERT INTO `surname` VALUES ('234', '郗', '1');
+INSERT INTO `surname` VALUES ('235', '班', '1');
+INSERT INTO `surname` VALUES ('236', '仰', '1');
+INSERT INTO `surname` VALUES ('237', '秋', '1');
+INSERT INTO `surname` VALUES ('238', '仲', '1');
+INSERT INTO `surname` VALUES ('239', '伊', '1');
+INSERT INTO `surname` VALUES ('240', '宫', '1');
+INSERT INTO `surname` VALUES ('241', '宁', '1');
+INSERT INTO `surname` VALUES ('242', '仇', '1');
+INSERT INTO `surname` VALUES ('243', '栾', '1');
+INSERT INTO `surname` VALUES ('244', '暴', '1');
+INSERT INTO `surname` VALUES ('245', '甘', '1');
+INSERT INTO `surname` VALUES ('246', '钭', '1');
+INSERT INTO `surname` VALUES ('247', '历', '1');
+INSERT INTO `surname` VALUES ('248', '戎', '1');
+INSERT INTO `surname` VALUES ('249', '祖', '1');
+INSERT INTO `surname` VALUES ('250', '武', '1');
+INSERT INTO `surname` VALUES ('251', '符', '1');
+INSERT INTO `surname` VALUES ('252', '刘', '1');
+INSERT INTO `surname` VALUES ('253', '景', '1');
+INSERT INTO `surname` VALUES ('254', '詹', '1');
+INSERT INTO `surname` VALUES ('255', '束', '1');
+INSERT INTO `surname` VALUES ('256', '龙', '1');
+INSERT INTO `surname` VALUES ('257', '叶', '1');
+INSERT INTO `surname` VALUES ('258', '幸', '1');
+INSERT INTO `surname` VALUES ('259', '司', '1');
+INSERT INTO `surname` VALUES ('260', '韶', '1');
+INSERT INTO `surname` VALUES ('261', '郜', '1');
+INSERT INTO `surname` VALUES ('262', '黎', '1');
+INSERT INTO `surname` VALUES ('263', '蓟', '1');
+INSERT INTO `surname` VALUES ('264', '溥', '1');
+INSERT INTO `surname` VALUES ('265', '印', '1');
+INSERT INTO `surname` VALUES ('266', '宿', '1');
+INSERT INTO `surname` VALUES ('267', '白', '1');
+INSERT INTO `surname` VALUES ('268', '怀', '1');
+INSERT INTO `surname` VALUES ('269', '蒲', '1');
+INSERT INTO `surname` VALUES ('270', '邰', '1');
+INSERT INTO `surname` VALUES ('271', '从', '1');
+INSERT INTO `surname` VALUES ('272', '鄂', '1');
+INSERT INTO `surname` VALUES ('273', '索', '1');
+INSERT INTO `surname` VALUES ('274', '咸', '1');
+INSERT INTO `surname` VALUES ('275', '籍', '1');
+INSERT INTO `surname` VALUES ('276', '赖', '1');
+INSERT INTO `surname` VALUES ('277', '卓', '1');
+INSERT INTO `surname` VALUES ('278', '蔺', '1');
+INSERT INTO `surname` VALUES ('279', '屠', '1');
+INSERT INTO `surname` VALUES ('280', '蒙', '1');
+INSERT INTO `surname` VALUES ('281', '池', '1');
+INSERT INTO `surname` VALUES ('282', '乔', '1');
+INSERT INTO `surname` VALUES ('283', '阳', '1');
+INSERT INTO `surname` VALUES ('284', '胥', '1');
+INSERT INTO `surname` VALUES ('285', '能', '1');
+INSERT INTO `surname` VALUES ('286', '苍', '1');
+INSERT INTO `surname` VALUES ('287', '双', '1');
+INSERT INTO `surname` VALUES ('288', '闻', '1');
+INSERT INTO `surname` VALUES ('289', '莘', '1');
+INSERT INTO `surname` VALUES ('290', '党', '1');
+INSERT INTO `surname` VALUES ('291', '翟', '1');
+INSERT INTO `surname` VALUES ('292', '谭', '1');
+INSERT INTO `surname` VALUES ('293', '贡', '1');
+INSERT INTO `surname` VALUES ('294', '劳', '1');
+INSERT INTO `surname` VALUES ('295', '逄', '1');
+INSERT INTO `surname` VALUES ('296', '姬', '1');
+INSERT INTO `surname` VALUES ('297', '申', '1');
+INSERT INTO `surname` VALUES ('298', '扶', '1');
+INSERT INTO `surname` VALUES ('299', '堵', '1');
+INSERT INTO `surname` VALUES ('300', '冉', '1');
+INSERT INTO `surname` VALUES ('301', '宰', '1');
+INSERT INTO `surname` VALUES ('302', '郦', '1');
+INSERT INTO `surname` VALUES ('303', '雍', '1');
+INSERT INTO `surname` VALUES ('304', '却', '1');
+INSERT INTO `surname` VALUES ('305', '璩', '1');
+INSERT INTO `surname` VALUES ('306', '桑', '1');
+INSERT INTO `surname` VALUES ('307', '桂', '1');
+INSERT INTO `surname` VALUES ('308', '濮', '1');
+INSERT INTO `surname` VALUES ('309', '牛', '1');
+INSERT INTO `surname` VALUES ('310', '寿', '1');
+INSERT INTO `surname` VALUES ('311', '通', '1');
+INSERT INTO `surname` VALUES ('312', '边', '1');
+INSERT INTO `surname` VALUES ('313', '扈', '1');
+INSERT INTO `surname` VALUES ('314', '燕', '1');
+INSERT INTO `surname` VALUES ('315', '冀', '1');
+INSERT INTO `surname` VALUES ('316', '僪', '1');
+INSERT INTO `surname` VALUES ('317', '浦', '1');
+INSERT INTO `surname` VALUES ('318', '尚', '1');
+INSERT INTO `surname` VALUES ('319', '农', '1');
+INSERT INTO `surname` VALUES ('320', '温', '1');
+INSERT INTO `surname` VALUES ('321', '别', '1');
+INSERT INTO `surname` VALUES ('322', '庄', '1');
+INSERT INTO `surname` VALUES ('323', '晏', '1');
+INSERT INTO `surname` VALUES ('324', '柴', '1');
+INSERT INTO `surname` VALUES ('325', '瞿', '1');
+INSERT INTO `surname` VALUES ('326', '阎', '1');
+INSERT INTO `surname` VALUES ('327', '充', '1');
+INSERT INTO `surname` VALUES ('328', '慕', '1');
+INSERT INTO `surname` VALUES ('329', '连', '1');
+INSERT INTO `surname` VALUES ('330', '茹', '1');
+INSERT INTO `surname` VALUES ('331', '习', '1');
+INSERT INTO `surname` VALUES ('332', '宦', '1');
+INSERT INTO `surname` VALUES ('333', '艾', '1');
+INSERT INTO `surname` VALUES ('334', '鱼', '1');
+INSERT INTO `surname` VALUES ('335', '容', '1');
+INSERT INTO `surname` VALUES ('336', '向', '1');
+INSERT INTO `surname` VALUES ('337', '古', '1');
+INSERT INTO `surname` VALUES ('338', '易', '1');
+INSERT INTO `surname` VALUES ('339', '慎', '1');
+INSERT INTO `surname` VALUES ('340', '戈', '1');
+INSERT INTO `surname` VALUES ('341', '廖', '1');
+INSERT INTO `surname` VALUES ('342', '庾', '1');
+INSERT INTO `surname` VALUES ('343', '终', '1');
+INSERT INTO `surname` VALUES ('344', '暨', '1');
+INSERT INTO `surname` VALUES ('345', '居', '1');
+INSERT INTO `surname` VALUES ('346', '衡', '1');
+INSERT INTO `surname` VALUES ('347', '步', '1');
+INSERT INTO `surname` VALUES ('348', '都', '1');
+INSERT INTO `surname` VALUES ('349', '耿', '1');
+INSERT INTO `surname` VALUES ('350', '满', '1');
+INSERT INTO `surname` VALUES ('351', '弘', '1');
+INSERT INTO `surname` VALUES ('352', '匡', '1');
+INSERT INTO `surname` VALUES ('353', '国', '1');
+INSERT INTO `surname` VALUES ('354', '文', '1');
+INSERT INTO `surname` VALUES ('355', '寇', '1');
+INSERT INTO `surname` VALUES ('356', '广', '1');
+INSERT INTO `surname` VALUES ('357', '禄', '1');
+INSERT INTO `surname` VALUES ('358', '阙', '1');
+INSERT INTO `surname` VALUES ('359', '东', '1');
+INSERT INTO `surname` VALUES ('360', '欧', '1');
+INSERT INTO `surname` VALUES ('361', '殳', '1');
+INSERT INTO `surname` VALUES ('362', '沃', '1');
+INSERT INTO `surname` VALUES ('363', '利', '1');
+INSERT INTO `surname` VALUES ('364', '蔚', '1');
+INSERT INTO `surname` VALUES ('365', '越', '1');
+INSERT INTO `surname` VALUES ('366', '夔', '1');
+INSERT INTO `surname` VALUES ('367', '隆', '1');
+INSERT INTO `surname` VALUES ('368', '师', '1');
+INSERT INTO `surname` VALUES ('369', '巩', '1');
+INSERT INTO `surname` VALUES ('370', '厍', '1');
+INSERT INTO `surname` VALUES ('371', '聂', '1');
+INSERT INTO `surname` VALUES ('372', '晁', '1');
+INSERT INTO `surname` VALUES ('373', '勾', '1');
+INSERT INTO `surname` VALUES ('374', '敖', '1');
+INSERT INTO `surname` VALUES ('375', '融', '1');
+INSERT INTO `surname` VALUES ('376', '冷', '1');
+INSERT INTO `surname` VALUES ('377', '訾', '1');
+INSERT INTO `surname` VALUES ('378', '辛', '1');
+INSERT INTO `surname` VALUES ('379', '阚', '1');
+INSERT INTO `surname` VALUES ('380', '那', '1');
+INSERT INTO `surname` VALUES ('381', '简', '1');
+INSERT INTO `surname` VALUES ('382', '饶', '1');
+INSERT INTO `surname` VALUES ('383', '空', '1');
+INSERT INTO `surname` VALUES ('384', '曾', '1');
+INSERT INTO `surname` VALUES ('385', '毋', '1');
+INSERT INTO `surname` VALUES ('386', '沙', '1');
+INSERT INTO `surname` VALUES ('387', '乜', '1');
+INSERT INTO `surname` VALUES ('388', '养', '1');
+INSERT INTO `surname` VALUES ('389', '鞠', '1');
+INSERT INTO `surname` VALUES ('390', '须', '1');
+INSERT INTO `surname` VALUES ('391', '丰', '1');
+INSERT INTO `surname` VALUES ('392', '巢', '1');
+INSERT INTO `surname` VALUES ('393', '关', '1');
+INSERT INTO `surname` VALUES ('394', '蒯', '1');
+INSERT INTO `surname` VALUES ('395', '相', '1');
+INSERT INTO `surname` VALUES ('396', '查', '1');
+INSERT INTO `surname` VALUES ('397', '后', '1');
+INSERT INTO `surname` VALUES ('398', '荆', '1');
+INSERT INTO `surname` VALUES ('399', '红', '1');
+INSERT INTO `surname` VALUES ('400', '游', '1');
+INSERT INTO `surname` VALUES ('401', '竺', '1');
+INSERT INTO `surname` VALUES ('402', '权', '1');
+INSERT INTO `surname` VALUES ('403', '逮', '1');
+INSERT INTO `surname` VALUES ('404', '盍', '1');
+INSERT INTO `surname` VALUES ('405', '益', '1');
+INSERT INTO `surname` VALUES ('406', '桓', '1');
+INSERT INTO `surname` VALUES ('407', '公', '1');
+INSERT INTO `surname` VALUES ('408', '万俟', '1');
+INSERT INTO `surname` VALUES ('409', '司马', '1');
+INSERT INTO `surname` VALUES ('410', '上官', '1');
+INSERT INTO `surname` VALUES ('411', '欧阳', '1');
+INSERT INTO `surname` VALUES ('412', '夏侯', '1');
+INSERT INTO `surname` VALUES ('413', '诸葛', '1');
+INSERT INTO `surname` VALUES ('414', '闻人', '1');
+INSERT INTO `surname` VALUES ('415', '东方', '1');
+INSERT INTO `surname` VALUES ('416', '赫连', '1');
+INSERT INTO `surname` VALUES ('417', '皇甫', '1');
+INSERT INTO `surname` VALUES ('418', '尉迟', '1');
+INSERT INTO `surname` VALUES ('419', '公羊', '1');
+INSERT INTO `surname` VALUES ('420', '澹台', '1');
+INSERT INTO `surname` VALUES ('421', '公冶', '1');
+INSERT INTO `surname` VALUES ('422', '宗政', '1');
+INSERT INTO `surname` VALUES ('423', '濮阳', '1');
+INSERT INTO `surname` VALUES ('424', '淳于', '1');
+INSERT INTO `surname` VALUES ('425', '单于', '1');
+INSERT INTO `surname` VALUES ('426', '太叔', '1');
+INSERT INTO `surname` VALUES ('427', '申屠', '1');
+INSERT INTO `surname` VALUES ('428', '公孙', '1');
+INSERT INTO `surname` VALUES ('429', '仲孙', '1');
+INSERT INTO `surname` VALUES ('430', '轩辕', '1');
+INSERT INTO `surname` VALUES ('431', '令狐', '1');
+INSERT INTO `surname` VALUES ('432', '钟离', '1');
+INSERT INTO `surname` VALUES ('433', '宇文', '1');
+INSERT INTO `surname` VALUES ('434', '长孙', '1');
+INSERT INTO `surname` VALUES ('435', '慕容', '1');
+INSERT INTO `surname` VALUES ('436', '司徒', '1');
+INSERT INTO `surname` VALUES ('437', '司空', '1');
+INSERT INTO `surname` VALUES ('438', '召', '1');
+INSERT INTO `surname` VALUES ('439', '有', '1');
+INSERT INTO `surname` VALUES ('440', '舜', '1');
+INSERT INTO `surname` VALUES ('441', '叶赫那拉', '1');
+INSERT INTO `surname` VALUES ('442', '丛', '1');
+INSERT INTO `surname` VALUES ('443', '岳', '1');
+INSERT INTO `surname` VALUES ('444', '寸', '1');
+INSERT INTO `surname` VALUES ('445', '贰', '1');
+INSERT INTO `surname` VALUES ('446', '皇', '1');
+INSERT INTO `surname` VALUES ('447', '侨', '1');
+INSERT INTO `surname` VALUES ('448', '彤', '1');
+INSERT INTO `surname` VALUES ('449', '竭', '1');
+INSERT INTO `surname` VALUES ('450', '端', '1');
+INSERT INTO `surname` VALUES ('451', '赫', '1');
+INSERT INTO `surname` VALUES ('452', '实', '1');
+INSERT INTO `surname` VALUES ('453', '甫', '1');
+INSERT INTO `surname` VALUES ('454', '集', '1');
+INSERT INTO `surname` VALUES ('455', '象', '1');
+INSERT INTO `surname` VALUES ('456', '翠', '1');
+INSERT INTO `surname` VALUES ('457', '狂', '1');
+INSERT INTO `surname` VALUES ('458', '辟', '1');
+INSERT INTO `surname` VALUES ('459', '典', '1');
+INSERT INTO `surname` VALUES ('460', '良', '1');
+INSERT INTO `surname` VALUES ('461', '函', '1');
+INSERT INTO `surname` VALUES ('462', '芒', '1');
+INSERT INTO `surname` VALUES ('463', '苦', '1');
+INSERT INTO `surname` VALUES ('464', '其', '1');
+INSERT INTO `surname` VALUES ('465', '京', '1');
+INSERT INTO `surname` VALUES ('466', '中', '1');
+INSERT INTO `surname` VALUES ('467', '夕', '1');
+INSERT INTO `surname` VALUES ('468', '之', '1');
+INSERT INTO `surname` VALUES ('469', '章佳', '1');
+INSERT INTO `surname` VALUES ('470', '那拉', '1');
+INSERT INTO `surname` VALUES ('471', '冠', '1');
+INSERT INTO `surname` VALUES ('472', '宾', '1');
+INSERT INTO `surname` VALUES ('473', '香', '1');
+INSERT INTO `surname` VALUES ('474', '果', '1');
+INSERT INTO `surname` VALUES ('475', '依尔根觉罗', '1');
+INSERT INTO `surname` VALUES ('476', '依尔觉罗', '1');
+INSERT INTO `surname` VALUES ('477', '萨嘛喇', '1');
+INSERT INTO `surname` VALUES ('478', '赫舍里', '1');
+INSERT INTO `surname` VALUES ('479', '额尔德特', '1');
+INSERT INTO `surname` VALUES ('480', '萨克达', '1');
+INSERT INTO `surname` VALUES ('481', '钮祜禄', '1');
+INSERT INTO `surname` VALUES ('482', '他塔喇', '1');
+INSERT INTO `surname` VALUES ('483', '喜塔腊', '1');
+INSERT INTO `surname` VALUES ('484', '讷殷富察', '1');
+INSERT INTO `surname` VALUES ('485', '叶赫那兰', '1');
+INSERT INTO `surname` VALUES ('486', '库雅喇', '1');
+INSERT INTO `surname` VALUES ('487', '瓜尔佳', '1');
+INSERT INTO `surname` VALUES ('488', '舒穆禄', '1');
+INSERT INTO `surname` VALUES ('489', '爱新觉罗', '1');
+INSERT INTO `surname` VALUES ('490', '索绰络', '1');
+INSERT INTO `surname` VALUES ('491', '纳喇', '1');
+INSERT INTO `surname` VALUES ('492', '乌雅', '1');
+INSERT INTO `surname` VALUES ('493', '范姜', '1');
+INSERT INTO `surname` VALUES ('494', '碧鲁', '1');
+INSERT INTO `surname` VALUES ('495', '张廖', '1');
+INSERT INTO `surname` VALUES ('496', '张简', '1');
+INSERT INTO `surname` VALUES ('497', '图门', '1');
+INSERT INTO `surname` VALUES ('498', '太史', '1');
+INSERT INTO `surname` VALUES ('499', '公叔', '1');
+INSERT INTO `surname` VALUES ('500', '乌孙', '1');
+INSERT INTO `surname` VALUES ('501', '完颜', '1');
+INSERT INTO `surname` VALUES ('502', '马佳', '1');
+INSERT INTO `surname` VALUES ('503', '佟佳', '1');
+INSERT INTO `surname` VALUES ('504', '富察', '1');
+INSERT INTO `surname` VALUES ('505', '费莫', '1');
+INSERT INTO `surname` VALUES ('506', '蹇', '1');
+INSERT INTO `surname` VALUES ('507', '称', '1');
+INSERT INTO `surname` VALUES ('508', '诺', '1');
+INSERT INTO `surname` VALUES ('509', '来', '1');
+INSERT INTO `surname` VALUES ('510', '多', '1');
+INSERT INTO `surname` VALUES ('511', '繁', '1');
+INSERT INTO `surname` VALUES ('512', '戊', '1');
+INSERT INTO `surname` VALUES ('513', '朴', '1');
+INSERT INTO `surname` VALUES ('514', '回', '1');
+INSERT INTO `surname` VALUES ('515', '毓', '1');
+INSERT INTO `surname` VALUES ('516', '税', '1');
+INSERT INTO `surname` VALUES ('517', '荤', '1');
+INSERT INTO `surname` VALUES ('518', '靖', '1');
+INSERT INTO `surname` VALUES ('519', '绪', '1');
+INSERT INTO `surname` VALUES ('520', '愈', '1');
+INSERT INTO `surname` VALUES ('521', '硕', '1');
+INSERT INTO `surname` VALUES ('522', '牢', '1');
+INSERT INTO `surname` VALUES ('523', '买', '1');
+INSERT INTO `surname` VALUES ('524', '但', '1');
+INSERT INTO `surname` VALUES ('525', '巧', '1');
+INSERT INTO `surname` VALUES ('526', '枚', '1');
+INSERT INTO `surname` VALUES ('527', '撒', '1');
+INSERT INTO `surname` VALUES ('528', '泰', '1');
+INSERT INTO `surname` VALUES ('529', '秘', '1');
+INSERT INTO `surname` VALUES ('530', '亥', '1');
+INSERT INTO `surname` VALUES ('531', '绍', '1');
+INSERT INTO `surname` VALUES ('532', '以', '1');
+INSERT INTO `surname` VALUES ('533', '壬', '1');
+INSERT INTO `surname` VALUES ('534', '森', '1');
+INSERT INTO `surname` VALUES ('535', '斋', '1');
+INSERT INTO `surname` VALUES ('536', '释', '1');
+INSERT INTO `surname` VALUES ('537', '奕', '1');
+INSERT INTO `surname` VALUES ('538', '姒', '1');
+INSERT INTO `surname` VALUES ('539', '朋', '1');
+INSERT INTO `surname` VALUES ('540', '求', '1');
+INSERT INTO `surname` VALUES ('541', '羽', '1');
+INSERT INTO `surname` VALUES ('542', '用', '1');
+INSERT INTO `surname` VALUES ('543', '占', '1');
+INSERT INTO `surname` VALUES ('544', '真', '1');
+INSERT INTO `surname` VALUES ('545', '穰', '1');
+INSERT INTO `surname` VALUES ('546', '翦', '1');
+INSERT INTO `surname` VALUES ('547', '闾', '1');
+INSERT INTO `surname` VALUES ('548', '漆', '1');
+INSERT INTO `surname` VALUES ('549', '贵', '1');
+INSERT INTO `surname` VALUES ('550', '代', '1');
+INSERT INTO `surname` VALUES ('551', '贯', '1');
+INSERT INTO `surname` VALUES ('552', '旁', '1');
+INSERT INTO `surname` VALUES ('553', '崇', '1');
+INSERT INTO `surname` VALUES ('554', '栋', '1');
+INSERT INTO `surname` VALUES ('555', '告', '1');
+INSERT INTO `surname` VALUES ('556', '休', '1');
+INSERT INTO `surname` VALUES ('557', '褒', '1');
+INSERT INTO `surname` VALUES ('558', '谏', '1');
+INSERT INTO `surname` VALUES ('559', '锐', '1');
+INSERT INTO `surname` VALUES ('560', '皋', '1');
+INSERT INTO `surname` VALUES ('561', '闳', '1');
+INSERT INTO `surname` VALUES ('562', '在', '1');
+INSERT INTO `surname` VALUES ('563', '歧', '1');
+INSERT INTO `surname` VALUES ('564', '禾', '1');
+INSERT INTO `surname` VALUES ('565', '示', '1');
+INSERT INTO `surname` VALUES ('566', '是', '1');
+INSERT INTO `surname` VALUES ('567', '委', '1');
+INSERT INTO `surname` VALUES ('568', '钊', '1');
+INSERT INTO `surname` VALUES ('569', '频', '1');
+INSERT INTO `surname` VALUES ('570', '嬴', '1');
+INSERT INTO `surname` VALUES ('571', '呼', '1');
+INSERT INTO `surname` VALUES ('572', '大', '1');
+INSERT INTO `surname` VALUES ('573', '威', '1');
+INSERT INTO `surname` VALUES ('574', '昂', '1');
+INSERT INTO `surname` VALUES ('575', '律', '1');
+INSERT INTO `surname` VALUES ('576', '冒', '1');
+INSERT INTO `surname` VALUES ('577', '保', '1');
+INSERT INTO `surname` VALUES ('578', '系', '1');
+INSERT INTO `surname` VALUES ('579', '抄', '1');
+INSERT INTO `surname` VALUES ('580', '定', '1');
+INSERT INTO `surname` VALUES ('581', '化', '1');
+INSERT INTO `surname` VALUES ('582', '莱', '1');
+INSERT INTO `surname` VALUES ('583', '校', '1');
+INSERT INTO `surname` VALUES ('584', '么', '1');
+INSERT INTO `surname` VALUES ('585', '抗', '1');
+INSERT INTO `surname` VALUES ('586', '祢', '1');
+INSERT INTO `surname` VALUES ('587', '綦', '1');
+INSERT INTO `surname` VALUES ('588', '悟', '1');
+INSERT INTO `surname` VALUES ('589', '宏', '1');
+INSERT INTO `surname` VALUES ('590', '功', '1');
+INSERT INTO `surname` VALUES ('591', '庚', '1');
+INSERT INTO `surname` VALUES ('592', '务', '1');
+INSERT INTO `surname` VALUES ('593', '敏', '1');
+INSERT INTO `surname` VALUES ('594', '捷', '1');
+INSERT INTO `surname` VALUES ('595', '拱', '1');
+INSERT INTO `surname` VALUES ('596', '兆', '1');
+INSERT INTO `surname` VALUES ('597', '丑', '1');
+INSERT INTO `surname` VALUES ('598', '丙', '1');
+INSERT INTO `surname` VALUES ('599', '畅', '1');
+INSERT INTO `surname` VALUES ('600', '苟', '1');
+INSERT INTO `surname` VALUES ('601', '随', '1');
+INSERT INTO `surname` VALUES ('602', '类', '1');
+INSERT INTO `surname` VALUES ('603', '卯', '1');
+INSERT INTO `surname` VALUES ('604', '俟', '1');
+INSERT INTO `surname` VALUES ('605', '友', '1');
+INSERT INTO `surname` VALUES ('606', '答', '1');
+INSERT INTO `surname` VALUES ('607', '乙', '1');
+INSERT INTO `surname` VALUES ('608', '允', '1');
+INSERT INTO `surname` VALUES ('609', '甲', '1');
+INSERT INTO `surname` VALUES ('610', '留', '1');
+INSERT INTO `surname` VALUES ('611', '尾', '1');
+INSERT INTO `surname` VALUES ('612', '佼', '1');
+INSERT INTO `surname` VALUES ('613', '玄', '1');
+INSERT INTO `surname` VALUES ('614', '乘', '1');
+INSERT INTO `surname` VALUES ('615', '裔', '1');
+INSERT INTO `surname` VALUES ('616', '延', '1');
+INSERT INTO `surname` VALUES ('617', '植', '1');
+INSERT INTO `surname` VALUES ('618', '环', '1');
+INSERT INTO `surname` VALUES ('619', '矫', '1');
+INSERT INTO `surname` VALUES ('620', '赛', '1');
+INSERT INTO `surname` VALUES ('621', '昔', '1');
+INSERT INTO `surname` VALUES ('622', '侍', '1');
+INSERT INTO `surname` VALUES ('623', '度', '1');
+INSERT INTO `surname` VALUES ('624', '旷', '1');
+INSERT INTO `surname` VALUES ('625', '遇', '1');
+INSERT INTO `surname` VALUES ('626', '偶', '1');
+INSERT INTO `surname` VALUES ('627', '前', '1');
+INSERT INTO `surname` VALUES ('628', '由', '1');
+INSERT INTO `surname` VALUES ('629', '咎', '1');
+INSERT INTO `surname` VALUES ('630', '塞', '1');
+INSERT INTO `surname` VALUES ('631', '敛', '1');
+INSERT INTO `surname` VALUES ('632', '受', '1');
+INSERT INTO `surname` VALUES ('633', '泷', '1');
+INSERT INTO `surname` VALUES ('634', '袭', '1');
+INSERT INTO `surname` VALUES ('635', '衅', '1');
+INSERT INTO `surname` VALUES ('636', '叔', '1');
+INSERT INTO `surname` VALUES ('637', '圣', '1');
+INSERT INTO `surname` VALUES ('638', '御', '1');
+INSERT INTO `surname` VALUES ('639', '夫', '1');
+INSERT INTO `surname` VALUES ('640', '仆', '1');
+INSERT INTO `surname` VALUES ('641', '镇', '1');
+INSERT INTO `surname` VALUES ('642', '藩', '1');
+INSERT INTO `surname` VALUES ('643', '邸', '1');
+INSERT INTO `surname` VALUES ('644', '府', '1');
+INSERT INTO `surname` VALUES ('645', '掌', '1');
+INSERT INTO `surname` VALUES ('646', '首', '1');
+INSERT INTO `surname` VALUES ('647', '员', '1');
+INSERT INTO `surname` VALUES ('648', '焉', '1');
+INSERT INTO `surname` VALUES ('649', '戏', '1');
+INSERT INTO `surname` VALUES ('650', '可', '1');
+INSERT INTO `surname` VALUES ('651', '智', '1');
+INSERT INTO `surname` VALUES ('652', '尔', '1');
+INSERT INTO `surname` VALUES ('653', '凭', '1');
+INSERT INTO `surname` VALUES ('654', '悉', '1');
+INSERT INTO `surname` VALUES ('655', '进', '1');
+INSERT INTO `surname` VALUES ('656', '笃', '1');
+INSERT INTO `surname` VALUES ('657', '厚', '1');
+INSERT INTO `surname` VALUES ('658', '仁', '1');
+INSERT INTO `surname` VALUES ('659', '业', '1');
+INSERT INTO `surname` VALUES ('660', '肇', '1');
+INSERT INTO `surname` VALUES ('661', '资', '1');
+INSERT INTO `surname` VALUES ('662', '合', '1');
+INSERT INTO `surname` VALUES ('663', '仍', '1');
+INSERT INTO `surname` VALUES ('664', '九', '1');
+INSERT INTO `surname` VALUES ('665', '衷', '1');
+INSERT INTO `surname` VALUES ('666', '哀', '1');
+INSERT INTO `surname` VALUES ('667', '刑', '1');
+INSERT INTO `surname` VALUES ('668', '俎', '1');
+INSERT INTO `surname` VALUES ('669', '仵', '1');
+INSERT INTO `surname` VALUES ('670', '圭', '1');
+INSERT INTO `surname` VALUES ('671', '夷', '1');
+INSERT INTO `surname` VALUES ('672', '徭', '1');
+INSERT INTO `surname` VALUES ('673', '蛮', '1');
+INSERT INTO `surname` VALUES ('674', '汗', '1');
+INSERT INTO `surname` VALUES ('675', '孛', '1');
+INSERT INTO `surname` VALUES ('676', '乾', '1');
+INSERT INTO `surname` VALUES ('677', '帖', '1');
+INSERT INTO `surname` VALUES ('678', '罕', '1');
+INSERT INTO `surname` VALUES ('679', '洛', '1');
+INSERT INTO `surname` VALUES ('680', '淦', '1');
+INSERT INTO `surname` VALUES ('681', '洋', '1');
+INSERT INTO `surname` VALUES ('682', '邶', '1');
+INSERT INTO `surname` VALUES ('683', '郸', '1');
+INSERT INTO `surname` VALUES ('684', '郯', '1');
+INSERT INTO `surname` VALUES ('685', '邗', '1');
+INSERT INTO `surname` VALUES ('686', '邛', '1');
+INSERT INTO `surname` VALUES ('687', '剑', '1');
+INSERT INTO `surname` VALUES ('688', '虢', '1');
+INSERT INTO `surname` VALUES ('689', '隋', '1');
+INSERT INTO `surname` VALUES ('690', '蒿', '1');
+INSERT INTO `surname` VALUES ('691', '茆', '1');
+INSERT INTO `surname` VALUES ('692', '菅', '1');
+INSERT INTO `surname` VALUES ('693', '苌', '1');
+INSERT INTO `surname` VALUES ('694', '树', '1');
+INSERT INTO `surname` VALUES ('695', '桐', '1');
+INSERT INTO `surname` VALUES ('696', '锁', '1');
+INSERT INTO `surname` VALUES ('697', '钟', '1');
+INSERT INTO `surname` VALUES ('698', '机', '1');
+INSERT INTO `surname` VALUES ('699', '盘', '1');
+INSERT INTO `surname` VALUES ('700', '铎', '1');
+INSERT INTO `surname` VALUES ('701', '斛', '1');
+INSERT INTO `surname` VALUES ('702', '玉', '1');
+INSERT INTO `surname` VALUES ('703', '线', '1');
+INSERT INTO `surname` VALUES ('704', '针', '1');
+INSERT INTO `surname` VALUES ('705', '箕', '1');
+INSERT INTO `surname` VALUES ('706', '庹', '1');
+INSERT INTO `surname` VALUES ('707', '绳', '1');
+INSERT INTO `surname` VALUES ('708', '磨', '1');
+INSERT INTO `surname` VALUES ('709', '蒉', '1');
+INSERT INTO `surname` VALUES ('710', '瓮', '1');
+INSERT INTO `surname` VALUES ('711', '弭', '1');
+INSERT INTO `surname` VALUES ('712', '刀', '1');
+INSERT INTO `surname` VALUES ('713', '疏', '1');
+INSERT INTO `surname` VALUES ('714', '牵', '1');
+INSERT INTO `surname` VALUES ('715', '浑', '1');
+INSERT INTO `surname` VALUES ('716', '恽', '1');
+INSERT INTO `surname` VALUES ('717', '势', '1');
+INSERT INTO `surname` VALUES ('718', '世', '1');
+INSERT INTO `surname` VALUES ('719', '仝', '1');
+INSERT INTO `surname` VALUES ('720', '同', '1');
+INSERT INTO `surname` VALUES ('721', '蚁', '1');
+INSERT INTO `surname` VALUES ('722', '止', '1');
+INSERT INTO `surname` VALUES ('723', '戢', '1');
+INSERT INTO `surname` VALUES ('724', '睢', '1');
+INSERT INTO `surname` VALUES ('725', '冼', '1');
+INSERT INTO `surname` VALUES ('726', '种', '1');
+INSERT INTO `surname` VALUES ('727', '涂', '1');
+INSERT INTO `surname` VALUES ('728', '肖', '1');
+INSERT INTO `surname` VALUES ('729', '己', '1');
+INSERT INTO `surname` VALUES ('730', '泣', '1');
+INSERT INTO `surname` VALUES ('731', '潜', '1');
+INSERT INTO `surname` VALUES ('732', '卷', '1');
+INSERT INTO `surname` VALUES ('733', '脱', '1');
+INSERT INTO `surname` VALUES ('734', '谬', '1');
+INSERT INTO `surname` VALUES ('735', '蹉', '1');
+INSERT INTO `surname` VALUES ('736', '赧', '1');
+INSERT INTO `surname` VALUES ('737', '浮', '1');
+INSERT INTO `surname` VALUES ('738', '顿', '1');
+INSERT INTO `surname` VALUES ('739', '说', '1');
+INSERT INTO `surname` VALUES ('740', '次', '1');
+INSERT INTO `surname` VALUES ('741', '错', '1');
+INSERT INTO `surname` VALUES ('742', '念', '1');
+INSERT INTO `surname` VALUES ('743', '夙', '1');
+INSERT INTO `surname` VALUES ('744', '斯', '1');
+INSERT INTO `surname` VALUES ('745', '完', '1');
+INSERT INTO `surname` VALUES ('746', '丹', '1');
+INSERT INTO `surname` VALUES ('747', '表', '1');
+INSERT INTO `surname` VALUES ('748', '聊', '1');
+INSERT INTO `surname` VALUES ('749', '源', '1');
+INSERT INTO `surname` VALUES ('750', '姓', '1');
+INSERT INTO `surname` VALUES ('751', '吾', '1');
+INSERT INTO `surname` VALUES ('752', '寻', '1');
+INSERT INTO `surname` VALUES ('753', '展', '1');
+INSERT INTO `surname` VALUES ('754', '出', '1');
+INSERT INTO `surname` VALUES ('755', '不', '1');
+INSERT INTO `surname` VALUES ('756', '户', '1');
+INSERT INTO `surname` VALUES ('757', '闭', '1');
+INSERT INTO `surname` VALUES ('758', '才', '1');
+INSERT INTO `surname` VALUES ('759', '无', '1');
+INSERT INTO `surname` VALUES ('760', '书', '1');
+INSERT INTO `surname` VALUES ('761', '学', '1');
+INSERT INTO `surname` VALUES ('762', '愚', '1');
+INSERT INTO `surname` VALUES ('763', '本', '1');
+INSERT INTO `surname` VALUES ('764', '性', '1');
+INSERT INTO `surname` VALUES ('765', '雪', '1');
+INSERT INTO `surname` VALUES ('766', '霜', '1');
+INSERT INTO `surname` VALUES ('767', '烟', '1');
+INSERT INTO `surname` VALUES ('768', '寒', '1');
+INSERT INTO `surname` VALUES ('769', '少', '1');
+INSERT INTO `surname` VALUES ('770', '字', '1');
+INSERT INTO `surname` VALUES ('771', '桥', '1');
+INSERT INTO `surname` VALUES ('772', '板', '1');
+INSERT INTO `surname` VALUES ('773', '斐', '1');
+INSERT INTO `surname` VALUES ('774', '独', '1');
+INSERT INTO `surname` VALUES ('775', '千', '1');
+INSERT INTO `surname` VALUES ('776', '诗', '1');
+INSERT INTO `surname` VALUES ('777', '嘉', '1');
+INSERT INTO `surname` VALUES ('778', '扬', '1');
+INSERT INTO `surname` VALUES ('779', '善', '1');
+INSERT INTO `surname` VALUES ('780', '揭', '1');
+INSERT INTO `surname` VALUES ('781', '祈', '1');
+INSERT INTO `surname` VALUES ('782', '析', '1');
+INSERT INTO `surname` VALUES ('783', '赤', '1');
+INSERT INTO `surname` VALUES ('784', '紫', '1');
+INSERT INTO `surname` VALUES ('785', '青', '1');
+INSERT INTO `surname` VALUES ('786', '柔', '1');
+INSERT INTO `surname` VALUES ('787', '刚', '1');
+INSERT INTO `surname` VALUES ('788', '奇', '1');
+INSERT INTO `surname` VALUES ('789', '拜', '1');
+INSERT INTO `surname` VALUES ('790', '佛', '1');
+INSERT INTO `surname` VALUES ('791', '陀', '1');
+INSERT INTO `surname` VALUES ('792', '弥', '1');
+INSERT INTO `surname` VALUES ('793', '阿', '1');
+INSERT INTO `surname` VALUES ('794', '素', '1');
+INSERT INTO `surname` VALUES ('795', '长', '1');
+INSERT INTO `surname` VALUES ('796', '僧', '1');
+INSERT INTO `surname` VALUES ('797', '隐', '1');
+INSERT INTO `surname` VALUES ('798', '仙', '1');
+INSERT INTO `surname` VALUES ('799', '隽', '1');
+INSERT INTO `surname` VALUES ('800', '宇', '1');
+INSERT INTO `surname` VALUES ('801', '祭', '1');
+INSERT INTO `surname` VALUES ('802', '酒', '1');
+INSERT INTO `surname` VALUES ('803', '淡', '1');
+INSERT INTO `surname` VALUES ('804', '塔', '1');
+INSERT INTO `surname` VALUES ('805', '琦', '1');
+INSERT INTO `surname` VALUES ('806', '闪', '1');
+INSERT INTO `surname` VALUES ('807', '始', '1');
+INSERT INTO `surname` VALUES ('808', '星', '1');
+INSERT INTO `surname` VALUES ('809', '南', '1');
+INSERT INTO `surname` VALUES ('810', '天', '1');
+INSERT INTO `surname` VALUES ('811', '接', '1');
+INSERT INTO `surname` VALUES ('812', '波', '1');
+INSERT INTO `surname` VALUES ('813', '碧', '1');
+INSERT INTO `surname` VALUES ('814', '速', '1');
+INSERT INTO `surname` VALUES ('815', '禚', '1');
+INSERT INTO `surname` VALUES ('816', '腾', '1');
+INSERT INTO `surname` VALUES ('817', '潮', '1');
+INSERT INTO `surname` VALUES ('818', '镜', '1');
+INSERT INTO `surname` VALUES ('819', '似', '1');
+INSERT INTO `surname` VALUES ('820', '澄', '1');
+INSERT INTO `surname` VALUES ('821', '潭', '1');
+INSERT INTO `surname` VALUES ('822', '謇', '1');
+INSERT INTO `surname` VALUES ('823', '纵', '1');
+INSERT INTO `surname` VALUES ('824', '渠', '1');
+INSERT INTO `surname` VALUES ('825', '奈', '1');
+INSERT INTO `surname` VALUES ('826', '风', '1');
+INSERT INTO `surname` VALUES ('827', '春', '1');
+INSERT INTO `surname` VALUES ('828', '濯', '1');
+INSERT INTO `surname` VALUES ('829', '沐', '1');
+INSERT INTO `surname` VALUES ('830', '茂', '1');
+INSERT INTO `surname` VALUES ('831', '英', '1');
+INSERT INTO `surname` VALUES ('832', '兰', '1');
+INSERT INTO `surname` VALUES ('833', '檀', '1');
+INSERT INTO `surname` VALUES ('834', '藤', '1');
+INSERT INTO `surname` VALUES ('835', '枝', '1');
+INSERT INTO `surname` VALUES ('836', '检', '1');
+INSERT INTO `surname` VALUES ('837', '生', '1');
+INSERT INTO `surname` VALUES ('838', '折', '1');
+INSERT INTO `surname` VALUES ('839', '登', '1');
+INSERT INTO `surname` VALUES ('840', '驹', '1');
+INSERT INTO `surname` VALUES ('841', '骑', '1');
+INSERT INTO `surname` VALUES ('842', '貊', '1');
+INSERT INTO `surname` VALUES ('843', '虎', '1');
+INSERT INTO `surname` VALUES ('844', '肥', '1');
+INSERT INTO `surname` VALUES ('845', '鹿', '1');
+INSERT INTO `surname` VALUES ('846', '雀', '1');
+INSERT INTO `surname` VALUES ('847', '野', '1');
+INSERT INTO `surname` VALUES ('848', '禽', '1');
+INSERT INTO `surname` VALUES ('849', '飞', '1');
+INSERT INTO `surname` VALUES ('850', '节', '1');
+INSERT INTO `surname` VALUES ('851', '宜', '1');
+INSERT INTO `surname` VALUES ('852', '鲜', '1');
+INSERT INTO `surname` VALUES ('853', '粟', '1');
+INSERT INTO `surname` VALUES ('854', '栗', '1');
+INSERT INTO `surname` VALUES ('855', '豆', '1');
+INSERT INTO `surname` VALUES ('856', '帛', '1');
+INSERT INTO `surname` VALUES ('857', '官', '1');
+INSERT INTO `surname` VALUES ('858', '布', '1');
+INSERT INTO `surname` VALUES ('859', '衣', '1');
+INSERT INTO `surname` VALUES ('860', '藏', '1');
+INSERT INTO `surname` VALUES ('861', '宝', '1');
+INSERT INTO `surname` VALUES ('862', '钞', '1');
+INSERT INTO `surname` VALUES ('863', '银', '1');
+INSERT INTO `surname` VALUES ('864', '门', '1');
+INSERT INTO `surname` VALUES ('865', '盈', '1');
+INSERT INTO `surname` VALUES ('866', '庆', '1');
+INSERT INTO `surname` VALUES ('867', '喜', '1');
+INSERT INTO `surname` VALUES ('868', '及', '1');
+INSERT INTO `surname` VALUES ('869', '普', '1');
+INSERT INTO `surname` VALUES ('870', '建', '1');
+INSERT INTO `surname` VALUES ('871', '营', '1');
+INSERT INTO `surname` VALUES ('872', '巨', '1');
+INSERT INTO `surname` VALUES ('873', '望', '1');
+INSERT INTO `surname` VALUES ('874', '希', '1');
+INSERT INTO `surname` VALUES ('875', '道', '1');
+INSERT INTO `surname` VALUES ('876', '载', '1');
+INSERT INTO `surname` VALUES ('877', '声', '1');
+INSERT INTO `surname` VALUES ('878', '漫', '1');
+INSERT INTO `surname` VALUES ('879', '犁', '1');
+INSERT INTO `surname` VALUES ('880', '力', '1');
+INSERT INTO `surname` VALUES ('881', '贸', '1');
+INSERT INTO `surname` VALUES ('882', '勤', '1');
+INSERT INTO `surname` VALUES ('883', '革', '1');
+INSERT INTO `surname` VALUES ('884', '改', '1');
+INSERT INTO `surname` VALUES ('885', '兴', '1');
+INSERT INTO `surname` VALUES ('886', '亓', '1');
+INSERT INTO `surname` VALUES ('887', '睦', '1');
+INSERT INTO `surname` VALUES ('888', '修', '1');
+INSERT INTO `surname` VALUES ('889', '信', '1');
+INSERT INTO `surname` VALUES ('890', '闽', '1');
+INSERT INTO `surname` VALUES ('891', '北', '1');
+INSERT INTO `surname` VALUES ('892', '守', '1');
+INSERT INTO `surname` VALUES ('893', '坚', '1');
+INSERT INTO `surname` VALUES ('894', '勇', '1');
+INSERT INTO `surname` VALUES ('895', '汉', '1');
+INSERT INTO `surname` VALUES ('896', '练', '1');
+INSERT INTO `surname` VALUES ('897', '尉', '1');
+INSERT INTO `surname` VALUES ('898', '士', '1');
+INSERT INTO `surname` VALUES ('899', '旅', '1');
+INSERT INTO `surname` VALUES ('900', '五', '1');
+INSERT INTO `surname` VALUES ('901', '令', '1');
+INSERT INTO `surname` VALUES ('902', '将', '1');
+INSERT INTO `surname` VALUES ('903', '旗', '1');
+INSERT INTO `surname` VALUES ('904', '军', '1');
+INSERT INTO `surname` VALUES ('905', '行', '1');
+INSERT INTO `surname` VALUES ('906', '奉', '1');
+INSERT INTO `surname` VALUES ('907', '敬', '1');
+INSERT INTO `surname` VALUES ('908', '恭', '1');
+INSERT INTO `surname` VALUES ('909', '仪', '1');
+INSERT INTO `surname` VALUES ('910', '母', '1');
+INSERT INTO `surname` VALUES ('911', '堂', '1');
+INSERT INTO `surname` VALUES ('912', '丘', '1');
+INSERT INTO `surname` VALUES ('913', '义', '1');
+INSERT INTO `surname` VALUES ('914', '礼', '1');
+INSERT INTO `surname` VALUES ('915', '慈', '1');
+INSERT INTO `surname` VALUES ('916', '孝', '1');
+INSERT INTO `surname` VALUES ('917', '理', '1');
+INSERT INTO `surname` VALUES ('918', '伦', '1');
+INSERT INTO `surname` VALUES ('919', '卿', '1');
+INSERT INTO `surname` VALUES ('920', '问', '1');
+INSERT INTO `surname` VALUES ('921', '永', '1');
+INSERT INTO `surname` VALUES ('922', '辉', '1');
+INSERT INTO `surname` VALUES ('923', '位', '1');
+INSERT INTO `surname` VALUES ('924', '让', '1');
+INSERT INTO `surname` VALUES ('925', '尧', '1');
+INSERT INTO `surname` VALUES ('926', '依', '1');
+INSERT INTO `surname` VALUES ('927', '犹', '1');
+INSERT INTO `surname` VALUES ('928', '介', '1');
+INSERT INTO `surname` VALUES ('929', '承', '1');
+INSERT INTO `surname` VALUES ('930', '市', '1');
+INSERT INTO `surname` VALUES ('931', '所', '1');
+INSERT INTO `surname` VALUES ('932', '苑', '1');
+INSERT INTO `surname` VALUES ('933', '杞', '1');
+INSERT INTO `surname` VALUES ('934', '剧', '1');
+INSERT INTO `surname` VALUES ('935', '第', '1');
+INSERT INTO `surname` VALUES ('936', '零', '1');
+INSERT INTO `surname` VALUES ('937', '谌', '1');
+INSERT INTO `surname` VALUES ('938', '招', '1');
+INSERT INTO `surname` VALUES ('939', '续', '1');
+INSERT INTO `surname` VALUES ('940', '达', '1');
+INSERT INTO `surname` VALUES ('941', '忻', '1');
+INSERT INTO `surname` VALUES ('942', '六', '1');
+INSERT INTO `surname` VALUES ('943', '鄞', '1');
+INSERT INTO `surname` VALUES ('944', '战', '1');
+INSERT INTO `surname` VALUES ('945', '迟', '1');
+INSERT INTO `surname` VALUES ('946', '候', '1');
+INSERT INTO `surname` VALUES ('947', '宛', '1');
+INSERT INTO `surname` VALUES ('948', '励', '1');
+INSERT INTO `surname` VALUES ('949', '粘', '1');
+INSERT INTO `surname` VALUES ('950', '萨', '1');
+INSERT INTO `surname` VALUES ('951', '邝', '1');
+INSERT INTO `surname` VALUES ('952', '覃', '1');
+INSERT INTO `surname` VALUES ('953', '辜', '1');
+INSERT INTO `surname` VALUES ('954', '初', '1');
+INSERT INTO `surname` VALUES ('955', '楼', '1');
+INSERT INTO `surname` VALUES ('956', '城', '1');
+INSERT INTO `surname` VALUES ('957', '区', '1');
+INSERT INTO `surname` VALUES ('958', '局', '1');
+INSERT INTO `surname` VALUES ('959', '台', '1');
+INSERT INTO `surname` VALUES ('960', '原', '1');
+INSERT INTO `surname` VALUES ('961', '考', '1');
+INSERT INTO `surname` VALUES ('962', '妫', '1');
+INSERT INTO `surname` VALUES ('963', '纳', '1');
+INSERT INTO `surname` VALUES ('964', '泉', '1');
+INSERT INTO `surname` VALUES ('965', '老', '1');
+INSERT INTO `surname` VALUES ('966', '清', '1');
+INSERT INTO `surname` VALUES ('967', '德', '1');
+INSERT INTO `surname` VALUES ('968', '卑', '1');
+INSERT INTO `surname` VALUES ('969', '过', '1');
+INSERT INTO `surname` VALUES ('970', '麦', '1');
+INSERT INTO `surname` VALUES ('971', '曲', '1');
+INSERT INTO `surname` VALUES ('972', '竹', '1');
+INSERT INTO `surname` VALUES ('973', '百', '1');
+INSERT INTO `surname` VALUES ('974', '福', '1');
+INSERT INTO `surname` VALUES ('975', '言', '1');
+INSERT INTO `surname` VALUES ('976', '第五', '1');
+INSERT INTO `surname` VALUES ('977', '佟', '1');
+INSERT INTO `surname` VALUES ('978', '爱', '1');
+INSERT INTO `surname` VALUES ('979', '年', '1');
+INSERT INTO `surname` VALUES ('980', '笪', '1');
+INSERT INTO `surname` VALUES ('981', '谯', '1');
+INSERT INTO `surname` VALUES ('982', '哈', '1');
+INSERT INTO `surname` VALUES ('983', '墨', '1');
+INSERT INTO `surname` VALUES ('984', '南宫', '1');
+INSERT INTO `surname` VALUES ('985', '赏', '1');
+INSERT INTO `surname` VALUES ('986', '伯', '1');
+INSERT INTO `surname` VALUES ('987', '佴', '1');
+INSERT INTO `surname` VALUES ('988', '佘', '1');
+INSERT INTO `surname` VALUES ('989', '牟', '1');
+INSERT INTO `surname` VALUES ('990', '商', '1');
+INSERT INTO `surname` VALUES ('991', '西门', '1');
+INSERT INTO `surname` VALUES ('992', '东门', '1');
+INSERT INTO `surname` VALUES ('993', '左丘', '1');
+INSERT INTO `surname` VALUES ('994', '梁丘', '1');
+INSERT INTO `surname` VALUES ('995', '琴', '1');
+INSERT INTO `surname` VALUES ('996', '况', '1');
+INSERT INTO `surname` VALUES ('997', '亢', '1');
+INSERT INTO `surname` VALUES ('998', '缑', '1');
+INSERT INTO `surname` VALUES ('999', '帅', '1');
+INSERT INTO `surname` VALUES ('1000', '微生', '1');
+INSERT INTO `surname` VALUES ('1001', '羊舌', '1');
+INSERT INTO `surname` VALUES ('1002', '海', '1');
+INSERT INTO `surname` VALUES ('1003', '归', '1');
+INSERT INTO `surname` VALUES ('1004', '呼延', '1');
+INSERT INTO `surname` VALUES ('1005', '南门', '1');
+INSERT INTO `surname` VALUES ('1006', '东郭', '1');
+INSERT INTO `surname` VALUES ('1007', '百里', '1');
+INSERT INTO `surname` VALUES ('1008', '钦', '1');
+INSERT INTO `surname` VALUES ('1009', '鄢', '1');
+INSERT INTO `surname` VALUES ('1010', '汝', '1');
+INSERT INTO `surname` VALUES ('1011', '法', '1');
+INSERT INTO `surname` VALUES ('1012', '闫', '1');
+INSERT INTO `surname` VALUES ('1013', '楚', '1');
+INSERT INTO `surname` VALUES ('1014', '晋', '1');
+INSERT INTO `surname` VALUES ('1015', '谷梁', '1');
+INSERT INTO `surname` VALUES ('1016', '宰父', '1');
+INSERT INTO `surname` VALUES ('1017', '夹谷', '1');
+INSERT INTO `surname` VALUES ('1018', '拓跋', '1');
+INSERT INTO `surname` VALUES ('1019', '壤驷', '1');
+INSERT INTO `surname` VALUES ('1020', '乐正', '1');
+INSERT INTO `surname` VALUES ('1021', '漆雕', '1');
+INSERT INTO `surname` VALUES ('1022', '公西', '1');
+INSERT INTO `surname` VALUES ('1023', '巫马', '1');
+INSERT INTO `surname` VALUES ('1024', '端木', '1');
+INSERT INTO `surname` VALUES ('1025', '颛孙', '1');
+INSERT INTO `surname` VALUES ('1026', '子车', '1');
+INSERT INTO `surname` VALUES ('1027', '督', '1');
+INSERT INTO `surname` VALUES ('1028', '仉', '1');
+INSERT INTO `surname` VALUES ('1029', '司寇', '1');
+INSERT INTO `surname` VALUES ('1030', '亓官', '1');
+INSERT INTO `surname` VALUES ('1031', '鲜于', '1');
+INSERT INTO `surname` VALUES ('1032', '锺离', '1');
+INSERT INTO `surname` VALUES ('1033', '盖', '1');
+INSERT INTO `surname` VALUES ('1034', '逯', '1');
+INSERT INTO `surname` VALUES ('1035', '库', '1');
+INSERT INTO `surname` VALUES ('1036', '郏', '1');
+INSERT INTO `surname` VALUES ('1037', '逢', '1');
+INSERT INTO `surname` VALUES ('1038', '阴', '1');
+INSERT INTO `surname` VALUES ('1039', '薄', '1');
+INSERT INTO `surname` VALUES ('1040', '厉', '1');
+INSERT INTO `surname` VALUES ('1041', '稽', '1');
+INSERT INTO `surname` VALUES ('1042', '闾丘', '1');
+INSERT INTO `surname` VALUES ('1043', '公良', '1');
+INSERT INTO `surname` VALUES ('1044', '段干', '1');
+INSERT INTO `surname` VALUES ('1045', '开', '1');
+INSERT INTO `surname` VALUES ('1046', '光', '1');
+INSERT INTO `surname` VALUES ('1047', '操', '1');
+INSERT INTO `surname` VALUES ('1048', '瑞', '1');
+INSERT INTO `surname` VALUES ('1049', '眭', '1');
+INSERT INTO `surname` VALUES ('1050', '泥', '1');
+INSERT INTO `surname` VALUES ('1051', '运', '1');
+INSERT INTO `surname` VALUES ('1052', '摩', '1');
+INSERT INTO `surname` VALUES ('1053', '伟', '1');
+INSERT INTO `surname` VALUES ('1054', '铁', '1');
+INSERT INTO `surname` VALUES ('1055', '迮', '1');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -3871,6 +4996,7 @@ CREATE TABLE `user` (
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `surname` varchar(10) NOT NULL DEFAULT '' COMMENT '姓氏',
   `name` varchar(10) NOT NULL DEFAULT '' COMMENT '名',
+  `cert` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0-未认证；1-已认证',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_username` (`username`) USING BTREE,
   UNIQUE KEY `idx_phone` (`phone`) USING BTREE
@@ -3879,15 +5005,39 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'dev', '31587b849f0a7e4e229af7ab742a1b634e1907d81abfa866bc9ac49f9d63da3c', '834ec6', '开发者', '', '18028763998', '1', '2013-01-23 17:33:24', '', '');
-INSERT INTO `user` VALUES ('2', 'admin', '0c75f68693dfad5b3ef8d6581b21f5130fe312285821ad7f79e405b17dbed1e5', 'b9ecdc', '系统管理员', '', '12345678909', '1', '2013-01-23 17:33:46', '', '');
-INSERT INTO `user` VALUES ('3', 'qnyk123', '77dda7c14c66ac20746997d066f479141ca22e526bd9f836fac06719a21beda2', 'f2ac4e', '清能云控', '', '18028763996', '1', '2015-10-10 22:59:59', '', '');
-INSERT INTO `user` VALUES ('5', 'qnyk1234', '70504ff24b385392e82f3247d4d28788c18aa56df34d24c4b4c5798c47aa1274', 'd99193', '李', '', '13430909666', '1', '2015-11-25 01:08:33', '', '');
-INSERT INTO `user` VALUES ('6', 'ewang', '812cd692cb0749c3bfaa3985400ff87ec9401a8c3fbda32568652abca17ae999', '7e44d7', 'Eric', '', '13810734019', '1', '2015-12-03 02:30:24', '', '');
-INSERT INTO `user` VALUES ('7', 'ewang2', 'f81b3385baa4a7a776dc33324f2d61df9fea3f368e6f34e13ad6eedd7ee00a9b', '1bf5a1', 'Eric', '', '13813734019', '1', '2015-12-03 03:18:16', '', '');
-INSERT INTO `user` VALUES ('9', 'qnyk2', '2e9f3cacb346e911feba8bf0fbf3d7ed7faa72082cacb175da99d67a1c02de7a', 'c88f1c', '电站管理员2', '', '123456789', '1', '2015-12-06 21:58:55', '', '');
-INSERT INTO `user` VALUES ('10', 'qnyk66', 'fcdf6a46d0095d4237daed3a5573d7174e314d1c7f32674a18d110cdf98b8497', '422528', '账号管理员', '', '123456789091', '1', '2015-12-07 21:27:52', '', '');
-INSERT INTO `user` VALUES ('17', '18028763997', 'ea36802c221d81695e379780036f35631c8df44d06e525a7b04003389358811c', '0b5cf0', '', '', '18028763997', '1', '2017-02-26 23:24:04', '', '');
+INSERT INTO `user` VALUES ('1', 'dev', '31587b849f0a7e4e229af7ab742a1b634e1907d81abfa866bc9ac49f9d63da3c', '834ec6', '开发者', '', '18028763998', '1', '2013-01-23 17:33:24', '廖', '', '0');
+INSERT INTO `user` VALUES ('2', 'admin', '0c75f68693dfad5b3ef8d6581b21f5130fe312285821ad7f79e405b17dbed1e5', 'b9ecdc', '系统管理员', '', '12345678909', '1', '2013-01-23 17:33:46', '廖', '', '0');
+INSERT INTO `user` VALUES ('3', 'qnyk123', '77dda7c14c66ac20746997d066f479141ca22e526bd9f836fac06719a21beda2', 'f2ac4e', '清能云控', '', '18028763996', '1', '2015-10-10 22:59:59', '廖', '', '0');
+INSERT INTO `user` VALUES ('5', 'qnyk1234', '70504ff24b385392e82f3247d4d28788c18aa56df34d24c4b4c5798c47aa1274', 'd99193', '李', '', '13430909666', '1', '2015-11-25 01:08:33', '', '', '0');
+INSERT INTO `user` VALUES ('6', 'ewang', '812cd692cb0749c3bfaa3985400ff87ec9401a8c3fbda32568652abca17ae999', '7e44d7', 'Eric', '', '13810734019', '1', '2015-12-03 02:30:24', '廖', '', '0');
+INSERT INTO `user` VALUES ('7', 'ewang2', 'f81b3385baa4a7a776dc33324f2d61df9fea3f368e6f34e13ad6eedd7ee00a9b', '1bf5a1', 'Eric', '', '13813734019', '1', '2015-12-03 03:18:16', '廖', '', '0');
+INSERT INTO `user` VALUES ('9', 'qnyk2', '2e9f3cacb346e911feba8bf0fbf3d7ed7faa72082cacb175da99d67a1c02de7a', 'c88f1c', '电站管理员2', '', '123456789', '1', '2015-12-06 21:58:55', '廖', '', '0');
+INSERT INTO `user` VALUES ('10', 'qnyk66', 'fcdf6a46d0095d4237daed3a5573d7174e314d1c7f32674a18d110cdf98b8497', '422528', '账号管理员', '', '123456789091', '1', '2015-12-07 21:27:52', '廖', '', '1');
+INSERT INTO `user` VALUES ('17', '18028763997', 'ea36802c221d81695e379780036f35631c8df44d06e525a7b04003389358811c', '0b5cf0', '', '', '18028763997', '1', '2017-02-26 23:24:04', '廖', '', '0');
+
+-- ----------------------------
+-- Table structure for user_cert
+-- ----------------------------
+DROP TABLE IF EXISTS `user_cert`;
+CREATE TABLE `user_cert` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
+  `idCardNo` varchar(20) NOT NULL DEFAULT '' COMMENT '身份证号',
+  `frontImg` varchar(100) NOT NULL DEFAULT '' COMMENT '身份证照片正面',
+  `backImg` varchar(100) NOT NULL DEFAULT '' COMMENT '身份证背面照片',
+  `handImg` varchar(100) NOT NULL DEFAULT '' COMMENT '手持身份证照片',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '认证状态：0-初始；1-审核通过；2-审核不通过',
+  `createTime` bigint(20) NOT NULL DEFAULT '0',
+  `updateTime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_user` (`userId`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='用户身份证认证';
+
+-- ----------------------------
+-- Records of user_cert
+-- ----------------------------
+INSERT INTO `user_cert` VALUES ('7', '10', '廖鹏', '450923198709106317', 'cert_image/2017/03/04/1488628960237083868.jpg', 'cert_image/2017/03/04/1488628960264077118.jpg', 'cert_image/2017/03/04/1488628960291018653.jpg', '1', '1488628960', '1488628960');
 
 -- ----------------------------
 -- Table structure for user_detail
@@ -3897,10 +5047,10 @@ CREATE TABLE `user_detail` (
   `id` bigint(20) NOT NULL,
   `gender` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1-男；2-女',
   `birthday` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生（秒）',
-  `birthplaceCountryId` int(11) NOT NULL DEFAULT '0' COMMENT '出生地：国家ID',
-  `birthplaceProvinceId` int(11) NOT NULL DEFAULT '0' COMMENT '出生地：省ID',
-  `birthplaceCityId` int(11) NOT NULL DEFAULT '0' COMMENT '出生地：市ID',
-  `birthplaceCountyId` int(11) NOT NULL DEFAULT '0' COMMENT '出生地：区/县ID',
+  `birthplaceCountryId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：国家ID',
+  `birthplaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：省ID',
+  `birthplaceCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：市ID',
+  `birthplaceCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：区/县ID',
   `credit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信誉',
   `contribution` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '贡献',
   `zibei` varchar(10) NOT NULL DEFAULT '' COMMENT '字辈',
@@ -3912,24 +5062,32 @@ CREATE TABLE `user_detail` (
   `workplaceCountryId` bigint(20) NOT NULL DEFAULT '0' COMMENT '工作地：国家ID',
   `workplaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '工作地：省ID',
   `workplaceCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '工作地：市ID',
-  `phone` varchar(255) NOT NULL COMMENT '手机号',
+  `phones` varchar(255) NOT NULL DEFAULT '' COMMENT '手机号',
   `tel` varchar(20) NOT NULL DEFAULT '' COMMENT '座机',
   `ranking` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排行',
   `nativePlaceCountryId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：国家',
   `nativePlaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：省',
   `nativePlaceCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：市',
-  `nativePlaceCountyId` int(11) NOT NULL DEFAULT '0' COMMENT '籍贯：区/县',
+  `nativePlaceCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：区/县',
   `ancestralCountryId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍',
   `ancestralProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍：省ID',
   `ancestralCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍：市ID',
-  `ancestralCounty` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍：区/县',
+  `ancestralCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍：区/县',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_detail
 -- ----------------------------
-INSERT INTO `user_detail` VALUES ('17', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '[{\"main\":true,\"phone\":\"18028763997\"}]', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('1', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('2', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('3', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('5', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('6', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('7', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('9', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('10', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('17', '1', '0', '0', '0', '0', '0', '0', '0', '声', '', '0', '0', '0', '', '0', '0', '0', '[{\"main\":true,\"phone\":\"18028763997\"}]', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for user_friend
@@ -3965,11 +5123,14 @@ CREATE TABLE `user_interest` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_interest` (`userId`,`interestId`) USING BTREE,
   KEY `idx_interest` (`interestId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户兴趣爱好表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='用户兴趣爱好表';
 
 -- ----------------------------
 -- Records of user_interest
 -- ----------------------------
+INSERT INTO `user_interest` VALUES ('2', '17', '11', '1488211157');
+INSERT INTO `user_interest` VALUES ('7', '17', '12', '1488211353');
+INSERT INTO `user_interest` VALUES ('8', '17', '13', '1488211353');
 
 -- ----------------------------
 -- Table structure for user_role

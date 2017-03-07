@@ -52,6 +52,11 @@ public class UserDetailServiceImpl implements UserDetailService {
 	public List<UserDetailDTO> getUserDetailDTOList(List<Long> userIdList) {
 		return userDetailDAO.getUserDetailDTOList(userIdList);
 	}
+
+	@Override
+	public UserDetailDTO getUserDetailDTO(Long id) {
+		return userDetailDAO.getUserDetailDTO(id);
+	}
 	
 	
 }

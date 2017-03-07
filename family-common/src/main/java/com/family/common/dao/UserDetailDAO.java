@@ -41,4 +41,10 @@ public interface UserDetailDAO {
      * @return
      */
     List<UserDetailDTO> getUserDetailDTOList(@Param("list") List<Long> userIdList);
+    /**
+     * 获取用户详情
+     * @param id
+     * @return
+     */
+    UserDetailDTO getUserDetailDTO(@Param("id") Long id);
 }

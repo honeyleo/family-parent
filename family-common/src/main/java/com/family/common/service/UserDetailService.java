@@ -47,4 +47,11 @@ public interface UserDetailService {
      * @return
      */
     List<UserDetailDTO> getUserDetailDTOList(List<Long> userIdList);
+    
+    /**
+     * 获取用户详情
+     * @param id
+     * @return
+     */
+    UserDetailDTO getUserDetailDTO(Long id);
 }

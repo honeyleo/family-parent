@@ -132,4 +132,13 @@
   		#{id}
   	</foreach>
   </select>
+  
+  <select id="getUserDetailDTO" resultType="com.family.common.model.UserDetailDTO">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state
+  	FROM `user` u INNER JOIN user_detail ud
+  	ON u.id = ud.id
+  	WHERE u.id = #{id}
+  </select>
 </mapper>

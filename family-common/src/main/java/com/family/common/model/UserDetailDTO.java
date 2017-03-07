@@ -3,6 +3,8 @@ package com.family.common.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class UserDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = 5553027590594336009L;
@@ -121,6 +123,7 @@ public class UserDetailDTO implements Serializable {
 	/**
 	 * JSON对象[{"phone":"18028761234","main":"true"},{"phone":"18028761235","main":"false"}]
 	 */
+	@JSONField(serialize = false)
 	private String phones;
 	/**
 	 * 排行
