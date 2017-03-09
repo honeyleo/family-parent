@@ -83,9 +83,9 @@ public class UserController {
 		return builder.build();
 	}
 	
-	@RequestMapping("/user/{user_id}")
+	@RequestMapping("/detail/{user_id}")
 	@ResponseBody
-	public Object updateMyInfo(@PathVariable("user_id") long userId, HttpServletRequest request) {
+	public Object detail(@PathVariable("user_id") long userId, HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/user/" + userId);
 		UserDetailDTO userDetailDTO = userDetailService.getUserDetailDTO(userId);
 		builder.data(userDetailDTO);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
+import com.family.common.model.UserDetailDTODecorate;
 import com.family.common.service.UserDetailService;
 
 import cn.lfy.common.framework.exception.ErrorCode;
@@ -55,7 +56,9 @@ public class UserDetailServiceImpl implements UserDetailService {
 
 	@Override
 	public UserDetailDTO getUserDetailDTO(Long id) {
-		return userDetailDAO.getUserDetailDTO(id);
+		UserDetailDTO userDetailDTO = userDetailDAO.getUserDetailDTO(id);
+		UserDetailDTODecorate userDetailDTODecorate = new UserDetailDTODecorate(userDetailDTO);
+		return userDetailDTODecorate;
 	}
 	
 	
