@@ -5,6 +5,8 @@ import java.util.Date;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import cn.lfy.common.utils.AgeUtil;
+
 public class UserDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = 5553027590594336009L;
@@ -56,6 +58,10 @@ public class UserDetailDTO implements Serializable {
 	 */
 	private Long birthday;
 	/**
+	 * 年龄
+	 */
+	private int age;
+	/**
 	 * 出生地（国家）
 	 */
 	private Long birthplaceCountryId; 
@@ -71,6 +77,10 @@ public class UserDetailDTO implements Serializable {
 	 * 出生地（区/县）
 	 */
 	private Long birthplaceCountyId;
+	/**
+	 * 出生地详细地址
+	 */
+	private String birthplaceAddress;
 	/**
 	 * 信誉
 	 */
@@ -252,6 +262,11 @@ public class UserDetailDTO implements Serializable {
 		this.birthday = birthday;
 	}
 
+	public int getAge() {
+		age = AgeUtil.getAge(birthday);
+		return age;
+	}
+
 	public Long getBirthplaceCountryId() {
 		return birthplaceCountryId;
 	}
@@ -282,6 +297,14 @@ public class UserDetailDTO implements Serializable {
 
 	public void setBirthplaceCountyId(Long birthplaceCountyId) {
 		this.birthplaceCountyId = birthplaceCountyId;
+	}
+
+	public String getBirthplaceAddress() {
+		return birthplaceAddress;
+	}
+
+	public void setBirthplaceAddress(String birthplaceAddress) {
+		this.birthplaceAddress = birthplaceAddress;
 	}
 
 	public Integer getCredit() {

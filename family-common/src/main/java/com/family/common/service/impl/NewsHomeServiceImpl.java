@@ -11,6 +11,7 @@ import cn.lfy.base.model.PageInfo;
 import com.family.common.dao.NewsHomeDAO;
 import com.family.common.enums.NewsType;
 import com.family.common.model.NewsHome;
+import com.family.common.model.Surname;
 import com.family.common.service.NewsHomeService;
 
 @Service
@@ -80,6 +81,11 @@ public class NewsHomeServiceImpl implements NewsHomeService {
 	@Override
 	public int incrComments(long id) {
 		return newsHomeDAO.incrComments(id);
+	}
+
+	@Override
+	public List<Surname> getSurnameBySurname(String surname) {
+		return newsHomeDAO.getSurnameBySurname(surname);
 	}
 
 }

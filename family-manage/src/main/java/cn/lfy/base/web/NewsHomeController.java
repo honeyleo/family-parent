@@ -124,6 +124,8 @@ public class NewsHomeController extends BaseController {
         List<String> list = uploadImageHandle(form.getImgs(), pathRoot, resourceManager, imageUrl);
         form.setImgs(Joiner.on(",").join(list));
         form.setContent(ueditorContentImgHandle(form.getContent(), pathRoot, resourceManager));
+        form.setSurname("");
+        form.setSurnameId(0L);
         newsHomeService.insert(form);
         return builder.build();
     }

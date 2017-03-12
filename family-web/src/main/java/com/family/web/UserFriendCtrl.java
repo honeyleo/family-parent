@@ -41,9 +41,10 @@ public class UserFriendCtrl extends BaseController {
 	@ResponseBody
 	public Object apply(CurrentUser user, 
 			@RequestParam(name = "friend_id", defaultValue = "0") long friendId, 
+			@RequestParam(name = "remark", defaultValue = "") String remark, 
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/user_friend/apply");
-		userFriendService.add(user.getId(), friendId);
+		userFriendService.add(user.getId(), friendId, remark);
 		return builder.build();
 	}
 	
@@ -64,6 +65,22 @@ public class UserFriendCtrl extends BaseController {
 		return builder.build();
 	}
 	
+	/**
+	 * user拒绝friendId的申请好友请求
+	 * @param user
+	 * @param friendId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/user_friend/refuse")
+	@ResponseBody
+	public Object refuse(CurrentUser user, 
+			@RequestParam(name = "friend_id", defaultValue = "0") long friendId, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user_friend/refuse");
+		userFriendService.refuse(user.getId(), friendId);
+		return builder.build();
+	}
 	/**
 	 * user同意friendId的申请好友请求
 	 * @param user
@@ -94,6 +111,8 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("credit", friend.getCredit());
 			dto.put("contribution", friend.getContribution());
 			dto.put("cert", friend.getCert());
+			dto.put("remark", uf.getRemark());
+			dto.put("status", uf.getStatus());
 			friendList.add(dto);
 		}
 		JSONObject data = new JSONObject();
@@ -132,6 +151,8 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("credit", friend.getCredit());
 			dto.put("contribution", friend.getContribution());
 			dto.put("cert", friend.getCert());
+			dto.put("remark", uf.getRemark());
+			dto.put("status", uf.getStatus());
 			notifyList.add(dto);
 		}
 		JSONObject data = new JSONObject();

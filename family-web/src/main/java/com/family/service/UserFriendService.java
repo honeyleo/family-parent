@@ -9,7 +9,7 @@ public interface UserFriendService {
     /**
      * userId向friendId发起添加好友申请
      */
-    int add(long userId, long friendId);
+    int add(long userId, long friendId, String remark);
 
     /**
      * userId的好友列表
@@ -24,6 +24,13 @@ public interface UserFriendService {
      * @return
      */
     int agree(long userId, long friendId);
+    /**
+     * userId拒绝friendId的好友申请请求
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    int refuse(long userId, long friendId);
     /**
      * userId的好友通知
      * @param userId

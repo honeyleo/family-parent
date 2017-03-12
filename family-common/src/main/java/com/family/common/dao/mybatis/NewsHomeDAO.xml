@@ -3,6 +3,8 @@
 <mapper namespace="com.family.common.dao.NewsHomeDAO" >
   <resultMap id="BaseResultMap" type="com.family.common.model.NewsHome" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="surnameId" property="surnameId" jdbcType="VARCHAR" />
+    <result column="surname" property="surname" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="intro" property="intro" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
@@ -40,7 +42,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    id, title, intro, content, type, imgShowMode, imgs, userId, createTime, updateTime
+    id, surnameId, surname, title, intro, content, type, imgShowMode, imgs, userId, createTime, updateTime
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
@@ -70,8 +72,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into news (title, intro, content, newsType, type, imgShowMode, imgs, createTime, updateTime,userId)
-    values (#{title}, #{intro}, #{content}, #{newsType}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
+    insert into news (surnameId, surname, title, intro, content, newsType, type, imgShowMode, imgs, createTime, updateTime,userId)
+    values (#{surnameId}, #{surname}, #{title}, #{intro}, #{content}, #{newsType}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
@@ -84,6 +86,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.family.common.model.NewsHome" >
     update news
     <set >
+      <if test="surnameId != null" >
+        surnameId = #{surnameId},
+      </if>
+      <if test="surname != null" >
+        surname = #{surname},
+      </if>
       <if test="title != null" >
         title = #{title},
       </if>
@@ -126,6 +134,14 @@
     AND newsType = #{newsType}
     AND type = #{type}
     LIMIT #{start}, #{limit}
+  </select>
+  
+  <select id="getSurnameBySurname" resultType="com.family.common.model.Surname">
+    SELECT
+    	id,`surname`,status
+    FROM surname
+    WHERE 1=1 AND `surname` like '%${surname}%'
+    AND status = 1
   </select>
   
   <update id="incrComments">

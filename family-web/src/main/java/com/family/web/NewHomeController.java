@@ -56,7 +56,7 @@ public class NewHomeController extends BaseController {
 	@ResponseBody
 	public Object list(@PathVariable("news_type") String newsType, 
 			@RequestParam(name = "type", defaultValue = "1") int type, 
-			@RequestParam(name = "start") int start, 
+			@RequestParam(name = "start", defaultValue = "0") int start, 
 			@RequestParam(name = "limit", defaultValue = "10") int limit,
 			@RequestParam(name = "last_update_time", defaultValue = "0") long lastUpdateTime,
 			HttpServletRequest request) {

@@ -14,6 +14,11 @@ public class NewsHome implements Serializable {
 	private static final long serialVersionUID = -2176671739863591332L;
 
 	private Long id;
+	/**
+	 * 姓氏ID
+	 */
+	private Long surnameId;
+	private String surname;
 	
 	private String title;
 	
@@ -49,6 +54,22 @@ public class NewsHome implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getSurnameId() {
+		return surnameId;
+	}
+
+	public void setSurnameId(Long surnameId) {
+		this.surnameId = surnameId;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getTitle() {

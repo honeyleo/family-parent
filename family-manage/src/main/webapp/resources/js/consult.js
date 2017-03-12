@@ -103,7 +103,9 @@ var users = {
             $(".J_sure").removeClass("none");
             $("#updContent").show();
             var id = $(this).attr("data-value");
+            
             self.clearData();
+            users.surnameFunc('surname1', 'surnameId1');
             $.getJSON("/manager/news_consult/detail", {id: id}, function(result){
             	if (result.ret == 0) {
             		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsSubType[result.data.type]);
@@ -112,7 +114,9 @@ var users = {
                     $("#title").val(result.data.title);
                     $("#intro").val(result.data.intro);
                     UE.getEditor('editor').setContent(result.data.content);
-                    
+                    $("#surname1").val(result.data.surname);
+                    $("#surnameId1").val(result.data.surnameId);
+                    $("#surnameId1Text").val(result.data.surname);
                     var portrait_img = result.data.imgs;
                     if (portrait_img == "" || portrait_img == undefined) {
                         $(".vertical .modify_icon").hide();
@@ -152,8 +156,12 @@ var users = {
         	$(".vertical .modify_icon .icon_img").each(function(){
         		imgs +=$(this).attr("src") + ",";
         	});
+        	var surnameId = $("#surnameId1").val();
+        	var surname = $("#surnameId1Text").val();
             var param = {
                 id: $("#id").val(),
+                surnameId : surnameId,
+                surname : surname,
                 title: $("#title").val(),
                 intro: $("#intro").val(),
                 content: content,
@@ -175,9 +183,10 @@ var users = {
         $(".add_dialog").click(function () {
         	var sure = $('.modal-footer .btn-primary');
             sure.addClass("none");
+            $("#surname1").removeAttr("disabled");
             $(".J_add_sure").removeClass("none");
             self.clearData();
-            
+            users.surnameFunc('surname1', 'surnameId1');
             $(".modify_icon").remove();
             $("#uploadPortrait").html("").show();
             util.uploadFile('uploadPortrait', self.completeIconImg);
@@ -223,7 +232,11 @@ var users = {
     	$(".vertical .modify_icon .icon_img").each(function(){
     		imgs +=$(this).attr("src") + ",";
     	});
+    	var surnameId = $("#surnameId1").val();
+    	var surname = $("#surnameId1Text").val();
     	var param = {
+    			surnameId : surnameId,
+    			surname : surname,
                 title: $("#title").val(),
                 intro: $("#intro").val(),
                 content: content,
@@ -264,12 +277,45 @@ var users = {
             $("#" + text).attr("value", value);
         });
     },
+    surnameFunc:function(component, componentId){
+        $('#' + component).focus(function(){
+            if($(this).val() == ""){
+                $(this).attr("data-id","");
+                $("#" + componentId).val("");
+            }
+        }).blur(function(){
+            if($(this).val() == ""){
+                $(this).attr("data-id","");
+                $("#" + componentId).val("");
+            }
+        }).typeahead({
+            source: function (typeahead, query) {
+                $.get('/public/surname/getsurnamebyname?surname=' + query, function (data) {
+                	var gameList = [], gameId = [];
+                    for (var i = 0; i < data.value.length; i++) {
+                        gameList.push(data.value[i].surname);
+                        gameId.push(data.value[i].id);
+                    }
+                    typeahead.process(gameList);
+                    for (var i = 0; i < gameId.length; i++) {
+                        typeahead.$menu.find("li:eq("+ i +")").attr("data-id", gameId[i]);
+                    }
+                });
+            },
+            onselect:function(text, id){
+                $("#" + componentId).val(id);
+                $("#" + componentId + "Text").val(text);
+            }
+        });
+    },
     clearData:function(){
     	$("#title").val("");
         $("#intro").val("");
         $("#content").val("");
         this.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         this.dropDown('modify_search_status2', 'search_dropDown-status2', 'status2');
+        $("#surname1").val("");
+        $("#surnameId1").val("");
     },
     completeIconImg: function (data) {
         var json = jQuery.parseJSON(data);

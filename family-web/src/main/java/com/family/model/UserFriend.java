@@ -32,6 +32,11 @@ public class UserFriend implements Serializable {
 	
 	private Long updateTime;
 
+	/**
+	 * 好友请求描述
+	 */
+	private String remark;
+	
 	public Long getId() {
 		return id;
 	}
@@ -86,6 +91,14 @@ public class UserFriend implements Serializable {
 
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 }

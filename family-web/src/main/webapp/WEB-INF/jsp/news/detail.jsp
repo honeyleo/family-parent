@@ -3,8 +3,27 @@
 <html lang="en">
 <head>
 <title>新闻详情</title>
+<style>
+.news-con-wrap{
+padding:10px 3%;
+max-width:750px;
+margin:auto;
+background:#fff;
+
+}
+.news-con-wrap p{
+text-indext:2em;
+padding:5px 0;
+}
+.news-con-wrap img{
+max-width:94%;
+display:block;
+margin:auto;
+}
+
+</style>
 </head>
-<body>
-<div>${news.content}</div>
+<body style="background:#eee;padding:0;margin:0;">
+<div class="news-con-wrap">${news.content}</div>
 </body>
 </html>

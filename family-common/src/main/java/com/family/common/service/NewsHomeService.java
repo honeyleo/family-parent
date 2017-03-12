@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.family.common.enums.NewsType;
 import com.family.common.model.NewsHome;
+import com.family.common.model.Surname;
 
 import cn.lfy.base.model.Criteria;
 import cn.lfy.base.model.PageInfo;
@@ -65,5 +66,12 @@ public interface NewsHomeService {
      * @return
      */
     int incrComments(long id);
+    
+    /**
+     * 查询匹配的姓氏
+     * @param surname
+     * @return
+     */
+    List<Surname> getSurnameBySurname(String surname);
 
 }

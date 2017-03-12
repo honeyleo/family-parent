@@ -13,9 +13,6 @@
        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
 	<context:component-scan base-package="cn.lfy.base,com.family" />
-	<!-- 使用默认的扫描方式 -->
-	<context:property-placeholder location="classpath:conf/jdbc.properties" ignore-unresolvable="true" />
-
 	<!-- 配置数据源 -->
  	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->

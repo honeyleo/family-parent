@@ -2,6 +2,8 @@ package com.family.common.model;
 
 import java.io.Serializable;
 
+import cn.lfy.common.utils.AgeUtil;
+
 public class UserDetail implements Serializable {
 
 	private static final long serialVersionUID = 8473464107515598298L;
@@ -15,6 +17,7 @@ public class UserDetail implements Serializable {
 	 * 生日
 	 */
 	private Long birthday;
+	private int age;
 	/**
 	 * 出生地（国家）
 	 */
@@ -31,6 +34,10 @@ public class UserDetail implements Serializable {
 	 * 出生地（区/县）
 	 */
 	private Long birthplaceCountyId;
+	/**
+	 * 出生地详细地址
+	 */
+	private String birthplaceAddress;
 	/**
 	 * 信誉
 	 */
@@ -130,6 +137,7 @@ public class UserDetail implements Serializable {
 		detail.setBirthplaceProvinceId(0L);
 		detail.setBirthplaceCityId(0L);
 		detail.setBirthplaceCountyId(0L);
+		detail.setBirthplaceAddress("");
 		detail.setCredit(0);
 		detail.setContribution(0);
 		detail.setZibei("");
@@ -178,6 +186,10 @@ public class UserDetail implements Serializable {
 	public void setBirthday(Long birthday) {
 		this.birthday = birthday;
 	}
+	public int getAge() {
+		age = AgeUtil.getAge(birthday);
+		return age;
+	}
 
 	public Long getBirthplaceCountryId() {
 		return birthplaceCountryId;
@@ -209,6 +221,14 @@ public class UserDetail implements Serializable {
 
 	public void setBirthplaceCountyId(Long birthplaceCountyId) {
 		this.birthplaceCountyId = birthplaceCountyId;
+	}
+
+	public String getBirthplaceAddress() {
+		return birthplaceAddress;
+	}
+
+	public void setBirthplaceAddress(String birthplaceAddress) {
+		this.birthplaceAddress = birthplaceAddress;
 	}
 
 	public Integer getCredit() {

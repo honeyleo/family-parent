@@ -18,7 +18,7 @@ public class UserCertTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("name", "廖鹏");
 		reqParams.put("id_card_no", "450923198709106317");
-		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImQzZDk0NDY4MDJhNDQyNTk3NTVkMzhlNmQxNjNlODIwIiwiciI6ImMyZmUzN2I2NmU4ZTQyZTlhNTQwZDQwZmI2OGFlMDg0IiwidCI6MTQ4ODYyNzQ3OCwidSI6MTB9");
+		reqParams.put("access_token", Constant.access_token);
 		try {
 			Map<HttpClient.FileInfo, byte[]> files = new HashMap<HttpClient.FileInfo, byte[]>();
 			FileInputStream in = new FileInputStream("E:\\tmp\\idCardNo.jpg");
@@ -49,7 +49,7 @@ public class UserCertTest {
 	@Test
 	public void info() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImQzZDk0NDY4MDJhNDQyNTk3NTVkMzhlNmQxNjNlODIwIiwiciI6ImMyZmUzN2I2NmU4ZTQyZTlhNTQwZDQwZmI2OGFlMDg0IiwidCI6MTQ4ODYyNzQ3OCwidSI6MTB9");
+		reqParams.put("access_token", Constant.access_token);
 		try {
 			String response = HttpClient.post(Constant.HOST + "/app/user_cert/info", reqParams);
 			System.out.println(response);

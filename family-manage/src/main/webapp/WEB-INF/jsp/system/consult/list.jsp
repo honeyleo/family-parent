@@ -105,6 +105,18 @@
             <div class="modal-body1" style="padding: 20px;">
                 <table cellspacing="0" width="100%" class="modifyTable">
                 	<tr>
+                        <th>姓氏：</th>
+                        <td>
+                            <div class="edit-input">
+                                <input type="text" id="surname1" class="form-control searchName input_common300" data-id="" placeholder="填写并选中结果">
+                            </div>
+                            <div class="edit-input">
+                               <input type="hidden" id="surnameId1" class="form-control searchName input_common" value="0" readonly />
+                               <input type="hidden" id="surnameId1Text" class="form-control searchName input_common" value="" readonly />
+                            </div>
+                        </td>
+                    </tr>
+                	<tr>
                         <th>新闻类型：</th>
                         <td>
                             <div class="btn-group">

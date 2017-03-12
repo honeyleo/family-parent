@@ -4,11 +4,11 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   
   <sql id="Base_Column_List" >
-    id, userId, friendId, status, createTime, updateTime
+    id, userId, friendId, status, createTime, updateTime, remark
   </sql>
   
   <sql id="Base_Column_List2" >
-    id, friendId AS userId, userId AS friendId, status, createTime, updateTime
+    id, friendId AS userId, userId AS friendId, status, createTime, updateTime, remark
   </sql>
   
   <select id="get" resultType="com.family.model.UserFriend" parameterType="java.lang.Long" >
@@ -25,8 +25,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user_friend (userId, friendId, status, createTime, updateTime, respondentUserId)
-    values (#{userId}, #{friendId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{respondentUserId})
+    insert into user_friend (userId, friendId, status, createTime, updateTime, respondentUserId, remark)
+    values (#{userId}, #{friendId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{respondentUserId}, #{remark})
   </insert>
   
   <update id="update" parameterType="com.family.model.UserFriend" >
@@ -82,6 +82,12 @@
   	UPDATE 
   		user_friend 
   	SET `status` = 2 
+  	WHERE respondentUserId = #{respondentUserId} AND userId = #{userId} AND friendId = #{friendId};
+  </update>
+  <update id="refuse">
+  	UPDATE 
+  		user_friend 
+  	SET `status` = 0 
   	WHERE respondentUserId = #{respondentUserId} AND userId = #{userId} AND friendId = #{friendId};
   </update>
 </mapper>

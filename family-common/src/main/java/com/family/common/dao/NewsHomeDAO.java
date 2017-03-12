@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import cn.lfy.base.model.Criteria;
-
 import com.family.common.model.NewsHome;
+import com.family.common.model.Surname;
+
+import cn.lfy.base.model.Criteria;
 
 public interface NewsHomeDAO {
     /**
@@ -59,4 +60,10 @@ public interface NewsHomeDAO {
      * @return
      */
     int incrComments(long id);
+    /**
+     * 查询匹配的姓氏
+     * @param surname
+     * @return
+     */
+    List<Surname> getSurnameBySurname(@Param("surname")String surname);
 }

@@ -18,8 +18,9 @@ public class UserFriendServiceImpl implements UserFriendService {
 	private UserFriendDAO userFriendDAO;
 	
 	@Override
-	public int add(long userId, long friendId) {
+	public int add(long userId, long friendId, String remark) {
 		UserFriend record = new UserFriend();
+		record.setRemark(remark);
 		boolean isFriend = userFriendDAO.isFriend(userId < friendId ? userId : friendId, userId < friendId ? friendId : userId);
 		Validators.isFalse(isFriend, ErrorCode.ACCESS_TOKEN_INVALID);
 		if(userId < friendId) {
@@ -42,6 +43,12 @@ public class UserFriendServiceImpl implements UserFriendService {
 
 	@Override
 	public int agree(long userId, long friendId) {
+		int ret = userFriendDAO.agree(userId, userId < friendId ? userId : friendId, userId < friendId ? friendId : userId);
+		return ret;
+	}
+	
+	@Override
+	public int refuse(long userId, long friendId) {
 		int ret = userFriendDAO.agree(userId, userId < friendId ? userId : friendId, userId < friendId ? friendId : userId);
 		return ret;
 	}

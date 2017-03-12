@@ -85,7 +85,10 @@ public class BaseController {
 		if(StringUtils.isNotBlank(content)) {
         	Set<String> imgs = ManageHelper.getImgsFromText( content );
     		for( String img : imgs ) {
-    			content = content.replace(img, imageUrl + img);
+    			if(img.startsWith("/news") || img.startsWith("news") 
+    					|| img.startsWith("content_image") || img.startsWith("/content_image")) {
+    				content = content.replace(img, imageUrl + img);
+    			}
     		}
     		return content;
         }

@@ -14,7 +14,6 @@
        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder location="classpath:conf/commons.properties" />
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"> 
 		<property name="maxTotal" value="32"></property> 
 		<property name="maxIdle" value="6"></property> 
