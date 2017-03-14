@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50618
 File Encoding         : 65001
 
-Date: 2017-03-08 00:01:57
+Date: 2017-03-13 22:17:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,36 +75,85 @@ CREATE TABLE `dict` (
   `updateTime` bigint(20) NOT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_type_pid` (`type`,`parentId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
 
 -- ----------------------------
 -- Records of dict
 -- ----------------------------
 INSERT INTO `dict` VALUES ('1', 'INDUSTRY', '行业', '0', '$', '', '0', '1484748914');
-INSERT INTO `dict` VALUES ('2', 'INDUSTRY', '文化艺术', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('3', 'INDUSTRY', '学生', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('4', 'INDUSTRY', '影视/娱乐', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('5', 'INDUSTRY', '金融', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('6', 'INDUSTRY', '医疗/健康', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('7', 'INDUSTRY', '工业/制造业', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('8', 'INDUSTRY', 'IT/互联网/通信', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('9', 'INDUSTRY', '媒体/公关', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('10', 'INDUSTRY', '零售', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('11', 'INDUSTRY', '教育/科研', '1', '$1$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('12', 'INDUSTRY', '其他', '1', '$1$', '', '0', '1484750124');
 INSERT INTO `dict` VALUES ('13', 'JOB_FIELD', '工作领域', '0', '$', '', '0', '1484750124');
-INSERT INTO `dict` VALUES ('14', 'JOB_FIELD', '高管', '13', '$13$', '', '1', '1484750124');
-INSERT INTO `dict` VALUES ('15', 'JOB_FIELD', '创始人', '13', '$13$', '', '2', '1484750124');
-INSERT INTO `dict` VALUES ('16', 'JOB_FIELD', '投资人', '13', '$13$', '', '3', '1484750124');
-INSERT INTO `dict` VALUES ('17', 'JOB_FIELD', '职业经理', '13', '$13$', '', '4', '1484750124');
-INSERT INTO `dict` VALUES ('18', 'JOB_FIELD', '咨询顾问', '13', '$13$', '', '5', '1484750124');
-INSERT INTO `dict` VALUES ('19', 'JOB_FIELD', '市场', '13', '$13$', '', '6', '1484750124');
-INSERT INTO `dict` VALUES ('20', 'JOB_FIELD', '产品', '13', '$13$', '', '7', '1484750124');
-INSERT INTO `dict` VALUES ('21', 'JOB_FIELD', '客服', '13', '$13$', '', '8', '1484750124');
-INSERT INTO `dict` VALUES ('22', 'JOB_FIELD', '销售', '13', '$13$', '', '9', '1484750124');
-INSERT INTO `dict` VALUES ('23', 'JOB_FIELD', '商务', '13', '$13$', '', '10', '1484750124');
-INSERT INTO `dict` VALUES ('24', 'JOB_FIELD', '公关', '13', '$13$', '', '11', '1484750124');
-INSERT INTO `dict` VALUES ('25', 'JOB_FIELD', '其他', '13', '$13$', '', '100', '1484750124');
+INSERT INTO `dict` VALUES ('26', 'INDUSTRY', '计算机（软件、硬件、服务）', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('27', 'INDUSTRY', '通信、电信', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('28', 'INDUSTRY', '互联网', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('29', 'INDUSTRY', '电子（半导体、仪器、自动化）', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('30', 'INDUSTRY', '金融服务（会计/审计、银行、保险... ...)', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('31', 'INDUSTRY', '金融/投资/证券', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('32', 'INDUSTRY', '贸易（进出口、批发、零售）', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('33', 'INDUSTRY', '快速消费品（食品、饮料、化妆品）', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('34', 'INDUSTRY', '服装/纺织/皮革', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('35', 'INDUSTRY', '家具/家电/工艺品/玩具', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('36', 'INDUSTRY', '办公用品及设备', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('37', 'INDUSTRY', '医疗、医药', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('38', 'INDUSTRY', '广告/公关/市场推广/会展', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('39', 'INDUSTRY', '影视/媒体/出版/印刷/包装', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('40', 'INDUSTRY', '房地产相关', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('41', 'INDUSTRY', '家居/室内设计/装潢', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('42', 'INDUSTRY', '服务(咨询、人力资源)', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('43', 'INDUSTRY', '法律相关', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('44', 'INDUSTRY', '教育/培训', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('45', 'INDUSTRY', '学术/科研', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('46', 'INDUSTRY', '酒店/餐饮业', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('47', 'INDUSTRY', '旅游', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('48', 'INDUSTRY', '娱乐/休闲/体育', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('49', 'INDUSTRY', '美容/保健', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('50', 'INDUSTRY', '交通（运输、物流、航天、航空）', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('51', 'INDUSTRY', '汽车及零件配件', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('52', 'INDUSTRY', '农业', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('53', 'INDUSTRY', '政府/非盈利机构', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('54', 'INDUSTRY', '其他行业', '1', '$1$', '', '0', '1484748914');
+INSERT INTO `dict` VALUES ('55', 'JOB_FIELD', '在校学生', '13', '$13$', '', '0', '1484750124');
+INSERT INTO `dict` VALUES ('56', 'JOB_FIELD', '计算机/互联网/IT', '13', '$13$', '', '0', '1484750125');
+INSERT INTO `dict` VALUES ('57', 'JOB_FIELD', '电子/半导体/仪表仪器', '13', '$13$', '', '0', '1484750126');
+INSERT INTO `dict` VALUES ('58', 'JOB_FIELD', '通信技术', '13', '$13$', '', '0', '1484750127');
+INSERT INTO `dict` VALUES ('59', 'JOB_FIELD', '销售', '13', '$13$', '', '0', '1484750128');
+INSERT INTO `dict` VALUES ('60', 'JOB_FIELD', '市场拓展', '13', '$13$', '', '0', '1484750129');
+INSERT INTO `dict` VALUES ('61', 'JOB_FIELD', '公关/商务', '13', '$13$', '', '0', '1484750130');
+INSERT INTO `dict` VALUES ('62', 'JOB_FIELD', '采购/贸易', '13', '$13$', '', '0', '1484750131');
+INSERT INTO `dict` VALUES ('63', 'JOB_FIELD', '客户服务/技术支持', '13', '$13$', '', '0', '1484750132');
+INSERT INTO `dict` VALUES ('64', 'JOB_FIELD', '人力资源/行政/后勤', '13', '$13$', '', '0', '1484750133');
+INSERT INTO `dict` VALUES ('65', 'JOB_FIELD', '高级管理', '13', '$13$', '', '0', '1484750134');
+INSERT INTO `dict` VALUES ('66', 'JOB_FIELD', '生产/加工/制造', '13', '$13$', '', '0', '1484750135');
+INSERT INTO `dict` VALUES ('67', 'JOB_FIELD', '质控/安检', '13', '$13$', '', '0', '1484750136');
+INSERT INTO `dict` VALUES ('68', 'JOB_FIELD', '工程机械', '13', '$13$', '', '0', '1484750137');
+INSERT INTO `dict` VALUES ('69', 'JOB_FIELD', '技工', '13', '$13$', '', '0', '1484750138');
+INSERT INTO `dict` VALUES ('70', 'JOB_FIELD', '财务/审计/统计', '13', '$13$', '', '0', '1484750139');
+INSERT INTO `dict` VALUES ('71', 'JOB_FIELD', '金融/证券/投资/保险', '13', '$13$', '', '0', '1484750140');
+INSERT INTO `dict` VALUES ('72', 'JOB_FIELD', '房地产/装修/物业', '13', '$13$', '', '0', '1484750141');
+INSERT INTO `dict` VALUES ('73', 'JOB_FIELD', '仓储/物流', '13', '$13$', '', '0', '1484750142');
+INSERT INTO `dict` VALUES ('74', 'JOB_FIELD', '普通劳动力/家庭服务', '13', '$13$', '', '0', '1484750143');
+INSERT INTO `dict` VALUES ('75', 'JOB_FIELD', '普通服务行业', '13', '$13$', '', '0', '1484750144');
+INSERT INTO `dict` VALUES ('76', 'JOB_FIELD', '航空服务行业', '13', '$13$', '', '0', '1484750145');
+INSERT INTO `dict` VALUES ('77', 'JOB_FIELD', '教育/培训', '13', '$13$', '', '0', '1484750146');
+INSERT INTO `dict` VALUES ('78', 'JOB_FIELD', '咨询/顾问', '13', '$13$', '', '0', '1484750147');
+INSERT INTO `dict` VALUES ('79', 'JOB_FIELD', '学术/科研', '13', '$13$', '', '0', '1484750148');
+INSERT INTO `dict` VALUES ('80', 'JOB_FIELD', '法律', '13', '$13$', '', '0', '1484750149');
+INSERT INTO `dict` VALUES ('81', 'JOB_FIELD', '设计/创意', '13', '$13$', '', '0', '1484750150');
+INSERT INTO `dict` VALUES ('82', 'JOB_FIELD', '文学/传媒/影视', '13', '$13$', '', '0', '1484750151');
+INSERT INTO `dict` VALUES ('83', 'JOB_FIELD', '餐饮/旅游', '13', '$13$', '', '0', '1484750152');
+INSERT INTO `dict` VALUES ('84', 'JOB_FIELD', '化工', '13', '$13$', '', '0', '1484750153');
+INSERT INTO `dict` VALUES ('85', 'JOB_FIELD', '能源/地质勘查', '13', '$13$', '', '0', '1484750154');
+INSERT INTO `dict` VALUES ('86', 'JOB_FIELD', '医疗/护理', '13', '$13$', '', '0', '1484750155');
+INSERT INTO `dict` VALUES ('87', 'JOB_FIELD', '保健/美容', '13', '$13$', '', '0', '1484750156');
+INSERT INTO `dict` VALUES ('88', 'JOB_FIELD', '生物/制药/医疗器械', '13', '$13$', '', '0', '1484750157');
+INSERT INTO `dict` VALUES ('89', 'JOB_FIELD', '体育工作者', '13', '$13$', '', '0', '1484750158');
+INSERT INTO `dict` VALUES ('90', 'JOB_FIELD', '翻译', '13', '$13$', '', '0', '1484750159');
+INSERT INTO `dict` VALUES ('91', 'JOB_FIELD', '公务员/国家干部', '13', '$13$', '', '0', '1484750160');
+INSERT INTO `dict` VALUES ('92', 'JOB_FIELD', '私营业主', '13', '$13$', '', '0', '1484750161');
+INSERT INTO `dict` VALUES ('93', 'JOB_FIELD', '农/林/牧/渔业', '13', '$13$', '', '0', '1484750162');
+INSERT INTO `dict` VALUES ('94', 'JOB_FIELD', '警察/其他', '13', '$13$', '', '0', '1484750163');
+INSERT INTO `dict` VALUES ('95', 'JOB_FIELD', '自由职业者', '13', '$13$', '', '0', '1484750164');
+INSERT INTO `dict` VALUES ('96', 'JOB_FIELD', '交通/运输', '13', '$13$', '', '0', '1484750165');
+INSERT INTO `dict` VALUES ('97', 'JOB_FIELD', '其他', '13', '$13$', '', '0', '1484750166');
 
 -- ----------------------------
 -- Table structure for district
@@ -3562,39 +3611,85 @@ CREATE TABLE `interest` (
   `pid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父标签ID',
   PRIMARY KEY (`id`),
   KEY `idx_pid` (`pid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='兴趣爱好表';
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COMMENT='兴趣爱好表';
 
 -- ----------------------------
 -- Records of interest
 -- ----------------------------
 INSERT INTO `interest` VALUES ('1', '运动', '0');
-INSERT INTO `interest` VALUES ('2', '旅行', '0');
-INSERT INTO `interest` VALUES ('3', '艺术', '0');
-INSERT INTO `interest` VALUES ('4', '美食', '0');
-INSERT INTO `interest` VALUES ('5', '游戏', '0');
-INSERT INTO `interest` VALUES ('6', '娱乐', '0');
-INSERT INTO `interest` VALUES ('7', '金融', '0');
-INSERT INTO `interest` VALUES ('8', '语言', '0');
-INSERT INTO `interest` VALUES ('9', '乐器', '0');
-INSERT INTO `interest` VALUES ('10', '瑜伽', '1');
-INSERT INTO `interest` VALUES ('11', '舞蹈', '1');
-INSERT INTO `interest` VALUES ('12', '国内游', '2');
-INSERT INTO `interest` VALUES ('13', '境外游', '2');
-INSERT INTO `interest` VALUES ('14', '绘画', '3');
-INSERT INTO `interest` VALUES ('15', '书法', '3');
-INSERT INTO `interest` VALUES ('16', '亨饪', '4');
-INSERT INTO `interest` VALUES ('17', '中餐', '4');
-INSERT INTO `interest` VALUES ('18', '网络游戏', '5');
-INSERT INTO `interest` VALUES ('19', '手机游戏', '5');
-INSERT INTO `interest` VALUES ('20', '聚会', '6');
-INSERT INTO `interest` VALUES ('21', '追星', '6');
-INSERT INTO `interest` VALUES ('22', '股票', '7');
-INSERT INTO `interest` VALUES ('23', '基金', '7');
-INSERT INTO `interest` VALUES ('24', '英语', '8');
-INSERT INTO `interest` VALUES ('25', '日语', '8');
-INSERT INTO `interest` VALUES ('26', '吉他', '9');
-INSERT INTO `interest` VALUES ('27', '口琴', '9');
-INSERT INTO `interest` VALUES ('28', '钢琴', '9');
+INSERT INTO `interest` VALUES ('2', '瑜伽', '1');
+INSERT INTO `interest` VALUES ('3', '舞蹈', '1');
+INSERT INTO `interest` VALUES ('4', '徒步', '1');
+INSERT INTO `interest` VALUES ('5', '篮球', '1');
+INSERT INTO `interest` VALUES ('6', '足球', '1');
+INSERT INTO `interest` VALUES ('7', '乒乓球', '1');
+INSERT INTO `interest` VALUES ('8', '台球', '1');
+INSERT INTO `interest` VALUES ('9', '网球', '1');
+INSERT INTO `interest` VALUES ('10', '排球', '1');
+INSERT INTO `interest` VALUES ('11', '羽毛球', '1');
+INSERT INTO `interest` VALUES ('12', '跑步', '1');
+INSERT INTO `interest` VALUES ('13', '游泳', '1');
+INSERT INTO `interest` VALUES ('14', '滑雪', '1');
+INSERT INTO `interest` VALUES ('15', '爬山', '1');
+INSERT INTO `interest` VALUES ('16', '健身', '1');
+INSERT INTO `interest` VALUES ('17', '滑雪', '1');
+INSERT INTO `interest` VALUES ('18', '高尔夫球', '1');
+INSERT INTO `interest` VALUES ('19', '旅游', '0');
+INSERT INTO `interest` VALUES ('20', '国内游', '20');
+INSERT INTO `interest` VALUES ('21', '境外游', '20');
+INSERT INTO `interest` VALUES ('22', '自驾游', '20');
+INSERT INTO `interest` VALUES ('23', '周边游', '20');
+INSERT INTO `interest` VALUES ('24', '沙发客', '20');
+INSERT INTO `interest` VALUES ('25', '户外探险', '20');
+INSERT INTO `interest` VALUES ('26', '艺术', '0');
+INSERT INTO `interest` VALUES ('27', '绘画', '27');
+INSERT INTO `interest` VALUES ('28', '书法', '27');
+INSERT INTO `interest` VALUES ('29', '音乐', '27');
+INSERT INTO `interest` VALUES ('30', '写作', '27');
+INSERT INTO `interest` VALUES ('31', '阅读', '27');
+INSERT INTO `interest` VALUES ('32', '魔术', '27');
+INSERT INTO `interest` VALUES ('33', '科技', '27');
+INSERT INTO `interest` VALUES ('34', '美食', '0');
+INSERT INTO `interest` VALUES ('35', '烹饪', '35');
+INSERT INTO `interest` VALUES ('36', '中餐', '35');
+INSERT INTO `interest` VALUES ('37', '西餐', '35');
+INSERT INTO `interest` VALUES ('38', '品茶', '35');
+INSERT INTO `interest` VALUES ('39', '品酒', '35');
+INSERT INTO `interest` VALUES ('40', '咖啡', '35');
+INSERT INTO `interest` VALUES ('41', '火锅', '35');
+INSERT INTO `interest` VALUES ('42', '游戏', '0');
+INSERT INTO `interest` VALUES ('43', '网络游戏', '43');
+INSERT INTO `interest` VALUES ('44', '手机游戏', '43');
+INSERT INTO `interest` VALUES ('45', '棋牌', '43');
+INSERT INTO `interest` VALUES ('46', '桌游', '43');
+INSERT INTO `interest` VALUES ('47', '休闲', '0');
+INSERT INTO `interest` VALUES ('48', '钓鱼', '48');
+INSERT INTO `interest` VALUES ('49', '花鸟', '48');
+INSERT INTO `interest` VALUES ('50', '宠物', '48');
+INSERT INTO `interest` VALUES ('51', '散步', '48');
+INSERT INTO `interest` VALUES ('52', '睡懒觉', '48');
+INSERT INTO `interest` VALUES ('53', '网购', '48');
+INSERT INTO `interest` VALUES ('54', '动漫', '48');
+INSERT INTO `interest` VALUES ('55', '金融', '0');
+INSERT INTO `interest` VALUES ('56', '股票', '56');
+INSERT INTO `interest` VALUES ('57', '基金', '56');
+INSERT INTO `interest` VALUES ('58', '债券', '56');
+INSERT INTO `interest` VALUES ('59', '期货', '56');
+INSERT INTO `interest` VALUES ('60', '投资', '56');
+INSERT INTO `interest` VALUES ('61', '语言', '0');
+INSERT INTO `interest` VALUES ('62', '英语', '63');
+INSERT INTO `interest` VALUES ('63', '日语', '63');
+INSERT INTO `interest` VALUES ('64', '韩语', '63');
+INSERT INTO `interest` VALUES ('65', '小语种', '63');
+INSERT INTO `interest` VALUES ('66', '乐器', '0');
+INSERT INTO `interest` VALUES ('67', '吉他', '67');
+INSERT INTO `interest` VALUES ('68', '口琴', '67');
+INSERT INTO `interest` VALUES ('69', '钢琴', '67');
+INSERT INTO `interest` VALUES ('70', '小提琴', '67');
+INSERT INTO `interest` VALUES ('71', '钢管乐器', '67');
+INSERT INTO `interest` VALUES ('72', '打击乐器', '67');
+INSERT INTO `interest` VALUES ('73', '民族乐器', '67');
+INSERT INTO `interest` VALUES ('74', '西洋乐器', '67');
 
 -- ----------------------------
 -- Table structure for member
@@ -3602,6 +3697,8 @@ INSERT INTO `interest` VALUES ('28', '钢琴', '9');
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `relation` tinyint(4) NOT NULL DEFAULT '1' COMMENT '11-父亲；12-母亲；21-祖父；22-祖母；1-自己；2-妻子；3-兄弟；4-姐弟；5-姐妹；6-堂兄',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '姓名',
   `gender` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1-男；2-女；',
   `avatar` varchar(100) NOT NULL DEFAULT '' COMMENT '头像',
@@ -3611,7 +3708,6 @@ CREATE TABLE `member` (
   `birthplaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '省',
   `birthplaceCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '市',
   `birthplaceCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '县/区',
-  `relation` tinyint(4) NOT NULL DEFAULT '1' COMMENT '11-父亲；12-母亲；21-祖父；22-祖母；1-自己；2-妻子；3-兄弟；4-姐弟；5-姐妹；6-堂兄',
   `ranking` tinyint(4) NOT NULL DEFAULT '1' COMMENT '排行',
   `nativePlaceCountryId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：国家ID',
   `nativePlaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '籍贯：省ID',
@@ -3621,7 +3717,6 @@ CREATE TABLE `member` (
   `ancestralProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍地：省ID',
   `ancestralCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍地：市ID',
   `ancestralCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '祖籍地：区/县ID',
-  `userId` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='家族成员表';
 
@@ -3721,19 +3816,43 @@ CREATE TABLE `news` (
   `userId` bigint(20) NOT NULL COMMENT '发布新闻的作者',
   `createTime` bigint(20) unsigned NOT NULL COMMENT '创建时间',
   `updateTime` bigint(20) NOT NULL COMMENT '更新时间',
+  `surnameId` bigint(20) NOT NULL DEFAULT '0' COMMENT '姓氏ID',
+  `surname` varchar(10) NOT NULL DEFAULT '' COMMENT '姓氏',
   PRIMARY KEY (`id`),
   KEY `idx_updateTime` (`updateTime`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='首页新闻表';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COMMENT='首页新闻表';
 
 -- ----------------------------
 -- Records of news
 -- ----------------------------
-INSERT INTO `news` VALUES ('8', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542');
-INSERT INTO `news` VALUES ('9', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362');
-INSERT INTO `news` VALUES ('10', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790');
-INSERT INTO `news` VALUES ('11', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595');
-INSERT INTO `news` VALUES ('12', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021');
-INSERT INTO `news` VALUES ('13', '活动', '地方', '', '2', '12', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1488727052');
+INSERT INTO `news` VALUES ('8', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542', '0', '');
+INSERT INTO `news` VALUES ('9', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362', '0', '');
+INSERT INTO `news` VALUES ('10', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790', '0', '');
+INSERT INTO `news` VALUES ('11', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595', '0', '');
+INSERT INTO `news` VALUES ('12', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021', '0', '');
+INSERT INTO `news` VALUES ('13', '活动', '地方', '', '2', '12', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1489242063', '0', '');
+INSERT INTO `news` VALUES ('14', '段氏', '段氏', '<p>订单</p>', '2', '11', '0', '', '0', '1', '1489241904', '1489304245', '1', '廖');
+INSERT INTO `news` VALUES ('15', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542', '0', '');
+INSERT INTO `news` VALUES ('16', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362', '0', '');
+INSERT INTO `news` VALUES ('17', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790', '0', '');
+INSERT INTO `news` VALUES ('18', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595', '0', '');
+INSERT INTO `news` VALUES ('19', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021', '0', '');
+INSERT INTO `news` VALUES ('20', '活动', '地方', '', '2', '12', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1489242063', '0', '');
+INSERT INTO `news` VALUES ('21', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542', '0', '');
+INSERT INTO `news` VALUES ('22', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362', '0', '');
+INSERT INTO `news` VALUES ('23', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790', '0', '');
+INSERT INTO `news` VALUES ('24', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595', '0', '');
+INSERT INTO `news` VALUES ('25', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021', '0', '');
+INSERT INTO `news` VALUES ('26', '活动', '地方', '', '2', '12', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1489242063', '0', '');
+INSERT INTO `news` VALUES ('27', '段氏', '段氏', '<p>订单</p>', '2', '11', '0', '', '0', '1', '1489241904', '1489304245', '1', '廖');
+INSERT INTO `news` VALUES ('28', 'ss', 'ss', '<p><img src=\"/content_image/2017/03/03/1488552916019022643.jpg\" title=\"1488552916019022643.jpg\" alt=\"baokuan-2.jpg\"/></p>', '1', '1', '1', 'news/2017/03/04/1488606443279077406.jpg,news/2017/03/05/1488726515180051737.jpg', '1', '1', '1487605987', '1488726542', '0', '');
+INSERT INTO `news` VALUES ('29', 'ddfdf', '', '<p>efsdfds大幅度发给<img src=\"/content_image/2017/03/03/1488553810226056298.jpg\" title=\"1488553810226056298.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '1', '2', '1', '/news/2017/03/03/1488555641343011751.jpg,/news/2017/03/03/1488555646016006122.jpg,/news/2017/03/03/1488555812814041169.jpg,/news/2017/03/03/1488556096803018157.jpg', '0', '1', '1487687468', '1488606362', '0', '');
+INSERT INTO `news` VALUES ('30', '这是个家族新闻', '大家好才是真的好啊', '<p>大家好好才是真的好</p><p><img src=\"content_image/2017/03/05/1488711339828036392.jpg\" title=\"1488711339828036392.jpg\" alt=\"index-fenlei-4.jpg\"/></p>', '2', '12', '1', 'news/2017/03/05/1488711324256043607.jpg', '0', '1', '1488711342', '1488726790', '0', '');
+INSERT INTO `news` VALUES ('31', 'fffgsdfg', 'gsdfgdf', '<p>fdgdf<br/></p>', '1', '1', '1', 'news/2017/03/05/1488726592912032496.jpg', '0', '1', '1488726581', '1488726595', '0', '');
+INSERT INTO `news` VALUES ('32', '家族新闻', '', '<p><img src=\"content_image/2017/03/05/1488726812753018296.jpg\" title=\"1488726812753018296.jpg\" alt=\"index-fenlei-2.jpg\"/></p>', '2', '11', '1', 'news/2017/03/05/1488727020170076392.jpg', '0', '1', '1488726814', '1488727021', '0', '');
+INSERT INTO `news` VALUES ('33', '活动', '地方', '<p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">央视网消息：</strong>假如见到总书记，你会对他说什么……是分享成功的喜悦，还是讲述心中的“小目标”？</p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">央视网微视频工作室推出的这期“街采”微视频，采集了各行各业、形形色色的百姓心声，他们，是否也讲出了你想讲的话……</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/7/70/70b8aec257f0812f94b7534aaa452679.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/7/70/70b8aec257f0812f94b7534aaa452679.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">篮球运动员 马布里：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">您喜欢篮球吗，您想来一场篮球比赛吗？</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/9/96/960a48d1cb8cdf4f0f3a4bce3dd56f8c.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/9/96/960a48d1cb8cdf4f0f3a4bce3dd56f8c.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">机器人 “优友”：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">我想对他说，别看我个子小，我的能耐多着呢，除了表演和讲解，还有很多可以做的事情。在总书记的鼓励下，我们不会骄傲，还要继续努力。</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/9/99/99c80e9ee04a69942973689a32dfcd06.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/9/99/99c80e9ee04a69942973689a32dfcd06.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.3rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">歌手 平安：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">我想对他说，我第一次参加文代会的时候，听到习总书记的讲话，非常非常地鼓舞人心，也是为我将来做音乐创作提供了很多的指示和方向。</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/b/ba/bad534ff1506d4588d88c5bf913323bc.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/b/ba/bad534ff1506d4588d88c5bf913323bc.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">全国人大代表 萧玉田：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">感谢您提出京津冀协同发展，并把它上升为国家战略，感谢您对河北人民，特别是对张家口、承德和保定，这些环首都周边的贫困地区的关心。</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/3/33/337f94ea9543100f98b73cad9201a6e2.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/3/33/337f94ea9543100f98b73cad9201a6e2.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">张北农民 徐海成：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">盼望总书记再来我们村，来我们村再看我们家，因为我们家准备今年开个农家院，我种的那个马铃薯，要准备再翻一倍，肯定价格也高了，日子肯定也更好过了。</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/c/ca/cacd8ad731d0ddd9701c30875ef43336.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/c/ca/cacd8ad731d0ddd9701c30875ef43336.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">张北农民 徐海成妻子：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">总书记上次来没吃上莜面窝窝，这回总书记来，吃我们莜面窝窝。</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/a/a1/a17599b0b6c807b901cf8e624e920d89.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/a/a1/a17599b0b6c807b901cf8e624e920d89.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">全国人大代表 董明珠：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">在您的供给侧改革的战略指导下，这两年企业在悄悄发生变化。2017，跟着总书记，撸起袖子加油干！</p><p><a href=\"http://cms-bucket.nosdn.127.net/catchpic/7/7b/7b59f57b735b48697cbd8902b97539a3.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://cms-bucket.nosdn.127.net/catchpic/7/7b/7b59f57b735b48697cbd8902b97539a3.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.3rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">《中国诗词大会》亚军 彭敏：</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">总书记我想对您说，船长、船长，海上有时风和日丽，有时大风大浪，但无论如何，我非常向往你将要带我们去的那个方向。</p><p><br/></p>&imgShowMode=1&imgs=/upload/2017/03/12/1489311015569026389.jpg,&intro=&title=这是一个图片&type=1', '1', '1', '1', 'news/2017/03/05/1488727038494067600.jpg', '0', '1', '1488727043', '1489242063', '0', '');
+INSERT INTO `news` VALUES ('34', '大图', '大图', '<h1 class=\"title\" style=\"margin: 0px; padding: 0px 0px 0.2rem; border: 0px; font-size: 0.46rem; color: rgb(64, 64, 64);\">照&quot;疯传 薄纱透出胸前两点</h1><p><span class=\"time js-time\" style=\"margin: 0px; padding: 0px; border: 0px;\">2017-03-10 00:52</span>&nbsp;<span class=\"source js-source\" style=\"margin: 0px; padding: 0px 0px 0px 0.2rem; border: 0px;\">耿直姐妹下午茶</span></p><p style=\"margin-top: 0.3rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">阿耿：呼叫张瀚/阿直：呼叫妖妖灵</p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\">欢迎分享并转发，转载须告知；欢迎关注公众号“耿直姐妹下午茶”（gengzhigirls）与我们互撩~</strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">厉害了！此刻阿耿很想呼叫张瀚，快来看看你的女盆友~</p><p><a href=\"http://dingyue.nosdn.127.net/1sO=26M9pI72ewPBYKKEmb=r1iYdbLpEL5hhZhezP3Et91489078336990compressflag.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://dingyue.nosdn.127.net/1sO=26M9pI72ewPBYKKEmb=r1iYdbLpEL5hhZhezP3Et91489078336990compressflag.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">最近除了前女友闹出了不少幺蛾子之外，现女友<a href=\"http://3g.163.com/touch/idol/star44\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><span style=\"color:#009ce5\">古力娜扎</span></a>也出事了！娜扎凭着亮丽外型演出多部武侠、玄幻剧，成为新一代吃瓜群众心目中的古装女神。不过她近日被网友发现拍古装剧时竟然“激凸”了......好羞羞，阿耿只想问，“难道不穿内衣吗”</p><p><a href=\"http://dingyue.nosdn.127.net/6PpUNQxRqmkkyvmFZEoBXFbQ8AbscFQcYmqRIsXLXleGL1489078336990.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://dingyue.nosdn.127.net/6PpUNQxRqmkkyvmFZEoBXFbQ8AbscFQcYmqRIsXLXleGL1489078336990.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">这部娜扎和张瀚因的定情作《山海经之赤影传说》，没想到事隔将近一年，她在戏里一幕昏倒醒来的戏，白色的贴身薄衣上，竟然有不寻常的两点......</p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><strong style=\"margin: 0px; padding: 0px; border: 0px;\"></strong></p><p><strong style=\"margin: 0px; padding: 0px; border: 0px;\"><a href=\"http://dingyue.nosdn.127.net/sjUHPVCM7xs2SE8YHDA5VLiBwGTtpFRiEqffNu99DeqQ41489078336990.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://dingyue.nosdn.127.net/sjUHPVCM7xs2SE8YHDA5VLiBwGTtpFRiEqffNu99DeqQ41489078336990.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></strong></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\"><br/></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">阿耿吓得下巴都要掉了！！！按理说，古装戏服有“里三层、外三层”，难道是错觉？！不对呀，还有另一部剧《武神赵子龙》也被万能的网友翻出来了，这一身华服古力娜扎也疑似激凸......</p><p><a href=\"http://dingyue.nosdn.127.net/yFYDWVJEAYHDh9yWfAWEMgxTQ3ULh1t3QQrswq9wH1A761489078336990.jpg\" style=\"margin: 0px; padding: 0px; border: 0px; text-decoration: none; color: rgb(77, 134, 198);\"><img alt=\"\" src=\"http://dingyue.nosdn.127.net/yFYDWVJEAYHDh9yWfAWEMgxTQ3ULh1t3QQrswq9wH1A761489078336990.jpg\"/><span style=\"margin: 0px; padding: 0px; border: 0px; font-size: 0.3rem; color: rgb(64, 64, 64);\"></span></a></p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">婊贝们，你们来看看！！阿耿没看错吧~</p><p style=\"margin-top: 0.6rem; margin-bottom: 0.6rem; padding: 0px; border: 0px; text-align: justify; text-indent: 2em;\">特别声明：本文为网易自媒体平台“网易号”作者上传并发布，仅代表该作者观点。网易仅提供信息发布平台。</p><p><br/></p>', '1', '1', '1', 'news/2017/03/12/1489313330505059056.jpg', '0', '1', '1489313343', '1489313343', '0', '');
+INSERT INTO `news` VALUES ('35', '张瀚快来看！古力娜扎\"古装激凸照\"疯传 薄纱透出胸前两点', '张瀚快来看！古力娜扎\"古装激凸照\"疯传 薄纱透出胸前两点', '<p>厉害了！此刻阿耿很想呼叫张瀚，快来看看你的女盆友~</p><p><img src=\"content_image/2017/03/12/1489314113428008276.jpg\" title=\"1489314113428008276.jpg\" alt=\"22312321.jpg\"/></p><p>最近除了前女友闹出了不少幺蛾子之外，现女友古力娜扎也出事了！娜扎凭着亮丽外型演出多部武侠、玄幻剧，成为新一代吃瓜群众心目中的古装女神。不过她近日被网友发现拍古装剧时竟然“激凸”了......好羞羞，阿耿只想问，“难道不穿内衣吗”</p><p><img src=\"content_image/2017/03/12/1489314166329087962.jpg\" title=\"1489314166329087962.jpg\" alt=\"1489078336990.jpg\"/></p><p>这部娜扎和张瀚因的定情作《山海经之赤影传说》，没想到事隔将近一年，她在戏里一幕昏倒醒来的戏，白色的贴身薄衣上，竟然有不寻常的两点......</p><p><img src=\"content_image/2017/03/12/1489314216722046849.jpg\" title=\"1489314216722046849.jpg\" alt=\"15489078336990.jpg\"/></p><p>阿耿吓得下巴都要掉了！！！按理说，古装戏服有“里三层、外三层”，难道是错觉？！不对呀，还有另一部剧《武神赵子龙》也被万能的网友翻出来了，这一身华服古力娜扎也疑似激凸......</p><p><br/></p>', '1', '1', '1', 'news/2017/03/12/1489314274515022742.jpg', '0', '1', '1489314309', '1489315338', '0', '');
 
 -- ----------------------------
 -- Table structure for role
@@ -5000,7 +5119,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_username` (`username`) USING BTREE,
   UNIQUE KEY `idx_phone` (`phone`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
@@ -5014,6 +5133,7 @@ INSERT INTO `user` VALUES ('7', 'ewang2', 'f81b3385baa4a7a776dc33324f2d61df9fea3
 INSERT INTO `user` VALUES ('9', 'qnyk2', '2e9f3cacb346e911feba8bf0fbf3d7ed7faa72082cacb175da99d67a1c02de7a', 'c88f1c', '电站管理员2', '', '123456789', '1', '2015-12-06 21:58:55', '廖', '', '0');
 INSERT INTO `user` VALUES ('10', 'qnyk66', 'fcdf6a46d0095d4237daed3a5573d7174e314d1c7f32674a18d110cdf98b8497', '422528', '账号管理员', '', '123456789091', '1', '2015-12-07 21:27:52', '廖', '', '1');
 INSERT INTO `user` VALUES ('17', '18028763997', 'ea36802c221d81695e379780036f35631c8df44d06e525a7b04003389358811c', '0b5cf0', '', '', '18028763997', '1', '2017-02-26 23:24:04', '廖', '', '0');
+INSERT INTO `user` VALUES ('18', '13430909675', 'e4e40ddc5f903171daa2ca1257be4bbeae95274b526299c0abc2d8009340cf9a', 'cfb858', '13430909675', '', '13430909675', '1', '2017-03-12 16:48:45', '', '', '0');
 
 -- ----------------------------
 -- Table structure for user_cert
@@ -5051,6 +5171,7 @@ CREATE TABLE `user_detail` (
   `birthplaceProvinceId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：省ID',
   `birthplaceCityId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：市ID',
   `birthplaceCountyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '出生地：区/县ID',
+  `birthplaceAddress` varchar(100) NOT NULL DEFAULT '' COMMENT '出生地详细地址',
   `credit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信誉',
   `contribution` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '贡献',
   `zibei` varchar(10) NOT NULL DEFAULT '' COMMENT '字辈',
@@ -5079,15 +5200,16 @@ CREATE TABLE `user_detail` (
 -- ----------------------------
 -- Records of user_detail
 -- ----------------------------
-INSERT INTO `user_detail` VALUES ('1', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('2', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('3', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('5', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('6', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('7', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('9', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('10', '1', '0', '0', '0', '0', '0', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `user_detail` VALUES ('17', '1', '0', '0', '0', '0', '0', '0', '0', '声', '', '0', '0', '0', '', '0', '0', '0', '[{\"main\":true,\"phone\":\"18028763997\"}]', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('1', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('2', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('3', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('5', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('6', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('7', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('9', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('10', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('17', '1', '0', '0', '0', '0', '0', '', '0', '0', '声', '', '0', '0', '0', '', '0', '0', '0', '[{\"main\":true,\"phone\":\"18028763997\"}]', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `user_detail` VALUES ('18', '1', '0', '0', '0', '0', '0', '', '0', '0', '', '', '0', '0', '0', '', '0', '0', '0', '[{\"main\":true,\"phone\":\"13430909675\"}]', '', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for user_friend
@@ -5101,6 +5223,7 @@ CREATE TABLE `user_friend` (
   `createTime` bigint(20) NOT NULL DEFAULT '0',
   `updateTime` bigint(20) NOT NULL DEFAULT '0',
   `respondentUserId` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '被申请人用户ID',
+  `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '好友请求备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_friend` (`userId`,`friendId`) USING BTREE,
   KEY `idx_respondent` (`respondentUserId`) USING BTREE
@@ -5109,7 +5232,7 @@ CREATE TABLE `user_friend` (
 -- ----------------------------
 -- Records of user_friend
 -- ----------------------------
-INSERT INTO `user_friend` VALUES ('4', '1', '2', '2', '1488008761', '1488008761', '2');
+INSERT INTO `user_friend` VALUES ('4', '1', '2', '2', '1488008761', '1488008761', '2', '');
 
 -- ----------------------------
 -- Table structure for user_interest

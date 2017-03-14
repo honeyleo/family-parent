@@ -36,7 +36,7 @@ public class DictTest {
 	public void dict() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		try {
-			String response = HttpClient.post(HOST + "/dict/JOB_FIELD/list", reqParams);
+			String response = HttpClient.post(HOST + "/dict/INDUSTRY/list", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
