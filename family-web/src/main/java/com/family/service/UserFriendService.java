@@ -37,4 +37,12 @@ public interface UserFriendService {
      * @return
      */
     List<UserFriend> notifys(long userId);
+    
+    /**
+     * 判断用户是否是好友关系
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    boolean isFriend(long userId, long friendId);
 }

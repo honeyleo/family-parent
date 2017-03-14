@@ -11,6 +11,11 @@ public class UserDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = 5553027590594336009L;
 	
+	/**
+	 * 
+	 */
+	private boolean isFriend;
+	
 	private Long id;
 	/**
      * 登录名
@@ -481,6 +486,14 @@ public class UserDetailDTO implements Serializable {
 
 	public void setAncestralCountyId(Long ancestralCountyId) {
 		this.ancestralCountyId = ancestralCountyId;
+	}
+
+	public boolean getIsFriend() {
+		return isFriend;
+	}
+
+	public void setIsFriend(boolean isFriend) {
+		this.isFriend = isFriend;
 	}
 	
 }

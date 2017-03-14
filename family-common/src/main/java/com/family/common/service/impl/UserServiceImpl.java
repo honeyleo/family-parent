@@ -80,5 +80,10 @@ public class UserServiceImpl implements UserService {
         res.setData(list);
         return res;
     }
+
+	@Override
+	public List<User> search(String query) {
+		return userDAO.search(query);
+	}
     
 }

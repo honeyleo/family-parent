@@ -131,4 +131,9 @@
   <update id="updateCerted">
   	UPDATE `user` SET cert = 1 WHERE id = #{id}
   </update>
+  <select id="search" resultMap="BaseResultMap" parameterType="java.lang.String" useCache="true">
+    select 
+    <include refid="Base_Column_List" />
+    from user where nickname = #{query} OR phone=#{query}
+  </select>
 </mapper>

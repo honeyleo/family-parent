@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.family.common.model.UserDetailDTO;
+import com.family.common.service.UserDetailService;
+import com.family.common.service.UserService;
 import com.family.model.CurrentUser;
 import com.family.model.UserFriend;
 import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
+import com.google.common.collect.Lists;
 
+import cn.lfy.base.model.User;
 import cn.lfy.common.model.Message;
 import cn.lfy.common.pinyin.HanyuPinyinHelper;
 import cn.lfy.common.web.BaseController;
@@ -158,6 +163,31 @@ public class UserFriendCtrl extends BaseController {
 		JSONObject data = new JSONObject();
 		data.put("list", notifyList);
 		builder.data(data);
+		return builder.build();
+	}
+	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserDetailService userDetailService;
+	
+	@RequestMapping("/app/user_friend/search")
+	@ResponseBody
+	public Object search(CurrentUser user, 
+			@RequestParam(name = "query") String query, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user_friend/search");
+		List<User> list = userService.search(query);
+		List<Long> userIdList = Lists.newArrayList();
+		for(User u : list) {
+			userIdList.add(u.getId());
+		}
+		List<UserDetailDTO> detailList = userDetailService.getUserDetailDTOList(userIdList);
+		for(UserDetailDTO dto : detailList) {
+			boolean isFriend = userFriendService.isFriend(user.getId(), dto.getId());
+			dto.setIsFriend(isFriend);
+		}
+		builder.put("list", detailList);
 		return builder.build();
 	}
 }

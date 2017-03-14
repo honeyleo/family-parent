@@ -44,4 +44,11 @@ public interface UserService {
      */
     User findByUsername(String username);
     
+    /**
+     * 通过手机号或者姓名搜索
+     * @param query
+     * @return
+     */
+    List<User> search(String query);
+    
 }

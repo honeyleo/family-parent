@@ -17,6 +17,7 @@ import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.service.UserDetailService;
 import com.family.model.CurrentUser;
+import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
 
 import cn.lfy.common.filehandler.ResourceIdentifier;
@@ -83,11 +84,17 @@ public class UserController {
 		return builder.build();
 	}
 	
+	@Autowired
+	private UserFriendService userFriendService;
+	
 	@RequestMapping("/detail/{user_id}")
 	@ResponseBody
-	public Object detail(@PathVariable("user_id") long userId, HttpServletRequest request) {
+	public Object detail(CurrentUser currentUser, @PathVariable("user_id") long userId, HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/user/" + userId);
 		UserDetailDTO userDetailDTO = userDetailService.getUserDetailDTO(userId);
+		if(userDetailDTO != null) {
+			userDetailDTO.setIsFriend(userFriendService.isFriend(currentUser.getId(), userId));
+		}
 		builder.data(userDetailDTO);
 		return builder.build();
 	}

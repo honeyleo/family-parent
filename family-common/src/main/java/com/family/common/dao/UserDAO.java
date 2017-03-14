@@ -2,8 +2,10 @@ package com.family.common.dao;
 
 import java.util.List;
 
-import cn.lfy.base.model.User;
+import org.apache.ibatis.annotations.Param;
+
 import cn.lfy.base.model.Criteria;
+import cn.lfy.base.model.User;
 
 public interface UserDAO {
     /**
@@ -49,4 +51,10 @@ public interface UserDAO {
      * @return
      */
     int updateCerted(Long id);
+    /**
+     * 通过手机号或者姓名搜索
+     * @param query
+     * @return
+     */
+    List<User> search(@Param("query")String query);
 }

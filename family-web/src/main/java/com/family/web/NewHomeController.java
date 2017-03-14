@@ -81,10 +81,10 @@ public class NewHomeController extends BaseController {
 			dto.put("comments", newsHome.getComments());
 			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
 			dto.put("imgs", imgs);
-			dto.put("detail_url", domainName + "/app/news_home/detail/" + newsHome.getId() + ".html");
+			dto.put("detail_url", domainName + "/app/" + newsType + "/detail/" + newsHome.getId() + ".html");
 			jsonList.add(dto);
 		}
-		Message.Builder builder = Message.newBuilder("/app/news_home/list");
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/list");
 		JSONObject data = new JSONObject();
 		data.put("more", more);
 		data.put("newestCount", count);
@@ -107,7 +107,7 @@ public class NewHomeController extends BaseController {
 			@PathVariable("newsId") long newsId, 
 			HttpServletRequest request) {
 		NewsHome newsHome = newsHomeService.getById(newsId);
-		Message.Builder builder = Message.newBuilder("/app/news_home/detail/" + newsId);
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/detail/" + newsId);
 		if(newsHome != null) {
 			JSONObject dto = new JSONObject();
 			dto.put("id", newsHome.getId());

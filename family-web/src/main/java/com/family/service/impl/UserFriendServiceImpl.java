@@ -58,4 +58,14 @@ public class UserFriendServiceImpl implements UserFriendService {
 		return userFriendDAO.listOfFriendNotify(userId);
 	}
 
+	@Override
+	public boolean isFriend(long userId, long friendId) {
+		if(userId > friendId) {
+			long tmp = userId;
+			userId = friendId;
+			friendId = tmp;
+		}
+		return userFriendDAO.isFriend(userId, friendId);
+	}
+
 }
