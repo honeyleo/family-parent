@@ -39,10 +39,10 @@ public class RegisterController {
 			@RequestParam(name = "name") String name,
 			HttpServletRequest request) {
 		Validators.isFalse(!StringUtils.isNumeric(phone), ErrorCode.PARAM_ILLEGAL, "手机号");
-		Validators.isFalse(!StringUtils.isBlank(surname), ErrorCode.PARAM_ILLEGAL, "姓氏");
-		Validators.isFalse(!StringUtils.isBlank(name), ErrorCode.PARAM_ILLEGAL, "姓名");
-		Validators.isFalse(!StringUtils.isBlank(password), ErrorCode.PARAM_ILLEGAL, "密码");
-		Validators.isFalse(!StringUtils.isBlank(code), ErrorCode.PARAM_ILLEGAL, "验证码");
+		Validators.isFalse(StringUtils.isBlank(surname), ErrorCode.PARAM_ILLEGAL, "姓氏");
+		Validators.isFalse(StringUtils.isBlank(name), ErrorCode.PARAM_ILLEGAL, "姓名");
+		Validators.isFalse(StringUtils.isBlank(password), ErrorCode.PARAM_ILLEGAL, "密码");
+		Validators.isFalse(StringUtils.isBlank(code), ErrorCode.PARAM_ILLEGAL, "验证码");
 		User user = userService.findByUsername(phone);
 		Validators.isFalse(user != null, ErrorCode.EXIST);
 		verifyCodeService.verifyCodeAndDel("REG", phone, code);

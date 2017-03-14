@@ -9,12 +9,12 @@ import cn.lfy.common.utils.MessageDigestUtil;
 
 public class ApiTest {
 
-	public static final String HOST = "http://localhost:8080";
+	public static final String HOST = "http://xcf.visop.cn:8081";
 	
 	@Test
 	public void login() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("username", "qnyk66");
+		reqParams.put("username", "18028763997");
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		try {
 			String response = HttpClient.post(HOST + "/oauth/login", reqParams);
