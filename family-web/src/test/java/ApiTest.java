@@ -11,6 +11,8 @@ public class ApiTest {
 
 	public static final String HOST = "http://xcf.visop.cn:8081";
 	
+//	public static final String HOST = "http://localhost:8080";
+	
 	@Test
 	public void login() {
 		Map<String, String> reqParams = new HashMap<String, String>();
@@ -125,6 +127,19 @@ public class ApiTest {
 		reqParams.put("access_token", Constant.access_token);
 		try {
 			String response = HttpClient.post(HOST + "/app/user_friend/notifys", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void search() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("query", "系统管理员");
+		try {
+			String response = HttpClient.post(HOST + "/app/user_friend/search", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

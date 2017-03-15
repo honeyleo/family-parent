@@ -73,9 +73,9 @@
   </select>
   
   <select id="isFriend" resultType="java.lang.Boolean" parameterType="java.lang.Long" >
-    select 
-    Count(0)
-    from user_friend where userId = #{userId} AND friendId = #{friendId}
+    SELECT 
+    	COUNT(0)
+    FROM user_friend WHERE userId = #{userId} AND friendId = #{friendId} AND status = 2
   </select>
   
   <update id="agree">
