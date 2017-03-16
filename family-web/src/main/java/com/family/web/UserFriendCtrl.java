@@ -187,7 +187,9 @@ public class UserFriendCtrl extends BaseController {
 			boolean isFriend = userFriendService.isFriend(user.getId(), dto.getId());
 			dto.setIsFriend(isFriend);
 		}
-		builder.put("list", detailList);
+		JSONObject data = new JSONObject();
+		data.put("list", detailList);
+		builder.data(data);
 		return builder.build();
 	}
 }
