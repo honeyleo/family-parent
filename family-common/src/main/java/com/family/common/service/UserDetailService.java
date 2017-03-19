@@ -2,6 +2,7 @@ package com.family.common.service;
 
 import java.util.List;
 
+import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 
@@ -40,6 +41,13 @@ public interface UserDetailService {
      * @return
      */
     int updateMy(Long id, UserDetail userDetail);
+    /**
+     * 更新手机号
+     * @param id
+     * @param phones
+     * @return
+     */
+    List<Phone> updatePhones(Long id, String phones);
     
     /**
      * 关联查出用户ID列表中的所有用户详情

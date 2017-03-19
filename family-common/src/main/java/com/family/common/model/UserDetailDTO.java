@@ -268,7 +268,7 @@ public class UserDetailDTO implements Serializable {
 	}
 
 	public int getAge() {
-		age = AgeUtil.getAge(birthday);
+		age = AgeUtil.getAge(getBirthday());
 		return age;
 	}
 

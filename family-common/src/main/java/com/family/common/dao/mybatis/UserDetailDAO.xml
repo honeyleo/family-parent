@@ -74,8 +74,8 @@
       <if test="workplaceCityId != null" >
         workplaceCityId = #{workplaceCityId},
       </if>
-      <if test="phone != null" >
-        phone = #{phone},
+      <if test="phones != null" >
+        phones = #{phones},
       </if>
       <if test="tel != null" >
         tel = #{tel},
@@ -116,6 +116,16 @@
     <set >
       <if test="avatar != null" >
         avatar = #{avatar},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updatePhones" >
+    update user_detail
+    <set >
+      <if test="phones != null" >
+        phones = #{phones},
       </if>
     </set>
     where id = #{id}

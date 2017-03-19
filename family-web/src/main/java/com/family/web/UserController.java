@@ -2,6 +2,7 @@ package com.family.web;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
+import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.service.UserDetailService;
@@ -84,6 +87,17 @@ public class UserController {
 		return builder.build();
 	}
 	
+	@RequestMapping("/update_phones")
+	@ResponseBody
+	public Object updatePhones(CurrentUser user, String phones, HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/update_phones");
+		List<Phone> list = userDetailService.updatePhones(user.getId(), phones);
+		JSONObject data = new JSONObject();
+		data.put("phones", list);
+		builder.data(data);
+		return builder.build();
+	}
+	
 	@Autowired
 	private UserFriendService userFriendService;
 	
@@ -98,4 +112,5 @@ public class UserController {
 		builder.data(userDetailDTO);
 		return builder.build();
 	}
+	
 }

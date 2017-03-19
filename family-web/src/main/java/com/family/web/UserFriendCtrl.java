@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,9 @@ import cn.lfy.common.web.BaseController;
 @Controller
 public class UserFriendCtrl extends BaseController {
 
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
+	
 	@Autowired
 	private UserFriendService userFriendService;
 	
@@ -104,7 +108,7 @@ public class UserFriendCtrl extends BaseController {
 			JSONObject dto = new JSONObject();
 			dto.put("id", friend.getId());
 			dto.put("gender", friend.getGender());
-			dto.put("avatar", friend.getAvatar());
+			dto.put("avatar", imageUrl + friend.getAvatar());
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
 			dto.put("surname", friend.getSurname());
@@ -146,7 +150,7 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
 			dto.put("gender", friend.getGender());
-			dto.put("avatar", friend.getAvatar());
+			dto.put("avatar", imageUrl + friend.getAvatar());
 			dto.put("surname", friend.getSurname());
 			dto.put("name", friend.getName());
 			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));

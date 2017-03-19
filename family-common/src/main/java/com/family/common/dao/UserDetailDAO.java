@@ -47,4 +47,11 @@ public interface UserDetailDAO {
      * @return
      */
     UserDetailDTO getUserDetailDTO(@Param("id") Long id);
+    /**
+     * 更新手机号
+     * @param id
+     * @param phones
+     * @return
+     */
+    int updatePhones(@Param("id") Long id, @Param("phones") String phones);
 }
