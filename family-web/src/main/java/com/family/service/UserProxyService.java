@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -35,6 +36,9 @@ public class UserProxyService {
 	private static final int EXPIRE_CURRENT_USER = 7*24*60*60;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserProxyService.class);
+	
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
 	
 	@Autowired
 	private UserService userService;
@@ -67,6 +71,9 @@ public class UserProxyService {
 			UserDetail userDetail = getUserDetail(uid);
 			currentUser = refreshToCache(user, userDetail, "");
 		}
+		if(StringUtils.isNotBlank(currentUser.getAvatar())) {
+			currentUser.setAvatar(imageUrl + currentUser.getAvatar());
+		}
 		return currentUser;
 	}
 	
@@ -90,6 +97,9 @@ public class UserProxyService {
 				if(StringUtils.isNotBlank(value)) {
 					try {
 						CurrentUser currentUser = JSON.parseObject(value, CurrentUser.class);
+						if(StringUtils.isNotBlank(currentUser.getAvatar())) {
+							currentUser.setAvatar(imageUrl + currentUser.getAvatar());
+						}
 						map.put(currentUser.getId(), currentUser);
 					} catch(Throwable t) {
 						LOG.error("解析CurrentUser JSON Data Error");
@@ -112,6 +122,9 @@ public class UserProxyService {
 			Iterator<UserDetailDTO> it2 = list.iterator();
 			while(it2.hasNext()) {
 				CurrentUser currentUser = refreshToCache(it2.next(), "");
+				if(StringUtils.isNotBlank(currentUser.getAvatar())) {
+					currentUser.setAvatar(imageUrl + currentUser.getAvatar());
+				}
 				map.put(currentUser.getId(), currentUser);
 			}
 		}

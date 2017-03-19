@@ -7,7 +7,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,9 @@ import cn.lfy.common.utils.UUIDUtil;
 @RequestMapping("/app/user")
 public class UserController {
 
+	@Value("${fileserver.image.url}")
+	private String imageUrl;
+	
 	@Autowired
 	private UserProxyService userProxyService;
 	
@@ -49,6 +54,9 @@ public class UserController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("basic", user);
 		UserDetail mine = userProxyService.getUserDetail(user.getId());
+		if(StringUtils.isNotBlank(mine.getAvatar())) {
+			mine.setAvatar(imageUrl + mine.getAvatar());
+		}
 		data.put("mine", mine);
 		return builder.data(data).build();
 	}

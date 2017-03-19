@@ -73,7 +73,9 @@ public class UserDetailServiceImpl implements UserDetailService {
 	@Override
 	public UserDetailDTO getUserDetailDTO(Long id) {
 		UserDetailDTO userDetailDTO = userDetailDAO.getUserDetailDTO(id);
-		userDetailDTO.setAvatar(imageUrl + userDetailDTO.getAvatar());
+		if(userDetailDTO.getAvatar() != null) {
+			userDetailDTO.setAvatar(imageUrl + userDetailDTO.getAvatar());
+		}
 		UserDetailDTODecorate userDetailDTODecorate = new UserDetailDTODecorate(userDetailDTO);
 		return userDetailDTODecorate;
 	}
