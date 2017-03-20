@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -108,7 +109,11 @@ public class UserFriendCtrl extends BaseController {
 			JSONObject dto = new JSONObject();
 			dto.put("id", friend.getId());
 			dto.put("gender", friend.getGender());
-			dto.put("avatar", imageUrl + friend.getAvatar());
+			if(StringUtils.isNotBlank(friend.getAvatar())) {
+				dto.put("avatar", imageUrl + friend.getAvatar());
+			} else {
+				dto.put("avatar", "");
+			}
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
 			dto.put("surname", friend.getSurname());
@@ -150,7 +155,11 @@ public class UserFriendCtrl extends BaseController {
 			dto.put("username", friend.getUsername());
 			dto.put("nickname", friend.getNickname());
 			dto.put("gender", friend.getGender());
-			dto.put("avatar", imageUrl + friend.getAvatar());
+			if(StringUtils.isNotBlank(friend.getAvatar())) {
+				dto.put("avatar", imageUrl + friend.getAvatar());
+			} else {
+				dto.put("avatar", "");
+			}
 			dto.put("surname", friend.getSurname());
 			dto.put("name", friend.getName());
 			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
@@ -188,6 +197,9 @@ public class UserFriendCtrl extends BaseController {
 		}
 		List<UserDetailDTO> detailList = userDetailService.getUserDetailDTOList(userIdList);
 		for(UserDetailDTO dto : detailList) {
+			if(StringUtils.isNotBlank(dto.getAvatar())) {
+				dto.setAvatar(imageUrl + dto.getAvatar());
+			}
 			boolean isFriend = userFriendService.isFriend(user.getId(), dto.getId());
 			dto.setIsFriend(isFriend);
 		}
