@@ -1,4 +1,3 @@
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,9 +8,6 @@ import cn.lfy.common.utils.MessageDigestUtil;
 
 public class ApiTest {
 
-	public static final String HOST = "http://xcf.visop.cn:8081";
-	
-//	public static final String HOST = "http://localhost:8080";
 	
 	@Test
 	public void login() {
@@ -19,7 +15,7 @@ public class ApiTest {
 		reqParams.put("username", "18028763997");
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		try {
-			String response = HttpClient.post(HOST + "/oauth/login", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/oauth/login", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,7 +28,7 @@ public class ApiTest {
 		reqParams.put("type", "REG");
 		reqParams.put("phone", "18028763997");
 		try {
-			String response = HttpClient.post(HOST + "/verify_code/get", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/verify_code/get", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,7 +42,7 @@ public class ApiTest {
 		reqParams.put("phone", "18948714536");
 		reqParams.put("code", "345305");
 		try {
-			String response = HttpClient.post(HOST + "/verify_code/check", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/verify_code/check", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +58,7 @@ public class ApiTest {
 		reqParams.put("surname", "廖");
 		reqParams.put("name", "鹏");
 		try {
-			String response = HttpClient.post(HOST + "/register", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/register", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +70,7 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
 		try {
-			String response = HttpClient.post(HOST + "/oauth/refresh_token", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/oauth/refresh_token", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,7 +85,7 @@ public class ApiTest {
 		reqParams.put("access_token", Constant.access_token);
 		reqParams.put("friend_id", "2");
 		try {
-			String response = HttpClient.post(HOST + "/app/user_friend/apply", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/apply", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,7 +98,7 @@ public class ApiTest {
 		reqParams.put("access_token", Constant.access_token);
 		reqParams.put("friend_id", "1");
 		try {
-			String response = HttpClient.post(HOST + "/app/user_friend/agree", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/agree", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +110,7 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
 		try {
-			String response = HttpClient.post(HOST + "/app/user_friend/list", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/list", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +122,7 @@ public class ApiTest {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
 		try {
-			String response = HttpClient.post(HOST + "/app/user_friend/notifys", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/notifys", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,7 +135,7 @@ public class ApiTest {
 		reqParams.put("access_token", Constant.access_token);
 		reqParams.put("query", "系统管理员");
 		try {
-			String response = HttpClient.post(HOST + "/app/user_friend/search", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/search", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

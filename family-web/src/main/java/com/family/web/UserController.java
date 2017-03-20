@@ -1,6 +1,5 @@
 package com.family.web;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +27,11 @@ import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
-import cn.lfy.common.utils.UUIDUtil;
+import cn.lfy.common.web.BaseController;
 
 @Controller
 @RequestMapping("/app/user")
-public class UserController {
+public class UserController extends BaseController {
 
 	@Autowired
 	private UserProxyService userProxyService;
@@ -57,18 +56,17 @@ public class UserController {
 	@ResponseBody
 	public Object avatar(CurrentUser user, MultipartFile file, HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/user/avatar");
-		Map<String, Object> data = new HashMap<String, Object>();
-		String fileName = UUIDUtil.uuid() + ".jpg";
 		try {
-			ResourceIdentifier dest = resourceManager.processResource("avatar_image", file.getBytes(), fileName);
-			data.put("avatar", dest.getUrl());
+//			ResourceIdentifier dest = resourceManager.processResource("avatar_image", file.getBytes(), fileName);
+			ResourceIdentifier dest = handleFile("avatar_image", file, resourceManager);
+			builder.put("avatar", dest.getUrl());
 			if(dest != null) {
 				userDetailService.updateAvatar(user.getId(), dest.getRelativePath());
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new ApplicationException(ErrorCode.SERVER_ERROR);
 		}
-		return builder.data(data).build();
+		return builder.build();
 	}
 	
 	@RequestMapping("/update_my")
