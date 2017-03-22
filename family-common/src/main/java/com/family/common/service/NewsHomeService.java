@@ -52,7 +52,7 @@ public interface NewsHomeService {
      * @param limit
      * @return
      */
-    List<NewsHome> list(NewsType newsType, int type, int start, int limit);
+    List<NewsHome> list(String surname, NewsType newsType, int type, int start, int limit);
     /**
      * 最新新聞數量
      * @param type

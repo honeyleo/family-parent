@@ -64,7 +64,7 @@ public class ForgetPwdCtrl {
             
         }
 		userService.updateByIdSelective(user);
-		Message.Builder builder = Message.newBuilder("/forget/pwd");
+		Message.Builder builder = Message.newBuilder("/forget/reset");
 		return builder.build();
 	}
 }

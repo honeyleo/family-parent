@@ -3,7 +3,7 @@ package com.family.common.enums;
 public enum NewsType {
 
 	NEWS_HOME("news_home", 1),
-	NEWS_CONSULT("news_consult", 2),
+	NEWS_CONSULT("consult", 2),
 	;
 	private String label;
 	private int value;

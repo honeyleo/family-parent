@@ -54,13 +54,19 @@ public class NewHomeController extends BaseController {
 	 */
 	@RequestMapping("/app/{news_type}/list")
 	@ResponseBody
-	public Object list(@PathVariable("news_type") String newsType, 
+	public Object list(CurrentUser currentUser,
+			@PathVariable("news_type") String newsType, 
 			@RequestParam(name = "type", defaultValue = "1") int type, 
 			@RequestParam(name = "start", defaultValue = "0") int start, 
 			@RequestParam(name = "limit", defaultValue = "10") int limit,
 			@RequestParam(name = "last_update_time", defaultValue = "0") long lastUpdateTime,
 			HttpServletRequest request) {
-		List<NewsHome> list = newsHomeService.list(NewsType.parse(newsType), type, start, limit + 1);
+		NewsType newsTypeEnum = NewsType.parse(newsType);
+		String surname = null;
+		if(newsTypeEnum == NewsType.NEWS_CONSULT) {
+			surname = currentUser.getSurname();
+		}
+		List<NewsHome> list = newsHomeService.list(surname, newsTypeEnum, type, start, limit + 1);
 		int count = 0;
 		if(start == 0 && lastUpdateTime > 0) {
 			count = newsHomeService.getNewestCount(type, lastUpdateTime);

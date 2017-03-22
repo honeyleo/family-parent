@@ -46,7 +46,7 @@ public interface NewsHomeDAO {
      * @param limit
      * @return
      */
-    List<NewsHome> list(@Param("newsType") int newsType, @Param("type")int type, @Param("start")int start, @Param("limit")int limit);
+    List<NewsHome> list(@Param("surnameId") Long surnameId, @Param("newsType") int newsType, @Param("type")int type, @Param("start")int start, @Param("limit")int limit);
     /**
      * 最新新聞數量
      * @param type
@@ -66,4 +66,10 @@ public interface NewsHomeDAO {
      * @return
      */
     List<Surname> getSurnameBySurname(@Param("surname")String surname);
+    /**
+     * 获取姓氏
+     * @param surname
+     * @return
+     */
+    Surname getSurname(String surname);
 }

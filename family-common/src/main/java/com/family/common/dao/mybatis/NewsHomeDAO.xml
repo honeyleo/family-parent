@@ -133,6 +133,9 @@
     WHERE 1=1
     AND newsType = #{newsType}
     AND type = #{type}
+    <if test="surnameId != null">
+    	AND surnameId = #{surnameId}
+    </if>
     LIMIT #{start}, #{limit}
   </select>
   
@@ -142,6 +145,15 @@
     FROM surname
     WHERE 1=1 AND `surname` like '%${surname}%'
     AND status = 1
+  </select>
+  
+   <select id="getSurname" resultType="com.family.common.model.Surname">
+    SELECT
+    	id,`surname`,status
+    FROM surname
+    WHERE 1=1 AND `surname` = #{surname}
+    AND status = 1
+    LIMIT 1
   </select>
   
   <update id="incrComments">

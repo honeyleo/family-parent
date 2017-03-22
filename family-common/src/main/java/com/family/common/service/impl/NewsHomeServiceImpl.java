@@ -2,6 +2,7 @@ package com.family.common.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,8 +70,15 @@ public class NewsHomeServiceImpl implements NewsHomeService {
     }
 
 	@Override
-	public List<NewsHome> list(NewsType newsType, int type, int start, int limit) {
-		return newsHomeDAO.list(newsType.getValue(), type, start, limit);
+	public List<NewsHome> list(String surname, NewsType newsType, int type, int start, int limit) {
+		Long surnameId = null;
+		if(StringUtils.isNotBlank(surname)) {
+			Surname surnameObj = newsHomeDAO.getSurname(surname);
+			if(surnameObj != null) {
+				surnameId = surnameObj.getId();
+			}
+		}
+		return newsHomeDAO.list(surnameId, newsType.getValue(), type, start, limit);
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public class ApiTest {
 	public void login() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("username", "18028763997");
-		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
+		reqParams.put("password", MessageDigestUtil.getSHA256("admin1"));
 		try {
 			String response = HttpClient.post(Constant.HOST + "/oauth/login", reqParams);
 			System.out.println(response);

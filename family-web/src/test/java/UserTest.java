@@ -31,7 +31,7 @@ public class UserTest {
 		reqParams.put("access_token", Constant.access_token);
 		try {
 			Map<HttpClient.FileInfo, byte[]> files = new HashMap<HttpClient.FileInfo, byte[]>();
-			FileInputStream in = new FileInputStream("C:\\Users\\honeyleo\\Desktop\\image\\dd.png");
+			FileInputStream in = new FileInputStream("C:\\Users\\liaopeng\\Desktop\\image\\dd.jpg");
 			byte[] bytes = new byte[in.available()];
 			in.read(bytes);
 			files.put(new HttpClient.FileInfo("file", "1.jpg"), bytes);
