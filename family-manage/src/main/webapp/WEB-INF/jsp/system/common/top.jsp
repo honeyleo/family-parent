@@ -23,7 +23,7 @@
 			<a href="#" class="navbar-brand">
 				<small>
 					<i class="fa fa-globe"></i>
-					LFY管理平台
+					脉承管理平台
 				</small>
 			</a>
 

@@ -142,7 +142,7 @@
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                        id="search_dropDown-status2" value="0">无图</i></button>
+                                        id="search_dropDown-status2" value="1">上文下一大图</i></button>
                                 <button type="button"
                                         class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                         data-toggle="dropdown">

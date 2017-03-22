@@ -106,7 +106,7 @@ var users = {
             $.getJSON("/manager/news_home/detail", {id: id}, function(result){
             	if (result.ret == 0) {
             		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsSubType[result.data.type]);
-            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode]);
+            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode].text);
                     $("#id").val(result.data.id);
                     $("#title").val(result.data.title);
                     $("#intro").val(result.data.intro);
@@ -148,9 +148,17 @@ var users = {
         $("#updContent").click(function(){
         	var content = UE.getEditor('editor').getContent();
         	var imgs = "";
+        	var imgsCount = 0;
         	$(".vertical .modify_icon .icon_img").each(function(){
         		imgs +=$(this).attr("src") + ",";
+        		imgsCount ++;
         	});
+        	
+        	var count = Map.ImgShowMode[$("#search_dropDown-status2").attr("value")].count;
+        	if(imgsCount != count) {
+        		asyncbox.alert("图片数量必须跟图片模式所要求的一致","提示");
+        		return;
+        	}
             var param = {
                 id: $("#id").val(),
                 title: $("#title").val(),
@@ -219,9 +227,16 @@ var users = {
     	var content = UE.getEditor('editor').getContent();
 //    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
     	var imgs = "";
+    	var imgsCount = 0;
     	$(".vertical .modify_icon .icon_img").each(function(){
     		imgs +=$(this).attr("src") + ",";
+    		imgsCount ++;
     	});
+    	var count = Map.ImgShowMode[$("#search_dropDown-status2").attr("value")].count;
+    	if(imgsCount != count) {
+    		asyncbox.alert("图片数量必须跟图片模式所要求的一致","提示");
+    		return;
+    	}
     	var param = {
                 title: $("#title").val(),
                 intro: $("#intro").val(),
@@ -269,6 +284,7 @@ var users = {
         $("#content").val("");
         this.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         this.dropDown('modify_search_status2', 'search_dropDown-status2', 'status2');
+        UE.getEditor('editor').setContent("");
     },
     completeIconImg: function (data) {
         var json = jQuery.parseJSON(data);

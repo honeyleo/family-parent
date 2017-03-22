@@ -27,7 +27,7 @@ var users = {
         for (var i = 0; i < value.length; i++) {
             var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
-            value[i].type = Map.NewsSubType[value[i].type];
+            value[i].type = Map.NewsConsultType[value[i].type];
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
             	//'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
@@ -108,8 +108,8 @@ var users = {
             users.surnameFunc('surname1', 'surnameId1');
             $.getJSON("/manager/news_consult/detail", {id: id}, function(result){
             	if (result.ret == 0) {
-            		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsSubType[result.data.type]);
-            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode]);
+            		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsConsultType[result.data.type]);
+            		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode].text);
                     $("#id").val(result.data.id);
                     $("#title").val(result.data.title);
                     $("#intro").val(result.data.intro);
@@ -153,9 +153,18 @@ var users = {
         $("#updContent").click(function(){
         	var content = UE.getEditor('editor').getContent();
         	var imgs = "";
+        	var imgsCount = 0;
         	$(".vertical .modify_icon .icon_img").each(function(){
         		imgs +=$(this).attr("src") + ",";
+        		imgsCount ++;
         	});
+        	
+        	var count = Map.ImgShowMode[$("#search_dropDown-status2").attr("value")].count;
+        	if(imgsCount != count) {
+        		asyncbox.alert("图片数量必须跟图片模式所要求的一致","提示");
+        		return;
+        	}
+        	
         	var surnameId = $("#surnameId1").val();
         	var surname = $("#surnameId1Text").val();
             var param = {
@@ -229,9 +238,17 @@ var users = {
     	var content = UE.getEditor('editor').getContent();
 //    	var imgs = $(".vertical .modify_icon .icon_img").attr("src");
     	var imgs = "";
+    	var imgsCount = 0;
     	$(".vertical .modify_icon .icon_img").each(function(){
     		imgs +=$(this).attr("src") + ",";
+    		imgsCount ++;
     	});
+    	
+    	var count = Map.ImgShowMode[$("#search_dropDown-status2").attr("value")].count;
+    	if(imgsCount != count) {
+    		asyncbox.alert("图片数量必须跟图片模式所要求的一致","提示");
+    		return;
+    	}
     	var surnameId = $("#surnameId1").val();
     	var surname = $("#surnameId1Text").val();
     	var param = {
@@ -316,23 +333,26 @@ var users = {
         this.dropDown('modify_search_status2', 'search_dropDown-status2', 'status2');
         $("#surname1").val("");
         $("#surnameId1").val("");
+        UE.getEditor('editor').setContent("");
+                                                                                                                                                                                                                                                                                                              
     },
     completeIconImg: function (data) {
         var json = jQuery.parseJSON(data);
-        var imgUrl = '/upload/' + json.value[0].url;
-        var Img = new Image();
+        var imgUrl = '/upload/' + json.value[0].url;                                                          
+        var Img = new Image();                                                               
         Img.src = imgUrl;
         Img.onload = function () {
             var _width = Img.width, _height = Img.height;
                 if (json.code == 200) {
-                    var tData = [
+                    var tData = [                                                                            
                         {
                             url: '/upload/' + json.value[0].url
                         }
                     ];
                     var temp = $("#iconTemplate").tmpl(tData);
                     $('#uploadPortrait').css("float", "left").before(temp);
-                    $(".modify_icon").css("float","left");
+                    $(".modify_icon").css("float","left");                                                                                                                 
+                                                                                                                                                                             
                     $("#icon_name").text("");
                 } else {
                     asyncbox.alert("上传失败，请重试","提示");

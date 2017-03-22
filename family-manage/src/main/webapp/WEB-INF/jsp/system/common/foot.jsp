@@ -4,8 +4,8 @@
 		<!-- #section:basics/footer -->
 		<div class="footer-content">
 			<span class="bigger-120">
-				<span class="blue bolder">LFY Technology</span>
-				&copy; 2014-2016
+				<span class="blue bolder">脉承文化</span>
+				&copy; 2014-2017
 			</span>
 		</div>
 	</div>

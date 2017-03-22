@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <%@ include file="../common/common_css.jsp"%>
-<title>欢迎使用66 Internet后台管理平台</title>
+<title>欢迎使用脉承文化管理平台</title>
 </head>
 <body class="no-skin">
 	<!-- header -->

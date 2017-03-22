@@ -46,8 +46,8 @@
                         </button>
                         <ul class="dropdown-menu modify_search_status scrollBar" role="menu">
                             <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="0">全部</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="11">家族新闻</a></li>
-                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="12">家族活动</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">家族新闻</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">家族活动</a></li>
                         </ul>
                     </div>
                     <input type="hidden" value="50" name="type" />
@@ -128,8 +128,8 @@
                                     <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu modify_search_status1 scrollBar" role="menu">
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="11">家族新闻</a></li>
-                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="12">家族活动</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">家族新闻</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">家族活动</a></li>
                                 </ul>
                             </div>
                             <input type="hidden" value="50" name="type1" />
@@ -152,7 +152,7 @@
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
-                                        id="search_dropDown-status2" value="0">无图</i></button>
+                                        id="search_dropDown-status2" value="1">上文下一大图</i></button>
                                 <button type="button"
                                         class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
                                         data-toggle="dropdown">
