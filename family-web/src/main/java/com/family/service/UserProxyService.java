@@ -52,6 +52,11 @@ public class UserProxyService {
 	@Autowired
 	private TokenService tokenService;
 	
+	/**
+	 * 获取当前用户信息
+	 * @param uid
+	 * @return
+	 */
 	public CurrentUser getCurrentUser(long uid) {
 		String key = RedisKey.currentUserKey(uid);
 		String value = redisClient.get(key);
@@ -62,16 +67,15 @@ public class UserProxyService {
 			} catch(Throwable t) {
 				LOG.error("解析CurrentUser JSON数据错误.uid={}", uid);
 			}
-			if(currentUser != null) {
-				return currentUser;
-			}
 		} 
-		User user = userService.findById(uid);
-		if(user != null) {
-			UserDetail userDetail = getUserDetail(uid);
-			currentUser = refreshToCache(user, userDetail, "");
+		if(currentUser == null) {
+			User user = userService.findById(uid);
+			if(user != null) {
+				UserDetail userDetail = getUserDetail(uid);
+				currentUser = refreshToCache(user, userDetail, "");
+			}
 		}
-		if(StringUtils.isNotBlank(currentUser.getAvatar())) {
+		if(currentUser != null && StringUtils.isNotBlank(currentUser.getAvatar())) {
 			currentUser.setAvatar(imageUrl + currentUser.getAvatar());
 		}
 		return currentUser;
@@ -97,6 +101,9 @@ public class UserProxyService {
 				if(StringUtils.isNotBlank(value)) {
 					try {
 						CurrentUser currentUser = JSON.parseObject(value, CurrentUser.class);
+						if(currentUser == null) {
+							continue;
+						}
 						if(StringUtils.isNotBlank(currentUser.getAvatar())) {
 							currentUser.setAvatar(imageUrl + currentUser.getAvatar());
 						}
@@ -122,6 +129,9 @@ public class UserProxyService {
 			Iterator<UserDetailDTO> it2 = list.iterator();
 			while(it2.hasNext()) {
 				CurrentUser currentUser = refreshToCache(it2.next(), "");
+				if(currentUser == null) {
+					continue;
+				}
 				if(StringUtils.isNotBlank(currentUser.getAvatar())) {
 					currentUser.setAvatar(imageUrl + currentUser.getAvatar());
 				}
@@ -203,5 +213,17 @@ public class UserProxyService {
 	
 	public UserDetail getUserDetail(long id) {
 		return userDetailService.selectByPrimaryKey(id);
+	}
+	/**
+	 * 获取用户详情
+	 * @param username
+	 * @return
+	 */
+	public UserDetailDTO getUserDetailDTO(String username) {
+		User user = userService.findByUsername(username);
+		Validators.notNull(user, ErrorCode.VALUE_NOT_EXIST, "用户");
+		UserDetailDTO userDetailDTO = userDetailService.getUserDetailDTO(user.getId());
+		Validators.notNull(userDetailDTO, ErrorCode.VALUE_NOT_EXIST, "用户");
+		return userDetailDTO;
 	}
 }

@@ -49,7 +49,7 @@ public class UserDetailServiceImpl implements UserDetailService {
 	@Override
 	public int updateMy(Long id, UserDetail userDetail) {
 		UserDetail detail = userDetailDAO.selectByPrimaryKey(id);
-		Validators.isFalse(detail == null, ErrorCode.NOT_EXIST, "用户信息");
+		Validators.isFalse(detail == null, ErrorCode.VALUE_NOT_EXIST, "用户信息");
 		userDetail.setId(id);
 		int ret = userDetailDAO.updateByPrimaryKeySelective(userDetail);
 		return ret;
@@ -58,7 +58,7 @@ public class UserDetailServiceImpl implements UserDetailService {
 	@Override
 	public List<Phone> updatePhones(Long id, String phones) {
 		UserDetail detail = userDetailDAO.selectByPrimaryKey(id);
-		Validators.isFalse(detail == null, ErrorCode.NOT_EXIST, "用户信息");
+		Validators.isFalse(detail == null, ErrorCode.VALUE_NOT_EXIST, "用户信息");
 		userDetailDAO.updatePhones(id, phones);
 		List<Phone> list = JSON.parseArray(phones, Phone.class);
 		return list;

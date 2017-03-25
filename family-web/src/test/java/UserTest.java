@@ -102,6 +102,18 @@ public class UserTest {
 	}
 	
 	@Test
+	public void getUserDetailByUsername() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/getUserDetail/18028763997", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void updatePhones() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
@@ -117,6 +129,20 @@ public class UserTest {
 		reqParams.put("phones", JSON.toJSONString(list));
 		try {
 			String response = HttpClient.post(Constant.HOST + "/app/user/update_phones", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void userNewsFavor() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("start", "0");
+		reqParams.put("limit", "10");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/news/favor", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -35,4 +35,13 @@ public interface CommentDAO {
      * @return
      */
     List<Comment> list(@Param("newsId")long newsId, @Param("start")int start, @Param("limit")int limit);
+    
+    /**
+     * 通过用户ID获取收藏列表
+     * @param userId
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<Comment> getFavorListByUserId(@Param("userId")long userId, @Param("start")int start, @Param("limit")int limit);
 }

@@ -61,6 +61,8 @@ public interface ErrorCode extends BaseErrorCode
     static final int USERNAME_CONTAIN_SENSITIVE = SERVER_ERROR + ACCOUNT + 13;
     
     static final int EXIST = SERVER_ERROR + 12;
-    
-    static final int NOT_EXIST = SERVER_ERROR + 13;
+    /**
+     * {}不存在
+     */
+    static final int VALUE_NOT_EXIST = SERVER_ERROR + 13;
 }

@@ -3,6 +3,7 @@ package com.family.common.service;
 import java.util.List;
 
 import com.family.common.model.Comment;
+import com.family.common.model.UserNewsFavor;
 
 public interface CommentService {
 
@@ -41,4 +42,12 @@ public interface CommentService {
      * @return
      */
     int favor(long userId, long newsId);
+    /**
+     * 获取用户新闻收藏列表
+     * @param userId
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<UserNewsFavor> getUserNewsFavorList(long userId, int start, int limit);
 }

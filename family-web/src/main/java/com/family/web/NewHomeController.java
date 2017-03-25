@@ -177,7 +177,7 @@ public class NewHomeController extends BaseController {
 		if(more) {
 			list = list.subList(0, limit);
 		}
-		Message.Builder builder = Message.newBuilder("/app/news_home/comments");
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/comments");
 		JSONObject data = new JSONObject();
 		JSONArray array = new JSONArray();
 		for(Comment comment : list) {
@@ -210,7 +210,7 @@ public class NewHomeController extends BaseController {
 			@RequestParam(name = "content") String content, 
 			CurrentUser user,
 			HttpServletRequest request) {
-		Message.Builder builder = Message.newBuilder("/app/news_home/comment");
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/comment");
 		Comment record = new Comment();
 		record.setContent(content);
 		record.setNewsId(newsId);
@@ -233,7 +233,7 @@ public class NewHomeController extends BaseController {
 			@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
 			CurrentUser user,
 			HttpServletRequest request) {
-		Message.Builder builder = Message.newBuilder("/app/news_home/favor");
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/favor");
 		commentService.favor(user.getId(), newsId);
 		return builder.build();
 	}

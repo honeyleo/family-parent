@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
+import com.family.common.model.UserNewsFavor;
+import com.family.common.service.CommentService;
 import com.family.common.service.UserDetailService;
 import com.family.model.CurrentUser;
 import com.family.service.UserFriendService;
@@ -110,7 +113,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/detail/{user_id}")
 	@ResponseBody
 	public Object detail(CurrentUser currentUser, @PathVariable("user_id") long userId, HttpServletRequest request) {
-		Message.Builder builder = Message.newBuilder("/app/user/" + userId);
+		Message.Builder builder = Message.newBuilder("/app/user/detail/" + userId);
 		UserDetailDTO userDetailDTO = userDetailService.getUserDetailDTO(userId);
 		if(userDetailDTO != null) {
 			userDetailDTO.setIsFriend(userFriendService.isFriend(currentUser.getId(), userId));
@@ -119,4 +122,32 @@ public class UserController extends BaseController {
 		return builder.build();
 	}
 	
+	@RequestMapping("/getUserDetail/{username}")
+	@ResponseBody
+	public Object getUserDetail(CurrentUser currentUser, @PathVariable("username") String username, HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/getUserDetail/" + username);
+		UserDetailDTO userDetailDTO = userProxyService.getUserDetailDTO(username);
+		if(userDetailDTO != null) {
+			userDetailDTO.setIsFriend(userFriendService.isFriend(currentUser.getId(), userDetailDTO.getId()));
+		}
+		builder.data(userDetailDTO);
+		return builder.build();
+	}
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@RequestMapping("/news/favor")
+	@ResponseBody
+	public Object newsFavor(CurrentUser currentUser, 
+			@RequestParam(value = "start", defaultValue = "0") int start, 
+			@RequestParam(value = "limit", defaultValue = "10") int limit, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/news/favor");
+		List<UserNewsFavor> list = commentService.getUserNewsFavorList(currentUser.getId(), start, limit);
+		boolean more = isMore(list, limit);
+		builder.put("more", more);
+		builder.put("list", list);
+		return builder.build();
+	}
 }

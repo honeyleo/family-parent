@@ -11,11 +11,6 @@ public class UserDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = 5553027590594336009L;
 	
-	/**
-	 * 
-	 */
-	private boolean isFriend;
-	
 	private Long id;
 	/**
      * 登录名
@@ -177,7 +172,10 @@ public class UserDetailDTO implements Serializable {
 	 */
 	private Long ancestralCountyId;
 	
-	
+	/**
+	 * 是否是朋友
+	 */
+	private boolean isFriend;
 
 	public Long getId() {
 		return id;
@@ -268,7 +266,9 @@ public class UserDetailDTO implements Serializable {
 	}
 
 	public int getAge() {
-		age = AgeUtil.getAge(getBirthday());
+		if(getBirthday() != null) {
+			age = AgeUtil.getAge(getBirthday());
+		}
 		return age;
 	}
 

@@ -199,7 +199,7 @@ public class RoleController {
 		Role role = roleService.getById(roleId);
 		if (null == role)
 		{
-			throw ApplicationException.newInstance(ErrorCode.NOT_EXIST, "角色");
+			throw ApplicationException.newInstance(ErrorCode.VALUE_NOT_EXIST, "角色");
 		}
 		Iterator<String> it = Splitter.on(",").trimResults().split(menuIds).iterator();
 		Set<Long> nowSet = Sets.newHashSet();

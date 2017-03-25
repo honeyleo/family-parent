@@ -240,7 +240,7 @@ public class UserController {
 		User user = userService.findById(userId);
 		if (null == user)
 		{
-			throw ApplicationException.newInstance(ErrorCode.NOT_EXIST, "用户");
+			throw ApplicationException.newInstance(ErrorCode.VALUE_NOT_EXIST, "用户");
 		}
 		userRoleService.saveRoles(user.getId(), roleIds, currentUser.getRoles());
 		return Message.newBuilder().build();

@@ -1,5 +1,6 @@
 package com.family.common.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -72,4 +73,10 @@ public interface NewsHomeDAO {
      * @return
      */
     Surname getSurname(String surname);
+    /**
+     * 获取新闻简介信息（不包含content）
+     * @param list
+     * @return
+     */
+    List<NewsHome> getNewsIntroListByIds(@Param("list")Collection<Long> list);
 }

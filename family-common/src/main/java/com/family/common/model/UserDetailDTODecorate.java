@@ -6,14 +6,13 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class UserDetailDTODecorate extends UserDetailDTO {
 
 	private static final long serialVersionUID = 6418582293510788859L;
 	
-	private List<JSONObject> phoneList;
+	private List<Phone> phoneList;
 	
 	@JSONField(serialize = false)
 	UserDetailDTO userDetailDTO;
@@ -21,7 +20,7 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 	public UserDetailDTODecorate(UserDetailDTO userDetailDTO) {
 		this.userDetailDTO = userDetailDTO;
 		if(StringUtils.isNotBlank(userDetailDTO.getPhones())) {
-			phoneList = JSON.parseArray(userDetailDTO.getPhones(), JSONObject.class);
+			phoneList = JSON.parseArray(userDetailDTO.getPhones(), Phone.class);
 		}
 	}
 	
@@ -321,7 +320,7 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 		userDetailDTO.setAncestralCountyId(ancestralCountyId);
 	}
 
-	public List<JSONObject> getPhoneList() {
+	public List<Phone> getPhoneList() {
 		return phoneList;
 	}
 	
