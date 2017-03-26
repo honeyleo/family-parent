@@ -146,8 +146,8 @@ public class UserController extends BaseController {
 		Message.Builder builder = Message.newBuilder("/app/user/news/favor");
 		List<UserNewsFavor> list = commentService.getUserNewsFavorList(currentUser.getId(), start, limit);
 		boolean more = isMore(list, limit);
-		builder.put("more", more);
-		builder.put("list", list);
+		builder.putData("more", more);
+		builder.putData("list", list);
 		return builder.build();
 	}
 }

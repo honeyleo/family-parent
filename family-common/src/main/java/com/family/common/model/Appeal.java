@@ -3,6 +3,8 @@ package com.family.common.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 求助消息
  * @author wendy
@@ -18,6 +20,7 @@ public class Appeal implements Serializable {
 	
 	private Long userId;
 	
+	@JSONField(serialize = false)
 	private String imgs;
 	
 	private List<String> imgsList;

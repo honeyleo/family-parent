@@ -24,8 +24,8 @@
 			var mainFrame = document.getElementById("mainFrame");
 			var bheight = document.documentElement.clientHeight;
 			mainFrame.style.width = '100%';
-			mainFrame.style.height = (bheight  - 51) + 'px';
-			
+			//mainFrame.style.height = (bheight  - 51) + 'px';
+			mainFrame.style.height = (bheight  - 120) + 'px';
 		}
 		loginFrame();
 		window.onresize=function(){  

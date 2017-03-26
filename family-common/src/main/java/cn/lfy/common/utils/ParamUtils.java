@@ -56,7 +56,6 @@ public class ParamUtils {
 		return map;
 	}
 	
-	
 	/**
 	 * 将value为数组类型的map转换成普通Map
 	 * @param map	Map<String, String[]>
@@ -75,7 +74,11 @@ public class ParamUtils {
 			}else if(object instanceof String[]){
 				String[] array = (String[])object;
 				for (int i = 0; i < array.length; i++) {
-					value = array[i] + "";
+					if(i == 0) {
+						value += array[i];
+					} else {
+						value += "," + array[i];
+					}
 				}
 			}else{
 				value = object.toString();
@@ -86,15 +89,14 @@ public class ParamUtils {
 	}
 	
 	public static Map<String, Object> getParameter(HttpServletRequest req){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if(req != null){
 			Map<String, String[]> paraMap = req.getParameterMap();
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			if(paraMap != null)
+			if(paraMap != null) {
 				resultMap = conversionToGeneralMap(paraMap);
-			return resultMap;
+			}
 		}
-		return null;
-		
+		return resultMap;
 	}
 	
 	/**

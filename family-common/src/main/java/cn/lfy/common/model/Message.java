@@ -19,7 +19,12 @@ public class Message extends HashMap<String,Object> {
 		this.put("ret", builder.ret);
 		this.put("uri", builder.uri);
 		this.put("msg", builder.msg);
-		this.put("data", builder.data);
+		if(builder.data != null) {
+			this.put("data", builder.data);
+		}
+		if(!builder.dataMap.isEmpty()) {
+			this.put("data", builder.dataMap);
+		}
 		this.put("total", builder.total);
 		this.putAll(builder.map);
 	}
@@ -36,6 +41,8 @@ public class Message extends HashMap<String,Object> {
 		private Integer total;
 		
 		private Map<String,Object> map = new HashMap<String, Object>();
+		
+		private Map<String,Object> dataMap = new HashMap<String, Object>();
 		
 		public Builder() {
 		}
@@ -68,6 +75,10 @@ public class Message extends HashMap<String,Object> {
 		}
 		public Builder put(String key, Object value) {
 			map.put(key, value);
+			return this;
+		}
+		public Builder putData(String key, Object value) {
+			dataMap.put(key, value);
 			return this;
 		}
 		public Message build() {

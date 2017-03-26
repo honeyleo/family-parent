@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.VersionDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, type, title, description, versionName, versionCode, url, state, createTime, updateTime
+  </sql>
+  
+  <select id="get" resultType="com.family.common.model.Version" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from version where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from version where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.Version" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into version (type, title, description, versionName, versionCode, url, state, createTime, updateTime)
+    values (#{type}, #{title}, #{description}, #{versionName}, #{versionCode}, #{url}, #{state}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+  </insert>
+  
+  <update id="update" parameterType="com.family.common.model.Version" >
+    update version
+    <set >
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="description != null" >
+        description = #{description},
+      </if>
+      <if test="versionName != null" >
+        versionName = #{versionName},
+      </if>
+      <if test="versionCode != null" >
+        versionCode = #{versionCode},
+      </if>
+      <if test="url != null" >
+        url = #{url},
+      </if>
+      <if test="state != null" >
+        state = #{state},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime},
+      </if>
+      updateTime = UNIX_TIMESTAMP()
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="list" resultType="com.family.common.model.Version">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	FROM `version`
+  </select>
+  
+</mapper>

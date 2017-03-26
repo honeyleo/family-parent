@@ -22,9 +22,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		String requestUrl = request.getRequestURI();
-
-		if (!(ignoreUrl.contains(requestUrl))) {
+		String requestUri = request.getRequestURI();
+		
+		if (!(ignoreUrl.contains(requestUri))) {
 			Object currentUser = request.getSession().getAttribute("CURRENT_USER");
 			if(currentUser == null) {
 				String accessToken = request.getHeader("access_token");

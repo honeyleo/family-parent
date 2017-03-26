@@ -1,0 +1,10 @@
+分页插件的使用方式：
+第一种：在DAO接口方法参数中包含pageIndex、pageSize两个key，并返回Page，
+如：Page<User> listPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+第二种：在传入的实体对象中包含pageIndex、pageSize两个属性，如 ：Page<User> list(User user);
+public class User {
+	private String query;
+	private Integer pageIndex;
+	private Integer pageSize;
+	//省略getter/setter方法
+}

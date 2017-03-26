@@ -3988,6 +3988,7 @@ var domUtils = dom.domUtils = {
         if (offsetTop) {
             element.style.top = top + offsetTop + 'px';
         }
+        element.style.width = rect.width - 18 + 'px';
     },
 
     /**
