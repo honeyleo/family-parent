@@ -15,6 +15,8 @@ public class Version implements Serializable {
 	private String description;
 	private String versionName;
 	private Long versionCode;
+	private Integer size;
+	private String digest;
 	private String url;
 	private Integer state;
 	private Long createTime;
@@ -53,6 +55,18 @@ public class Version implements Serializable {
 	}
 	public void setVersionCode(Long versionCode) {
 		this.versionCode = versionCode;
+	}
+	public Integer getSize() {
+		return size;
+	}
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+	public String getDigest() {
+		return digest;
+	}
+	public void setDigest(String digest) {
+		this.digest = digest;
 	}
 	public String getUrl() {
 		return url;

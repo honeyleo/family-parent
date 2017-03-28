@@ -4,7 +4,7 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   
   <sql id="Base_Column_List" >
-    id, type, title, description, versionName, versionCode, url, state, createTime, updateTime
+    id, type, title, description, versionName, versionCode, digest, size, url, state, createTime, updateTime
   </sql>
   
   <select id="get" resultType="com.family.common.model.Version" parameterType="java.lang.Long" >
@@ -21,8 +21,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into version (type, title, description, versionName, versionCode, url, state, createTime, updateTime)
-    values (#{type}, #{title}, #{description}, #{versionName}, #{versionCode}, #{url}, #{state}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    insert into version (type, title, description, versionName, versionCode, digest, size, url, state, createTime, updateTime)
+    values (#{type}, #{title}, #{description}, #{versionName}, #{versionCode}, #{digest}, #{size}, #{url}, #{state}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
   </insert>
   
   <update id="update" parameterType="com.family.common.model.Version" >
@@ -43,6 +43,12 @@
       <if test="versionCode != null" >
         versionCode = #{versionCode},
       </if>
+      <if test="digest != null" >
+        digest = #{digest},
+      </if>
+      <if test="size != null" >
+        size = #{size},
+      </if>
       <if test="url != null" >
         url = #{url},
       </if>
@@ -61,6 +67,14 @@
   	SELECT 
   	<include refid="Base_Column_List" />
   	FROM `version`
+  </select>
+  
+  <select id="getLatestVersion" resultType="com.family.common.model.Version">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	FROM `version`
+  	WHERE type = #{type} AND versionCode > #{versionCode} AND state = 1
+  	LIMIT 1
   </select>
   
 </mapper>

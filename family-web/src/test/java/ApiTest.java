@@ -141,4 +141,18 @@ public class ApiTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void checkUpdate() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("type", "IOS");
+		reqParams.put("channel", "100");
+		reqParams.put("versionCode", "2");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/version/check_update", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

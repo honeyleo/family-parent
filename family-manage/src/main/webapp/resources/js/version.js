@@ -33,7 +33,7 @@ var versions = {
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
                 '</td>';
-            arr.push([versions.sunNum, value[i].id, value[i].type, title, '<div class="text_l">'+ value[i].description +'</div>', value[i].versionName, value[i].versionCode, value[i].url, value[i].createTime, state, $opera]);
+            arr.push([versions.sunNum, value[i].id, value[i].type, title, '<div class="text_l">'+ value[i].description +'</div>', value[i].versionName, value[i].versionCode, value[i].digest, value[i].size, value[i].url, value[i].createTime, state, $opera]);
         }
         self.num++;
         result.draw = self.num;
@@ -108,6 +108,8 @@ var versions = {
                     $("#description").val(result.data.description);
                     $("#versionName").val(result.data.versionName);
                     $("#versionCode").val(result.data.versionCode);
+                    $("#digest").val(result.data.digest);
+                    $("#size").val(result.data.size);
                     $("#url").val(result.data.url);
                     $('#search_dropDown-status2').attr("value", result.data.state).text(versions.State[result.data.state]);
             	}
@@ -122,6 +124,8 @@ var versions = {
                     description: $("#description").val(),
                     versionName: $("#versionName").val(),
                     versionCode: $("#versionCode").val(),
+                    digest: $("#digest").val(),
+                    size: $("#size").val(),
                     url: $("#url").val(),
                     state:$("#search_dropDown-status2").attr("value")
                 };
@@ -156,6 +160,8 @@ var versions = {
         $(".descriptionText").text(data.description);
         $(".versionNameText").text(data.versionName);
         $(".versionCodeText").text(data.versionCode);
+        $(".digestText").text(data.digest);
+        $(".sizeText").text(data.size);
         $(".stateText").text(versions.State[data.state]);
         var createTime = new Date(data.createTime*1000);
         data.createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
@@ -176,6 +182,8 @@ var versions = {
                 description: $("#description").val(),
                 versionName: $("#versionName").val(),
                 versionCode: $("#versionCode").val(),
+                digest: $("#digest").val(),
+                size: $("#size").val(),
                 url: $("#url").val(),
                 state:$("#search_dropDown-status2").attr("value")
             };
@@ -217,6 +225,8 @@ var versions = {
         $("#description").val("");
         $("#versionName").val("");
         $("#versionCode").val("");
+        $("#digest").val("");
+        $("#size").val("");
         $("#url").val("");
     },
 };

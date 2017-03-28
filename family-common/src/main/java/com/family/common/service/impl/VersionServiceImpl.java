@@ -22,6 +22,12 @@ public class VersionServiceImpl implements VersionService {
 	
 	@Override
 	public int insert(Version record) {
+		if(record.getDigest() == null) {
+			record.setDigest("");
+		}
+		if(record.getSize() == null) {
+			record.setSize(0);
+		}
 		int ret = versionDAO.insert(record);
 		return ret;
 	}
@@ -40,6 +46,11 @@ public class VersionServiceImpl implements VersionService {
 	public Page<Version> list(int pageIndex, int pageSize) {
 		Page<Version> page = versionDAO.list(pageIndex, pageSize);
 		return page;
+	}
+
+	@Override
+	public Version getLatestVersion(String type, Integer versionCode) {
+		return versionDAO.getLatestVersion(type, versionCode);
 	}
 
 }

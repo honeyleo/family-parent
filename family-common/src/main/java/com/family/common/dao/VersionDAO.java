@@ -34,4 +34,11 @@ public interface VersionDAO {
 	 * @return
 	 */
 	Page<Version> list(@Param("pageIndex")Integer pageIndex, @Param("pageSize") Integer pageSize);
+	/**
+	 * 根据版本号获取最新版本
+	 * @param type
+	 * @param versionCode
+	 * @return
+	 */
+	Version getLatestVersion(@Param("type") String type, @Param("versionCode") Integer versionCode);
 }

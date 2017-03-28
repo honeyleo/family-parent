@@ -33,4 +33,12 @@ public interface VersionService {
      */
     Page<Version> list(int pageIndex, int pageSize);
     
+    /**
+	 * 根据版本号获取最新版本
+	 * @param type
+	 * @param versionCode
+	 * @return
+	 */
+	Version getLatestVersion(String type, Integer versionCode);
+    
 }

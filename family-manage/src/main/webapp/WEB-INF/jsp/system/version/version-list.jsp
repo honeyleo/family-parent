@@ -66,6 +66,8 @@
                 <th width="140px">描述</th>
                 <th>版本名</th>
                 <th>版本号</th>
+                <th>摘要</th>
+                <th>文件大小</th>
                 <th>下载链接</th>
                 <th width="180px">创建时间</th>
                 <th>状态</th>
@@ -151,6 +153,18 @@
 	                    </td>
 	                </tr>
 	                <tr>
+	                    <th>摘要：</th>
+	                    <td>
+	                        <input type="text" class="form-control input_common600" id="digest" placeholder="文件摘要">
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th>文件大小：</th>
+	                    <td>
+	                        <input type="number" class="form-control input_common300" id="size">
+	                    </td>
+	                </tr>
+	                <tr>
 	                    <th>下载链接：</th>
 	                    <td>
 	                        <input type="text" class="form-control input_common600" id="url" placeholder="下载链接">
@@ -211,6 +225,12 @@
         <td><span class="versionNameText"></span></td>
         <th>版本号：</th>
         <td><span class="versionCodeText"></span></td>
+    </tr>
+	<tr>
+        <th>文件摘要：</th>
+        <td><span class="digestText"></span></td>
+        <th>文件大小：</th>
+        <td><span class="sizeText"></span></td>
     </tr>
 	<tr>
         <th>状态：</th>
