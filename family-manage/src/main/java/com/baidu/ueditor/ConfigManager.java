@@ -195,7 +195,7 @@ public final class ConfigManager {
 		StringBuilder builder = new StringBuilder();
 		
 		try {
-			InputStream inputStream = ConfigManager.this.getClass().getClassLoader().getResourceAsStream("config.json");
+			InputStream inputStream = ConfigManager.this.getClass().getClassLoader().getResourceAsStream("conf/config.json");
 //			InputStreamReader reader = new InputStreamReader( new FileInputStream( path ), "UTF-8" );
 			InputStreamReader reader = new InputStreamReader( inputStream, "UTF-8" );
 			BufferedReader bfReader = new BufferedReader( reader );

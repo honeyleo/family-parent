@@ -24,12 +24,15 @@ public class LogFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
 			FilterChain filterChain) throws ServletException, IOException {
-		
+		String requestUri = request.getRequestURI();
+		if(requestUri.indexOf("ued/config") > 0 || requestUri.indexOf("/ued/config") > 0) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 		if(isMultipartContent(request)) {
 			request = multipartResolver.resolveMultipart(request);
 		}
 		
-		String requestUri = request.getRequestURI();
 		Map<String, Object> paraMap = ParamUtils.getParameter(request);
 		String queryString = paraMap.isEmpty() ? "" : "?" + ParamUtils.getParameterText(paraMap, null, "&");
 		log.info(requestUri + queryString);
