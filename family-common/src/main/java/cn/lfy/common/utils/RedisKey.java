@@ -12,6 +12,8 @@ public class RedisKey {
 	
 	private static final String NEARBY_SURNAME_PEOPLE = PREFIX + "neaby:surname:%s:people";
 	
+	private static final String KEY_DISTRICT = PREFIX + "district:%d";
+	
 	public static String tokenKey(long uid) {
 		return String.format(KEY_TOKEN, uid);
 	}
@@ -26,5 +28,9 @@ public class RedisKey {
 	
 	public static String nearbySurnamePeopleKey(String surname) {
 		return String.format(NEARBY_SURNAME_PEOPLE, surname);
+	}
+	
+	public static String districtKey(long id) {
+		return String.format(KEY_DISTRICT, id);
 	}
 }

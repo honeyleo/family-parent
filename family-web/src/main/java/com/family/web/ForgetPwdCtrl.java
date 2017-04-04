@@ -34,7 +34,7 @@ public class ForgetPwdCtrl {
 			@RequestParam(name = "phone") String phone, 
 			HttpServletRequest request) {
 		User user = userService.findByUsername(StringUtil.isBlank(username) ? phone : username);
-		Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST);
+		Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST, "用户名");
 		
 		Validators.isFalse(!user.getPhone().equals(phone), ErrorCode.UNAUTHORIZED_OPERATE);
 		verifyCodeService.generatVerifyCode("FORGET", phone);
@@ -50,7 +50,7 @@ public class ForgetPwdCtrl {
 			@RequestParam(name = "password") String password,
 			HttpServletRequest request) {
 		User user = userService.findByUsername(StringUtil.isBlank(username) ? phone : username);
-		Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST);
+		Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST, "用户名");
 		
 		Validators.isFalse(!user.getPhone().equals(phone), ErrorCode.UNAUTHORIZED_OPERATE);
 		verifyCodeService.verifyCodeAndDel("FORGET", phone, code);

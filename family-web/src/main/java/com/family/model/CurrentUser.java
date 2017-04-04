@@ -35,7 +35,17 @@ public class CurrentUser implements Serializable {
 	 * 0-未认证；1-已认证
 	 */
 	private int cert;
-	
+	/**
+	 * 出生地（省）
+	 */
+	private long birthplaceProvinceId;
+	/**
+	 * 出生地（市）
+	 */
+	private Long birthplaceCityId;
+	/**
+	 * 距离（附近的人用到）
+	 */
 	private int distance;
 
 	public long getId() {
@@ -156,6 +166,22 @@ public class CurrentUser implements Serializable {
 
 	public void setCert(int cert) {
 		this.cert = cert;
+	}
+
+	public long getBirthplaceProvinceId() {
+		return birthplaceProvinceId;
+	}
+
+	public void setBirthplaceProvinceId(long birthplaceProvinceId) {
+		this.birthplaceProvinceId = birthplaceProvinceId;
+	}
+
+	public Long getBirthplaceCityId() {
+		return birthplaceCityId;
+	}
+
+	public void setBirthplaceCityId(Long birthplaceCityId) {
+		this.birthplaceCityId = birthplaceCityId;
 	}
 	
 }

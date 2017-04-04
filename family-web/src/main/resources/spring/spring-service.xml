@@ -29,7 +29,6 @@
 		<constructor-arg value="6379"></constructor-arg> 
 		<!-- timeout --> 
 		<constructor-arg value="1000"></constructor-arg> 
-	
 	</bean> 
 	
 	<bean id="userCertExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

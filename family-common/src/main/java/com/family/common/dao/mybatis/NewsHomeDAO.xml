@@ -37,6 +37,7 @@
   
   <sql id="Example_Order_Clause">
   	<trim prefix="order by" prefixOverrides="," >
+  		,updateTime DESC
   		<if test="orderMap.id != null">
   			,id #{orderMap.id}
   		</if>

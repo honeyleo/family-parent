@@ -48,7 +48,7 @@ public interface ErrorCode extends BaseErrorCode
      */
     static final int USERNAME_FORMAT_ERROR = SERVER_ERROR + ACCOUNT + 10;
     /**
-     * {}的字符数应在{}到{}之间
+     * {0}的字符数应在{1}到{2}之间
      */
     static final int PARAM_LENGTH_RANGE = SERVER_ERROR + ACCOUNT + 11;
     /**
@@ -59,10 +59,12 @@ public interface ErrorCode extends BaseErrorCode
      * 账户包含敏感词汇
      */
     static final int USERNAME_CONTAIN_SENSITIVE = SERVER_ERROR + ACCOUNT + 13;
-    
-    static final int EXIST = SERVER_ERROR + 12;
     /**
-     * {}不存在
+     * {0}已存在
+     */
+    static final int VALUE_EXIST = SERVER_ERROR + 12;
+    /**
+     * {0}不存在
      */
     static final int VALUE_NOT_EXIST = SERVER_ERROR + 13;
 }

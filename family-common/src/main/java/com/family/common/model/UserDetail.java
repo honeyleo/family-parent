@@ -1,6 +1,9 @@
 package com.family.common.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import cn.lfy.common.utils.AgeUtil;
 
@@ -70,7 +73,12 @@ public class UserDetail implements Serializable {
 	/**
 	 * 公司
 	 */
+	@JSONField(serialize = false)
 	private String company;
+	/**
+	 * 公司列表
+	 */
+	private List<Company> companyList;
 	/**
 	 * 工作地
 	 */
@@ -90,7 +98,10 @@ public class UserDetail implements Serializable {
 	/**
 	 * JSON对象[{"phone":"18028761234","main":"true"},{"phone":"18028761235","main":"false"}]
 	 */
+	@JSONField(serialize = false)
 	private String phones;
+	
+	private List<Phone> phoneList;
 	/**
 	 * 排行
 	 */
@@ -405,6 +416,22 @@ public class UserDetail implements Serializable {
 
 	public void setAncestralCountyId(Long ancestralCountyId) {
 		this.ancestralCountyId = ancestralCountyId;
+	}
+
+	public List<Company> getCompanyList() {
+		return companyList;
+	}
+
+	public void setCompanyList(List<Company> companyList) {
+		this.companyList = companyList;
+	}
+
+	public List<Phone> getPhoneList() {
+		return phoneList;
+	}
+
+	public void setPhoneList(List<Phone> phoneList) {
+		this.phoneList = phoneList;
 	}
 	
 }

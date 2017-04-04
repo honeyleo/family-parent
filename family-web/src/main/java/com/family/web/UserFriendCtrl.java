@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.UserDetailDTO;
+import com.family.common.service.DistrictService;
 import com.family.common.service.UserDetailService;
 import com.family.common.service.UserService;
 import com.family.model.CurrentUser;
@@ -23,6 +24,7 @@ import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
 import com.google.common.collect.Lists;
 
+import cn.lfy.base.model.District;
 import cn.lfy.base.model.User;
 import cn.lfy.common.model.Message;
 import cn.lfy.common.pinyin.HanyuPinyinHelper;
@@ -39,6 +41,9 @@ public class UserFriendCtrl extends BaseController {
 	
 	@Autowired
 	private UserProxyService userProxyService;
+	
+	@Autowired
+	private DistrictService districtService;
 	
 	/**
 	 * user申请加friendId为好友
@@ -105,28 +110,7 @@ public class UserFriendCtrl extends BaseController {
 		List<UserFriend> list = userFriendService.list(user.getId());
 		List<JSONObject> friendList = new ArrayList<JSONObject>();
 		for(UserFriend uf : list) {
-			CurrentUser friend = userProxyService.getCurrentUser(uf.getFriendId());
-			JSONObject dto = new JSONObject();
-			dto.put("id", friend.getId());
-			dto.put("gender", friend.getGender());
-			if(StringUtils.isNotBlank(friend.getAvatar())) {
-				dto.put("avatar", imageUrl + friend.getAvatar());
-			} else {
-				dto.put("avatar", "");
-			}
-			dto.put("username", friend.getUsername());
-			dto.put("nickname", friend.getNickname());
-			dto.put("surname", friend.getSurname());
-			dto.put("name", friend.getName());
-			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
-			dto.put("namePinyin", HanyuPinyinHelper.getPinyinString(friend.getName()));
-			dto.put("surnameAndNamePinyin", HanyuPinyinHelper.getPinyinString(friend.getSurname() + friend.getName()));
-			dto.put("surnameAndNamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
-			dto.put("credit", friend.getCredit());
-			dto.put("contribution", friend.getContribution());
-			dto.put("cert", friend.getCert());
-			dto.put("remark", uf.getRemark());
-			dto.put("status", uf.getStatus());
+			JSONObject dto = build(uf);
 			friendList.add(dto);
 		}
 		JSONObject data = new JSONObject();
@@ -149,28 +133,7 @@ public class UserFriendCtrl extends BaseController {
 		List<UserFriend> list = userFriendService.notifys(user.getId());
 		List<JSONObject> notifyList = new ArrayList<JSONObject>();
 		for(UserFriend uf : list) {
-			CurrentUser friend = userProxyService.getCurrentUser(uf.getFriendId());
-			JSONObject dto = new JSONObject();
-			dto.put("id", friend.getId());
-			dto.put("username", friend.getUsername());
-			dto.put("nickname", friend.getNickname());
-			dto.put("gender", friend.getGender());
-			if(StringUtils.isNotBlank(friend.getAvatar())) {
-				dto.put("avatar", imageUrl + friend.getAvatar());
-			} else {
-				dto.put("avatar", "");
-			}
-			dto.put("surname", friend.getSurname());
-			dto.put("name", friend.getName());
-			dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
-			dto.put("namePinyin", HanyuPinyinHelper.getPinyinString(friend.getName()));
-			dto.put("surnameAndNamePinyin", HanyuPinyinHelper.getPinyinString(friend.getSurname() + friend.getName()));
-			dto.put("surnameAndNamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
-			dto.put("credit", friend.getCredit());
-			dto.put("contribution", friend.getContribution());
-			dto.put("cert", friend.getCert());
-			dto.put("remark", uf.getRemark());
-			dto.put("status", uf.getStatus());
+			JSONObject dto = build(uf);
 			notifyList.add(dto);
 		}
 		JSONObject data = new JSONObject();
@@ -179,6 +142,41 @@ public class UserFriendCtrl extends BaseController {
 		return builder.build();
 	}
 	
+	private JSONObject build(UserFriend uf) {
+		CurrentUser friend = userProxyService.getCurrentUser(uf.getFriendId());
+		JSONObject dto = new JSONObject();
+		dto.put("id", friend.getId());
+		dto.put("username", friend.getUsername());
+		dto.put("nickname", friend.getNickname());
+		dto.put("gender", friend.getGender());
+		if(StringUtils.isNotBlank(friend.getAvatar())) {
+			dto.put("avatar", imageUrl + friend.getAvatar());
+		} else {
+			dto.put("avatar", "");
+		}
+		dto.put("surname", friend.getSurname());
+		dto.put("name", friend.getName());
+		dto.put("surnamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+		dto.put("namePinyin", HanyuPinyinHelper.getPinyinString(friend.getName()));
+		dto.put("surnameAndNamePinyin", HanyuPinyinHelper.getPinyinString(friend.getSurname() + friend.getName()));
+		dto.put("surnameAndNamePinyinFirst", HanyuPinyinHelper.getFirstLettersLo(friend.getSurname()));
+		dto.put("credit", friend.getCredit());
+		dto.put("contribution", friend.getContribution());
+		dto.put("cert", friend.getCert());
+		dto.put("remark", uf.getRemark());
+		dto.put("status", uf.getStatus());
+		District district = districtService.getByCache(friend.getBirthplaceProvinceId());
+		String birthplaceProvince = "", birthplaceProvinceFirst = "", birthplaceProvincePinyin = "";
+		if(district != null) {
+			birthplaceProvince = district.getName();
+			birthplaceProvinceFirst = HanyuPinyinHelper.getFirstLettersLo(district.getName());
+			birthplaceProvincePinyin = HanyuPinyinHelper.getPinyinString(district.getName());
+		}
+		dto.put("birthplaceProvince", birthplaceProvince);
+		dto.put("birthplaceProvinceFirst", birthplaceProvinceFirst);
+		dto.put("birthplaceProvincePinyin", birthplaceProvincePinyin);
+		return dto;
+	}
 	@Autowired
 	private UserService userService;
 	@Autowired

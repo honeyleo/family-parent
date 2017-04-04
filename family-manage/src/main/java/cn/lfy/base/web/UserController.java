@@ -130,7 +130,7 @@ public class UserController {
         String username = RequestUtil.getString(request, "username");
         User extuser = userService.findByUsername(username);
         if (extuser != null) {
-            throw new ApplicationException(ErrorCode.EXIST, "用户名存在", new String[]{"用户名"});
+            throw new ApplicationException(ErrorCode.VALUE_EXIST, "用户名存在", new String[]{"用户名"});
         }
         String password = RequestUtil.getString(request, "passward");
         try {

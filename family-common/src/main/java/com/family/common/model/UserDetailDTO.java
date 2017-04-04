@@ -13,6 +13,10 @@ public class UserDetailDTO implements Serializable {
 	
 	private Long id;
 	/**
+	 * 是否认证：0-未认证；1-已认证
+	 */
+	private Integer cert;
+	/**
      * 登录名
      */
     private String username;
@@ -111,8 +115,9 @@ public class UserDetailDTO implements Serializable {
 	 */
 	private Long jobField;
 	/**
-	 * 公司
+	 * 公司：JSON对象[{"company":"18028761234","main":"true"},{"company":"18028761235","main":"false"}]
 	 */
+	@JSONField(serialize = false)
 	private String company;
 	/**
 	 * 工作地
@@ -127,7 +132,7 @@ public class UserDetailDTO implements Serializable {
 	 */
 	private Long workplaceCityId;
 	/**
-	 * 电话
+	 * 电话 
 	 */
 	private String tel;
 	/**
@@ -183,6 +188,14 @@ public class UserDetailDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getCert() {
+		return cert;
+	}
+
+	public void setCert(Integer cert) {
+		this.cert = cert;
 	}
 
 	public String getUsername() {

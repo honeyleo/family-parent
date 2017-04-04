@@ -44,7 +44,7 @@ public class RegisterController {
 		Validators.isFalse(StringUtils.isBlank(password), ErrorCode.PARAM_ILLEGAL, "密码");
 		Validators.isFalse(StringUtils.isBlank(code), ErrorCode.PARAM_ILLEGAL, "验证码");
 		User user = userService.findByUsername(phone);
-		Validators.isFalse(user != null, ErrorCode.EXIST);
+		Validators.isFalse(user != null, ErrorCode.VALUE_EXIST, "用户名");
 		verifyCodeService.verifyCodeAndDel("REG", phone, code);
 		User record = new User();
 		record.setUsername(phone);

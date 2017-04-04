@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.family.common.model.Company;
+import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.service.UserDetailService;
@@ -178,6 +180,8 @@ public class UserProxyService {
 		currentUser.setSurname(user.getSurname());
 		currentUser.setName(user.getName());
 		currentUser.setCert(user.getCert());
+		currentUser.setBirthplaceProvinceId(userDetail.getBirthplaceProvinceId());
+		currentUser.setBirthplaceCityId(userDetail.getBirthplaceCityId());
 		String key = RedisKey.currentUserKey(currentUser.getId());
 		try {
 			redisClient.setex(key, JSON.toJSONString(currentUser), EXPIRE_CURRENT_USER);
@@ -202,6 +206,9 @@ public class UserProxyService {
 		currentUser.setIp(ip);
 		currentUser.setSurname(user.getSurname());
 		currentUser.setName(user.getName());
+		currentUser.setCert(user.getCert());
+		currentUser.setBirthplaceProvinceId(user.getBirthplaceProvinceId());
+		currentUser.setBirthplaceCityId(user.getBirthplaceCityId());
 		String key = RedisKey.currentUserKey(currentUser.getId());
 		try {
 			redisClient.setex(key, JSON.toJSONString(currentUser), EXPIRE_CURRENT_USER);
@@ -212,7 +219,30 @@ public class UserProxyService {
 	}
 	
 	public UserDetail getUserDetail(long id) {
-		return userDetailService.selectByPrimaryKey(id);
+		UserDetail userDetail = userDetailService.selectByPrimaryKey(id);
+		if(userDetail != null) {
+			if(StringUtils.isNotBlank(userDetail.getCompany())) {
+				try {
+					List<Company> companyList = JSON.parseArray(userDetail.getCompany(), Company.class);
+					userDetail.setCompanyList(companyList);
+				} catch (Exception e) {
+					Company company = new Company();
+					company.setCompany(userDetail.getCompany());
+					company.setMain(true);
+					List<Company> companyList = Lists.newArrayList();
+					userDetail.setCompanyList(companyList);
+				}
+			}
+			if(StringUtils.isNotBlank(userDetail.getPhones())) {
+				try {
+					List<Phone> phoneList = JSON.parseArray(userDetail.getPhones(), Phone.class);
+					userDetail.setPhoneList(phoneList);
+				} catch (Exception e) {
+					
+				}
+			}
+		}
+		return userDetail;
 	}
 	/**
 	 * 获取用户详情

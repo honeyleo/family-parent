@@ -54,4 +54,11 @@ public interface UserDetailDAO {
      * @return
      */
     int updatePhones(@Param("id") Long id, @Param("phones") String phones);
+    /**
+     * 更新个人信誉
+     * @param id
+     * @param credit
+     * @return
+     */
+    int updateCredit(@Param("id") Long id, @Param("credit") Integer credit);
 }

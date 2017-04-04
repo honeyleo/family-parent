@@ -40,4 +40,10 @@ public interface DistrictService {
      * @return
      */
     List<District> list(Long pid);
+    /**
+     * 先通过缓存获取，获取不到从数据库获取
+     * @param id
+     * @return
+     */
+    District getByCache(Long id);
 }

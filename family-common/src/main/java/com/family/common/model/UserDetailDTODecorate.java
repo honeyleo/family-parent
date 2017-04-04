@@ -7,12 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.google.common.collect.Lists;
 
 public class UserDetailDTODecorate extends UserDetailDTO {
 
 	private static final long serialVersionUID = 6418582293510788859L;
 	
 	private List<Phone> phoneList;
+	
+	private List<Company> companyList;
 	
 	@JSONField(serialize = false)
 	UserDetailDTO userDetailDTO;
@@ -21,6 +24,17 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 		this.userDetailDTO = userDetailDTO;
 		if(StringUtils.isNotBlank(userDetailDTO.getPhones())) {
 			phoneList = JSON.parseArray(userDetailDTO.getPhones(), Phone.class);
+		}
+		if(StringUtils.isNotBlank(userDetailDTO.getCompany())) {
+			try {
+				companyList = JSON.parseArray(userDetailDTO.getCompany(), Company.class);
+			} catch (Exception e) {
+				companyList = Lists.newArrayList();
+				Company company = new Company();
+				company.setCompany(userDetailDTO.getCompany());
+				company.setMain(true);
+				companyList.add(company);
+			}
 		}
 	}
 	
@@ -324,6 +338,10 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 		return phoneList;
 	}
 	
+	public List<Company> getCompanyList() {
+		return companyList;
+	}
+
 	public static void main(String[] args) {
 		UserDetailDTO user = new UserDetailDTO();
 		user.setId(12L);

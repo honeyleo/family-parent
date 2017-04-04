@@ -68,4 +68,14 @@ public class TokenValue {
 		}
 		return null;
 	}
+	
+	public static void main(String[] args) {
+		try {
+			String token = new String(BaseEncoding.base64().decode("eyJpIjoiMjIzLjczLjIwNi4yNTIiLCJsIjoiNmY0OTIyZjQ1NTY4MTYxYThjZGY0YWQyMjk5ZjZkMjMiLCJyIjoiYWY2ODU5ZTM5OTIxNDVmYThlNTgzN2U2NmFjMzg2YjIiLCJ0IjoxNDkxMTUwOTUxLCJ1IjoxOH0="));
+			System.out.println(token);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

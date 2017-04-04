@@ -157,6 +157,34 @@ public class NewHomeController extends BaseController {
 		}
 		return "/news/detail";
 	}
+	
+	/**
+	 * 评论详情
+	 * @param newsId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/{news_type}/news-detail/{newsId}.html")
+	public String newsDetailHtml(@PathVariable("news_type") String newsType, 
+			@PathVariable("newsId") long newsId, 
+			HttpServletRequest request) {
+		NewsHome newsHome = newsHomeService.getById(newsId);
+		if(newsHome != null) {
+			JSONObject dto = new JSONObject();
+			dto.put("id", newsHome.getId());
+			dto.put("title", newsHome.getTitle());
+			dto.put("intro", newsHome.getIntro());
+			dto.put("type", newsHome.getType());
+			dto.put("imgShowMode", newsHome.getImgShowMode());
+			dto.put("createTime", newsHome.getCreateTime());
+			dto.put("content", htmlContentImageAppendDomain(newsHome.getContent(), imageUrl));
+			dto.put("comments", newsHome.getComments());
+			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
+			dto.put("imgs", imgs);
+			request.setAttribute("news", dto);
+		}
+		return "/news/news-detail";
+	}
 	/**
 	 * 评论列表
 	 * @param newsId

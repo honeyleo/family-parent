@@ -134,7 +134,7 @@
   <select id="getUserDetailDTOList" resultType="com.family.common.model.UserDetailDTO">
   	SELECT 
   	<include refid="Base_Column_List" />
-  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state
+  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state, u.cert
   	FROM `user` u INNER JOIN user_detail ud
   	ON u.id = ud.id
   	WHERE u.id IN
@@ -146,9 +146,19 @@
   <select id="getUserDetailDTO" resultType="com.family.common.model.UserDetailDTO">
   	SELECT 
   	<include refid="Base_Column_List" />
-  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state
+  	,u.username, u.nickname, u.email, u.phone, u.surname, u.`name`, u.createTime, u.state, u.cert
   	FROM `user` u INNER JOIN user_detail ud
   	ON u.id = ud.id
   	WHERE u.id = #{id}
   </select>
+  
+  <update id="updateCredit" >
+    update user_detail
+    <set >
+      <if test="credit != null" >
+        credit = #{credit},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
 </mapper>
