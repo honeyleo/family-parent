@@ -150,7 +150,7 @@ public class UserFriendCtrl extends BaseController {
 		dto.put("nickname", friend.getNickname());
 		dto.put("gender", friend.getGender());
 		if(StringUtils.isNotBlank(friend.getAvatar())) {
-			dto.put("avatar", imageUrl + friend.getAvatar());
+			dto.put("avatar", friend.getAvatar());
 		} else {
 			dto.put("avatar", "");
 		}
