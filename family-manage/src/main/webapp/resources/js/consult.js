@@ -7,6 +7,7 @@ var users = {
     init: function () {
     	UE.getEditor('editor');
         this.bindEvents();
+        util.showFullImage('editorDialog', 'icon_img');
         this.loadTable();
     },
     //加载表格数据
