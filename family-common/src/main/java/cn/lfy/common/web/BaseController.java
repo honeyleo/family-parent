@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,13 @@ import cn.lfy.common.utils.PathFormat;
 
 public class BaseController {
 
+	public String getAccessToken(HttpServletRequest request) {
+		String accessToken = request.getHeader("access_token");
+		if(accessToken == null) {
+			accessToken = request.getParameter("access_token");
+		}
+		return accessToken;
+	}
 	/**
 	 * 根据给定的文件名,获取其后缀信息
 	 * @param filename

@@ -50,4 +50,11 @@ public interface CommentService {
      * @return
      */
     List<UserNewsFavor> getUserNewsFavorList(long userId, int start, int limit);
+    /**
+     * 是否收藏
+     * @param userId
+     * @param newsId
+     * @return
+     */
+    boolean isFavor(long userId, long newsId);
 }

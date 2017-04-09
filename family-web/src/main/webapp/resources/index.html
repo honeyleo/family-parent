@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>族谱</title>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="/resources/js/common/common.js"></script>
+<script>
+//服务器端返回数据
+function jsonDataFromServer(msg) {
+    var list = msg.data.list;
+    alert(list.length);
+    children(list, $(".tree"));
+}
+
+function children(list, liElement) {
+	var ul;
+	if(list.length > 0) {
+		ul = $("<ul></ul>");
+	}
+	for(var i = 0; i < list.length; i++) {
+    	var member = list[i];
+    	var liTag = $('<li></<li>');
+   		var aElement = '<a href="javascript:device.gotoChose(' + member.id + ');">' +
+	   	                 	'<img src="' + (member.avatar == '' ? '/resources/images/tn.png' : member.avatar) + '">' +
+	   	                 	'<span>' + member.name + '</span>' +
+	   	                 	(member.alive == 0 ? '<em style="background:#cacaca;">逝</em>' : '') +
+	   	                 	'<em ' + (member.gender == 2 ? 'style="background:#db256e; font-size:10.9px;"' : '') + '>' + member.zibei + '</em>' +
+   	                 	'</a>';
+   	    liTag.append(aElement);
+   	    ul.append(liTag);
+   	 	children(member.childrens, liTag);
+   	 	var spouses = member.spouses;
+   	    if(spouses.length > 0) {
+   	    	for(var j = 0; j < spouses.length; j ++) {
+   	    		var spouse = spouses[j];
+   	    		var spousesLi = $("<li></li>");
+   	    		var spouseElement = '<a href="javascript:device.gotoChose(' + spouse.id + ');">' +
+				                	'<img src="' + (spouse.avatar == '' ? '/resources/images/tn.png' : spouse.avatar) + '">' +
+				                	'<span>'+ member.name + '之妻' + spouse.name + '</span>' +
+				                	(spouse.alive == 0 ? '<em style="background:#cacaca;">逝</em>' : '') +
+				                	'<em style="background:#db256e; font-size:10.9px;">' + spouse.zibei + '</em>' +
+				                '</a>';
+				spousesLi.append(spouseElement);
+				ul.append(spousesLi);
+   	    	}
+   	    }
+   	 	liElement.append(ul);
+    }
+}
+
+//$(document).ready(function () {
+	//$.post("/app/family/tree", 
+			//{
+				//access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6IjU4OTYwNDkwZmYxNTQzZDNiZDFiNjNkYjdhMDcwNDI2IiwidCI6MTQ5MTc0NjQ0OCwidSI6MTd9"
+			//}, 
+			//function(result) {
+				//jsonDataFromServer(result);
+			//}
+	//);
+//});
+</script>
+
+</head>
+
+<body>
+
+
+<div class="tree">
+	
+</div>
+
+
+</body>
+</html>

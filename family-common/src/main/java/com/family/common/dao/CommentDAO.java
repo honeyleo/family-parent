@@ -44,4 +44,11 @@ public interface CommentDAO {
      * @return
      */
     List<Comment> getFavorListByUserId(@Param("userId")long userId, @Param("start")int start, @Param("limit")int limit);
+    /**
+     * 判断用户是否收藏过
+     * @param userId
+     * @param newsId
+     * @return
+     */
+    boolean isFavor(@Param("userId")Long userId, @Param("newsId")Long newsId);
 }

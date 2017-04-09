@@ -19,6 +19,7 @@ detected.
 		<Array type="String">
 			<Item>localhost</Item>
 			<Item>127.0.0.1</Item>
+			<Item>192.168.3.7</Item>
 			<Item>api.mcwh123.com</Item>	
 		</Array>
 	</Set>

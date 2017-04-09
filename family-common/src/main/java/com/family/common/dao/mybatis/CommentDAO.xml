@@ -55,4 +55,13 @@
     LIMIT #{start}, #{limit}
   </select>
   
+  <select id="isFavor" resultType="java.lang.Boolean">
+    SELECT
+    	COUNT(0)
+    FROM comment
+    WHERE 1=1
+    AND userId = #{userId} AND newsId = #{newsId}
+    AND type = 2
+    LIMIT 1
+  </select>
 </mapper>

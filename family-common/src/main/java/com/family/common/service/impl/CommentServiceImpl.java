@@ -66,12 +66,15 @@ public class CommentServiceImpl implements CommentService {
 	public int favor(long userId, long newsId) {
 		Comment record = new Comment();
 		record.setType(2);
+		record.setContent("");
 		record.setUserId(userId);
 		record.setNewsId(newsId);
 		record.setCreateTime(System.currentTimeMillis()/1000);
 		return commentDAO.insert(record);
 	}
-	
+	public boolean isFavor(long userId, long newsId) {
+		return commentDAO.isFavor(userId, newsId);
+	}
 	public List<UserNewsFavor> getUserNewsFavorList(long userId, int start, int limit) {
 		List<Comment> commentList = commentDAO.getFavorListByUserId(userId, start, limit + 1);
 		Map<Long, Comment> map = Maps.newHashMap();

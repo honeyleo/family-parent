@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.MemberDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, userId, spouseId, creatorUserId, 
+    fatherId, motherId,
+    name, gender, birthday, zibei, avatar, ranking, 
+    birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, birthplaceCountyId, 
+    ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId,
+    alive
+  </sql>
+  
+  <select id="get" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from member where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.Member" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member (
+    	userId, spouseId, creatorUserId, 
+    	fatherId, motherId,
+    	name, gender, birthday, zibei, avatar, ranking, 
+    	birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, birthplaceCountyId, 
+    	ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId,
+    	alive, dieTime, createTime
+    )
+    values (
+    	#{userId}, #{spouseId}, #{creatorUserId}, 
+    	#{fatherId}, #{motherId}, 
+    	#{name}, #{gender}, #{birthday}, #{zibei}, #{avatar}, #{ranking},
+    	#{birthplaceCountryId}, #{birthplaceProvinceId}, #{birthplaceCityId}, #{birthplaceCountyId}, 
+    	#{ancestralCountryId}, #{ancestralProvinceId}, #{ancestralCityId}, #{ancestralCountyId}, 
+    	#{alive}, #{dieTime}, UNIX_TIMESTAMP()
+    )
+  </insert>
+  
+  <update id="update" parameterType="com.family.common.model.Member" >
+    update member
+    <set >
+      <if test="entity.spouseId != null" >
+        spouseId = #{entity.spouseId},
+      </if>
+      <if test="entity.name != null" >
+        name = #{entity.name},
+      </if>
+      <if test="entity.gender != null" >
+        gender = #{entity.gender},
+      </if>
+      <if test="entity.birthday != null" >
+        birthday = #{entity.birthday},
+      </if>
+      <if test="entity.avatar != null" >
+        avatar = #{entity.avatar},
+      </if>
+      <if test="entity.ranking != null" >
+        ranking = #{entity.ranking},
+      </if>
+      <if test="entity.zibei != null" >
+        zibei = #{entity.zibei},
+      </if>
+      <if test="entity.birthplaceCountryId != null" >
+        birthplaceCountryId = #{entity.birthplaceCountryId},
+      </if>
+      <if test="entity.birthplaceProvinceId != null" >
+        birthplaceProvinceId = #{entity.birthplaceProvinceId},
+      </if>
+      <if test="entity.birthplaceCityId != null" >
+        birthplaceCityId = #{entity.birthplaceCityId},
+      </if>
+      <if test="entity.birthplaceCountyId != null" >
+        birthplaceCountyId = #{entity.birthplaceCountyId},
+      </if>
+      <if test="entity.ancestralCountryId != null" >
+        ancestralCountryId = #{entity.ancestralCountryId},
+      </if>
+      <if test="entity.ancestralProvinceId != null" >
+        ancestralProvinceId = #{entity.ancestralProvinceId},
+      </if>
+      <if test="entity.ancestralCityId != null" >
+        ancestralCityId = #{entity.ancestralCityId},
+      </if>
+      <if test="entity.ancestralCountyId != null" >
+        ancestralCountyId = #{entity.ancestralCountyId},
+      </if>
+      <if test="entity.alive != null" >
+        alive = #{entity.alive},
+      </if>
+    </set>
+    where id = #{entity.id}
+  </update>
+  <update id="updateParent" parameterType="com.family.common.model.Member" >
+    update member
+    <set>
+      <if test="fatherId != null" >
+        fatherId = #{fatherId},
+      </if>
+      <if test="motherId != null" >
+        motherId = #{motherId},
+      </if>
+     </set>
+     where id = #{id}
+  </update>
+  <select id="list" resultType="com.family.common.model.Member">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	FROM `member`
+  	WHERE creatorUserId = #{creatorUserId}
+  </select>
+  <select id="getSelf" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member where userId = #{userId}
+  </select>
+  <select id="getFather" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    FROM member WHERE  id  = (SELECT fatherId FROM member WHERE id = #{memberId})
+  </select>
+  <select id="getMother" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    FROM member WHERE  id  = (SELECT motherId FROM member WHERE id = #{memberId})
+  </select>
+  <select id="getFemaleSpouse" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    FROM member WHERE  spouseId  = #{spouseId} LIMIT 1
+  </select>
+</mapper>

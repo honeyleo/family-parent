@@ -1,5 +1,6 @@
 package com.family.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import com.family.service.UserProxyService;
 import com.google.common.collect.Lists;
 
 import cn.lfy.common.model.Message;
+import cn.lfy.common.utils.DateUtils;
 import cn.lfy.common.web.BaseController;
 
 @Controller
@@ -87,7 +89,7 @@ public class NewHomeController extends BaseController {
 			dto.put("comments", newsHome.getComments());
 			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
 			dto.put("imgs", imgs);
-			dto.put("detail_url", domainName + "/app/" + newsType + "/detail/" + newsHome.getId() + ".html");
+			dto.put("detail_url", domainName + "/app/" + newsType + "/news-detail/" + newsHome.getId() + ".html");
 			jsonList.add(dto);
 		}
 		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/list");
@@ -164,8 +166,10 @@ public class NewHomeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/{news_type}/news-detail/{newsId}.html")
-	public String newsDetailHtml(@PathVariable("news_type") String newsType, 
+	@RequestMapping("/app/{news_type}/news-detail/{newsId}.html")
+	public String newsDetailHtml(
+			CurrentUser currentUser,
+			@PathVariable("news_type") String newsType, 
 			@PathVariable("newsId") long newsId, 
 			HttpServletRequest request) {
 		NewsHome newsHome = newsHomeService.getById(newsId);
@@ -182,6 +186,8 @@ public class NewHomeController extends BaseController {
 			List<String> imgs = getImgsList(newsHome.getImgs(), imageUrl);
 			dto.put("imgs", imgs);
 			request.setAttribute("news", dto);
+			request.setAttribute("isFavor", commentService.isFavor(currentUser.getId(), newsId));
+			request.setAttribute("access_token", getAccessToken(request));
 		}
 		return "/news/news-detail";
 	}
@@ -213,10 +219,12 @@ public class NewHomeController extends BaseController {
 			dto.put("id", comment.getId());
 			dto.put("newsId", comment.getNewsId());
 			dto.put("content", comment.getContent());
-			dto.put("createTime", comment.getCreateTime());
+			dto.put("createTime", DateUtils.date2String2(new Date(comment.getCreateTime() * 1000)));
 			CurrentUser user = userproxyService.getCurrentUser(comment.getUserId());
-			dto.put("username", user.getNickname());
+			dto.put("username", user.getUsername());
+			dto.put("nickname", user.getNickname());
 			dto.put("userId", comment.getUserId());
+			dto.put("avatar", user.getAvatar());
 			array.add(dto);
 		}
 		data.put("more", more);
@@ -262,6 +270,10 @@ public class NewHomeController extends BaseController {
 			CurrentUser user,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/favor");
+		if(commentService.isFavor(user.getId(), newsId)) {
+			builder.setMsg("已收藏过，不需重复收藏");
+			return builder.build();
+		}
 		commentService.favor(user.getId(), newsId);
 		return builder.build();
 	}
