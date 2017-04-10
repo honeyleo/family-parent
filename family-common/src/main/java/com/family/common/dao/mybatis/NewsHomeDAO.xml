@@ -139,6 +139,7 @@
     <if test="surnameId != null">
     	AND surnameId = #{surnameId}
     </if>
+    ORDER BY updateTime
     LIMIT #{start}, #{limit}
   </select>
   
@@ -173,5 +174,6 @@
   	<foreach collection="list" open="(" item="id" separator="," close=")">
   		#{id}
   	</foreach>
+  	ORDER BY updateTime DESC
   </select>
 </mapper>

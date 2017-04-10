@@ -20,7 +20,9 @@ import com.family.model.CurrentUser;
 
 import cn.lfy.common.filehandler.ResourceIdentifier;
 import cn.lfy.common.filehandler.ResourceManager;
+import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
+import cn.lfy.common.utils.Validators;
 import cn.lfy.common.web.BaseController;
 
 @Controller
@@ -58,7 +60,11 @@ public class FamilyCtrl  extends BaseController {
 		member.setSpouseId(0L);
 		member.setFatherId(0L);
 		member.setMotherId(0L);
-		
+		if(member.getAlive() != null && member.getAlive() == 0) {
+			member.setDieTime(0L);
+		} else if(member.getAlive() != null && member.getAlive() == 1) {
+			Validators.isFalse(member.getDieTime() == null, ErrorCode.PARAM_ILLEGAL, "逝世时间");
+		}
 		try {
 			if(file != null) {
 				ResourceIdentifier dest = handleFile("avatar_image", file, resourceManager);
@@ -82,7 +88,11 @@ public class FamilyCtrl  extends BaseController {
 			Member member,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/member/update");
-		
+		if(member.getAlive() != null && member.getAlive() == 0) {
+			member.setDieTime(0L);
+		} else if(member.getAlive() != null && member.getAlive() == 1) {
+			Validators.isFalse(member.getDieTime() == null, ErrorCode.PARAM_ILLEGAL, "逝世时间");
+		}
 		try {
 			if(file != null) {
 				ResourceIdentifier dest = handleFile("avatar_image", file, resourceManager);
