@@ -8,8 +8,8 @@
 <script>
 //服务器端返回数据
 function jsonDataFromServer(msg) {
-    var list = msg.data.list;
-    alert(list.length);
+	var result = eval("(" + msg + ")");
+    var list = result.data.list;
     children(list, $(".tree"));
 }
 
