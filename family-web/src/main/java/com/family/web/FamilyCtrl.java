@@ -1,7 +1,5 @@
 package com.family.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.family.common.model.Member;
-import com.family.common.model.MemberDTO;
+import com.family.common.model.MemberDTOWrapper;
 import com.family.common.service.MemberService;
 import com.family.model.CurrentUser;
 
@@ -41,8 +39,8 @@ public class FamilyCtrl  extends BaseController {
 	public Object tree(CurrentUser user, 
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/family/tree");
-		List<MemberDTO> result = memberService.familyTree(user.getId());
-		builder.putData("list", result);
+		MemberDTOWrapper result = memberService.familyTree(user.getId());
+		builder.data(result);
 		return builder.build();
 	}
 	
@@ -76,8 +74,8 @@ public class FamilyCtrl  extends BaseController {
 			LOG.error("上传成员头像出错", e);
 		}
 		memberService.addMember(user.getId(), memberId, relation, member);
-		List<MemberDTO> result = memberService.familyTree(user.getId());
-		builder.putData("list", result);
+		MemberDTOWrapper result = memberService.familyTree(user.getId());
+		builder.data(result);
 		return builder.build();
 	}
 	

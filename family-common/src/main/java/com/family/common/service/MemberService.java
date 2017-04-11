@@ -1,9 +1,7 @@
 package com.family.common.service;
 
-import java.util.List;
-
 import com.family.common.model.Member;
-import com.family.common.model.MemberDTO;
+import com.family.common.model.MemberDTOWrapper;
 
 /**
  * 家谱成员服务接口
@@ -36,7 +34,7 @@ public interface MemberService {
      * @param userId
      * @return
      */
-    List<MemberDTO> familyTree(Long userId);
+    MemberDTOWrapper familyTree(Long userId);
     /**
 	 *  给指定用户添加
 	 * @param userId 创建者

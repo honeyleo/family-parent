@@ -19,6 +19,7 @@ import com.family.common.dao.MemberDAO;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.Member;
 import com.family.common.model.MemberDTO;
+import com.family.common.model.MemberDTOWrapper;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.service.MemberService;
 import com.google.common.collect.Maps;
@@ -90,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.update(record);
 	}
 	
-	public List<MemberDTO> familyTree(Long userId) {
+	public MemberDTOWrapper familyTree(Long userId) {
 		Member self = memberDAO.getSelf(userId);
 		if(self == null) {
 			//创建以自己为中心的家谱
@@ -111,9 +112,11 @@ public class MemberServiceImpl implements MemberService {
 			member.setDieTime(0L);
 			memberDAO.insert(member);
 		}
+		int total = 0;
 		List<MemberDTO> result = new ArrayList<MemberDTO>();  
 		try {   
 	        List<Member> itemList = memberDAO.list(userId); 
+	        total = itemList.size();
 	        Map<Long, MemberDTO> allMap = Maps.newHashMap();
 	        for(Member item : itemList) {  
 	            if(item.getFatherId() == 0 && item.getGender() == 1) {
@@ -149,7 +152,8 @@ public class MemberServiceImpl implements MemberService {
 	    } catch(Exception e) {  
 	        
 	    }  
-		return result;
+		MemberDTOWrapper wrapper = new MemberDTOWrapper(total, result);
+		return wrapper;
 	}
 	
 	private MemberDTO getChildren(MemberDTO memberDTO, List<Member> itemList, Map<Long, MemberDTO> allMap) {  
