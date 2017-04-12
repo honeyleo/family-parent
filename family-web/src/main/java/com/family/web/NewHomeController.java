@@ -188,6 +188,7 @@ public class NewHomeController extends BaseController {
 			request.setAttribute("news", dto);
 			request.setAttribute("isFavor", commentService.isFavor(currentUser.getId(), newsId));
 			request.setAttribute("access_token", getAccessToken(request));
+			request.setAttribute("currentUser", currentUser);
 		}
 		return "/news/news-detail";
 	}
@@ -254,6 +255,7 @@ public class NewHomeController extends BaseController {
 		record.setUserId(user.getId());
 		record.setCreateTime(System.currentTimeMillis()/1000);
 		commentService.insert(record);
+		builder.putData("createTime", DateUtils.date2String2(new Date(record.getCreateTime()*1000)));
 		return builder.build();
 	}
 	

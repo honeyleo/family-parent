@@ -21,100 +21,68 @@
 
 </head>
 <body>
-<div class="index-wrap">
-    <div class="content">
-        ${news.content}
-    </div>
-    <!--旅游列表 start-->
-    <!--  
-    <div class="tourist-list">
-        <div class="tourist-item">
-            <div class="tourist-title">
-                朱家角古镇城隍庙文化景点对外开放
-            </div>
-            <div class="imgs">
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-            </div>
-            <div class="intro display-box-h">
-                <div class="left">看图说事</div>
-                <div class="center">10分钟前</div>
-                <div class="right flex-one">9839评
-                    <span class="point"></span>
-                    <span class="point"></span>
-                    <span class="point"></span>
-                </div>
-            </div>
-        </div>
-        <div class="tourist-item">
-            <div class="tourist-title">
-                朱家角古镇城隍庙文化景点对外开放
-            </div>
-            <div class="imgs">
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-                <div class="img-item">
-                    <img src="/resources/img/news.png" class="img"/>
-                </div>
-            </div>
-            <div class="intro display-box-h">
-                <div class="left">看图说事</div>
-                <div class="center">10分钟前</div>
-                <div class="right flex-one">9839评
-                    <span class="point"></span>
-                    <span class="point"></span>
-                    <span class="point"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
-    <!--旅游列表 end-->
-    <!-- 
-    <div class="more-btn">
-        还没看够 ，<span class="enter">进入看看</span>
-    </div>
-     -->
-    <div class="hot-discuss">热门评论（${news.comments }）</div>
-    <div class="discuss-list">
-        
-    </div>
+<div class="index-wrap display-box-v">
+	<div class="header flex-one">
 
+	    <div class="content">
+	        ${news.content}
+	    </div>
+	    <div class="hot-discuss">热门评论（${news.comments }）</div>
+	    <div class="discuss-list">
+	        
+	    </div>
+    </div>
+	<div class="bottom-fixed display-box-h">
+	    <div class="left flex-one">
+	        <div class="input-text" id="commentContent" onclick="showTextarea()"></div>
+	    </div>
+	    <div class="center">
+	        ${news.comments }
+	    </div>
+	    <div class="right">
+	        <c:choose>
+		   	<c:when test="${isFavor}">  
+		   		<img src="/resources/img/favored.png" class="shoucang"/>
+		   	</c:when>
+		   	<c:otherwise> 
+		   		<img src="/resources/img/favor.png" class="shoucang"/>
+		   	</c:otherwise>
+			</c:choose>
+	    </div>
+	</div>
 </div>
-<div class="bottom-fixed display-box-h">
-    <div class="left flex-one">
-        <input type="text" class="input-text" id="commentContent"/>
-    </div>
-    <div class="center">
-        ${news.comments }
-    </div>
-    <div class="right">
-        <c:choose>
-	   	<c:when test="${isFavor}">  
-	   		<img src="/resources/img/favored.png" class="shoucang"/>
-	   	</c:when>
-	   	<c:otherwise> 
-	   		<img src="/resources/img/favor.png" class="shoucang"/>
-	   	</c:otherwise>
-		</c:choose>
-    </div>
-</div>
+
 </body>
 <script src="/resources/js/common/common.js"></script>
+
 <script src="/resources/js/common/jquery-asyncbox.js"></script>
+<div id="popLayer">
+	<div class="content">
+		<textarea clos="5" class="txt-are" id="messageInfor" placeholder="请输入留言信息"> </textarea>
+		<div class="display-box-h btns">
+			<div class="flex-one left"><span onclick="cancelLeaveMessage()">取消</span></div>
+			<div class="flex-one right" ><span id="publish">发表</span></div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
+function leaveMessage(){
+	var txtAreaVal = $("#messageInfor").val(); 
+	if(txtAreaVal==''){
+		return alert("请输入留言内容");
+	}
+}
+function cancelLeaveMessage(){
+	$("#popLayer").hide();
+	$("#messageInfor").val(''); 
+	
+}
+function showTextarea(){
+	$("#popLayer").show();
+}
 $(document).ready(function () {
+	$("#messageInfor").val(''); 
+	$("#popLayer").hide();
 	loadData(0, 10);
 	$(".shoucang").click(function(){
 		if("${isFavor}" == "true") {
@@ -132,8 +100,8 @@ $(document).ready(function () {
 				}
 		);
 	});
-	$(".center").click(function(){
-		var content = $("#commentContent").val();
+	$("#publish").click(function(){
+		var content = $("#messageInfor").val();
 		if(!content || content == '') {
 			return;
 		}
@@ -144,8 +112,27 @@ $(document).ready(function () {
 					access_token: "${access_token}"
 				}, 
 				function(result) {
+					var comment = "";
 					if(result.ret == 0) {
-						$("#commentContent").val("");
+						$("#messageInfor").val("");
+						$("#popLayer").hide();
+						
+						//append
+						comment = '<div class="discuss-item display-box-h">'
+			        					+ '<div class="left">'
+			            					+ 	'<img src="' + "${currentUser.avatar}" + '" class="touxiang"/>'
+			        					+ '</div>'
+			        					+ '<div class="right flex-one display-box-v">'
+			            					+ '<div class="top display-box-h">'
+			                					+ '<div class="name flex-one">' + "${currentUser.nickname}" + '</div>'
+			                					+ '<div class="date">' + result.data.createTime + '</div>'
+			            					+ '</div>'
+			            					+ '<div class="bottom">'
+			               					+ content
+			            					+ '</div>'
+			        					+ '</div>'
+			    					+ '</div>';
+    					$(".discuss-list").append(comment);
 					}
 				}
 		);
@@ -180,7 +167,7 @@ function loadData(start, limit) {
 	        		$(".discuss-list").append(comment);
 	            }
 	        } else {
-	            asyncbox.alert(result.msg,"提示");
+	            //asyncbox.alert(result.msg,"提示");
 	        }
 	    });
 }

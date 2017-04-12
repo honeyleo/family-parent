@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.family.common.dao.MemberDAO;
 import com.family.common.dao.UserDAO;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.Company;
+import com.family.common.model.Member;
 import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
@@ -33,6 +35,9 @@ public class UserDetailServiceImpl implements UserDetailService {
 	private UserDetailDAO userDetailDAO;
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private MemberDAO memberDAO;
 
 	public int deleteByPrimaryKey(Long id) {
 		return userDetailDAO.deleteByPrimaryKey(id);
@@ -136,6 +141,10 @@ public class UserDetailServiceImpl implements UserDetailService {
 		User user = userDAO.selectByPrimaryKey(userDetail.getId());
 		if(user != null && user.getCert() == 1) {
 			credit += 25;
+		}
+		Member self = memberDAO.getSelf(userDetail.getId());
+		if(self != null) {
+			credit +=20;
 		}
 		return credit;
 	}

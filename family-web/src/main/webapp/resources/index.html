@@ -7,9 +7,9 @@
 <script src="/resources/js/common/common.js"></script>
 <script>
 //服务器端返回数据
-function jsonDataFromServer(msg) {
-	var result = eval("(" + msg + ")");
-	device.backCount(result.data.total);
+function jsonDataFromServer(result) {
+	//var result = eval("(" + msg + ")");
+	//device.backCount(result.data.total);
     var list = result.data.list;
     children(list, $(".tree"));
 }
@@ -50,16 +50,16 @@ function children(list, liElement) {
     }
 }
 
-//$(document).ready(function () {
-	//$.post("/app/family/tree", 
-			//{
-				//access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6IjU4OTYwNDkwZmYxNTQzZDNiZDFiNjNkYjdhMDcwNDI2IiwidCI6MTQ5MTc0NjQ0OCwidSI6MTd9"
-			//}, 
-			//function(result) {
-				//jsonDataFromServer(result);
-			//}
-	//);
-//});
+$(document).ready(function () {
+	$.post("/app/family/tree", 
+			{
+				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6IjIwNTkwOGM3YTYxNzQ5ZGU5ZDI3OWZhMzAwZTc1MTVlIiwidCI6MTQ5MTk5ODYxNiwidSI6MTd9"
+			}, 
+			function(result) {
+				jsonDataFromServer(result);
+			}
+	);
+});
 </script>
 
 </head>
