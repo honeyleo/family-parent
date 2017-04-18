@@ -50,8 +50,10 @@ public class AppealCtrl extends BaseController {
 	@ResponseBody
 	public Object publish(CurrentUser user, 
 			@RequestParam(name = "content") String content,
-			@RequestParam(name = "lng") double lng,
-			@RequestParam(name = "lat") double lat,
+			@RequestParam(name = "lng", required = false, defaultValue = "0") double lng,
+			@RequestParam(name = "lat", required = false, defaultValue = "0") double lat,
+			@RequestParam(name = "address", required = false, defaultValue = "") String address,
+			@RequestParam(name = "fullAddress", required = false, defaultValue = "") String fullAddress,
 			@RequestParam(name = "phone") String phone,
 			@RequestParam MultipartFile[] file,
 			HttpServletRequest request) {
@@ -62,6 +64,8 @@ public class AppealCtrl extends BaseController {
 		record.setUserId(user.getId());
 		record.setLng(lng);
 		record.setLat(lat);
+		record.setAddress(address);
+		record.setFullAddress(fullAddress);
 		record.setStatus(0);
 		long time = System.currentTimeMillis()/1000;
 		record.setCreateTime(time);
@@ -117,7 +121,7 @@ public class AppealCtrl extends BaseController {
 			@RequestParam(name = "start") int start,
 			@RequestParam(name = "limit") int limit,
 			HttpServletRequest request) {
-		List<Appeal> list = appealService.list(user.getId(), start, limit + 1);
+		List<Appeal> list = appealService.familyAppealList(user.getId(), start, limit + 1);
 		boolean more = isMore(list, limit);
 		if(more) {
 			list = list.subList(0, limit);
@@ -140,7 +144,7 @@ public class AppealCtrl extends BaseController {
 		}
 		JSONObject data = new JSONObject();
 		data.put("more", more);
-		data.put("list", userProxyService);
+		data.put("list", wrapperList);
 		return Message.newBuilder("/app/appeal/list").data(data).build();
 	}
 	

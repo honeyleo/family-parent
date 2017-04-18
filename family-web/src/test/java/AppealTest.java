@@ -50,12 +50,13 @@ public class AppealTest {
 	}
 	
 	@Test
-	public void userList() {
+	public void list() {
 		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
 		reqParams.put("start", "0");
 		reqParams.put("limit", "10");
 		try {
-			String response = HttpClient.post(Constant.HOST + "/user/list", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/list", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -4,7 +4,7 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   
   <sql id="Base_Column_List" >
-    id, content, userId, imgs, createTime, updateTime, lng, lat, phone, status
+    id, content, userId, imgs, createTime, updateTime, lng, lat, address, fullAddress, phone, status
   </sql>
   
   <select id="get" resultType="com.family.common.model.Appeal" parameterType="java.lang.Long" >
@@ -21,8 +21,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into appeal (content, userId, imgs, createTime, updateTime, lng, lat, phone, status)
-    values (#{content}, #{userId}, #{imgs}, #{createTime}, #{updateTime}, #{lng}, #{lat}, #{phone}, #{status})
+    insert into appeal (content, userId, imgs, createTime, updateTime, lng, lat, phone, status, address, fullAddress)
+    values (#{content}, #{userId}, #{imgs}, #{createTime}, #{updateTime}, #{lng}, #{lat}, #{phone}, #{status}, #{address}, #{fullAddress})
   </insert>
   
   <update id="update" parameterType="com.family.common.model.Appeal" >
@@ -47,4 +47,11 @@
     LIMIT #{start}, #{limit}
   </select>
   
+  <select id="familyAppealList" resultType="com.family.common.model.Appeal">
+	  SELECT a.id, a.content, a.userId, a.imgs, a.createTime, a.updateTime, a.lng, a.lat, a.address, a.fullAddress, a.phone, a.status 
+	  FROM appeal a LEFT JOIN `user` u 
+	  ON a.userId = u.id 
+	  WHERE u.surname = (SELECT surname FROM `user` WHERE id = #{userId})
+	  LIMIT #{start}, #{limit}
+  </select>
 </mapper>

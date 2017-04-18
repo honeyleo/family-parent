@@ -33,6 +33,15 @@ public class Appeal implements Serializable {
 	 */
 	private Double lat;
 	
+	/**
+	 * 地址
+	 */
+	private String address;
+	/**
+	 * 详细地址
+	 */
+	private String fullAddress;
+	
 	private String phone;
 	
 	private Integer status;
@@ -87,6 +96,22 @@ public class Appeal implements Serializable {
 
 	public void setLat(Double lat) {
 		this.lat = lat;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getFullAddress() {
+		return fullAddress;
+	}
+
+	public void setFullAddress(String fullAddress) {
+		this.fullAddress = fullAddress;
 	}
 
 	public String getPhone() {

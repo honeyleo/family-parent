@@ -35,4 +35,12 @@ public interface AppealDAO {
      * @return
      */
     List<Appeal> list(@Param("userId")long userId, @Param("start")int start, @Param("limit")int limit);
+    /**
+     * 求助消息列表列表
+     * @param userId
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<Appeal> familyAppealList(@Param("userId")long userId, @Param("start")int start, @Param("limit")int limit);
 }

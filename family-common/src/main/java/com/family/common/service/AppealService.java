@@ -2,6 +2,8 @@ package com.family.common.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.family.common.model.Appeal;
 
 /**
@@ -37,6 +39,15 @@ public interface AppealService {
      * @param limit
      * @return
      */
-    List<Appeal> list(long newsId, int start, int limit);
+    List<Appeal> list(long userId, int start, int limit);
+    
+    /**
+     * 求助消息列表列表
+     * @param userId
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<Appeal> familyAppealList(long userId, int start, int limit);
     
 }

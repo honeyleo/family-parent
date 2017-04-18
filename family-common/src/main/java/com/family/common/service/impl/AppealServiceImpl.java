@@ -20,6 +20,12 @@ public class AppealServiceImpl implements AppealService {
 	}
 
 	public int insert(Appeal record) {
+		if(record.getAddress() == null) {
+			record.setAddress("");
+		}
+		if(record.getFullAddress() == null) {
+			record.setFullAddress("");
+		}
 		return appealDAO.insert(record);
 	}
 
@@ -33,5 +39,10 @@ public class AppealServiceImpl implements AppealService {
 
 	public List<Appeal> list(long userId, int start, int limit) {
 		return appealDAO.list(userId, start, limit);
+	}
+
+	@Override
+	public List<Appeal> familyAppealList(long userId, int start, int limit) {
+		return appealDAO.familyAppealList(userId, start, limit);
 	}
 }
