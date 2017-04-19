@@ -45,7 +45,7 @@ public class NearbyService {
 		for(GeoRadiusResponse geoRadiusResponse : geoRadiusResponseList) {
 			String userId = geoRadiusResponse.getMemberByString();
 			CurrentUser user = map.get(Long.parseLong(userId));
-			if(user != null) {
+			if(user != null && !userId.equals(String.valueOf(currentUser.getId()))) {
 				Double distance = geoRadiusResponse.getDistance();
 				user.setDistance(distance.intValue());
 				list.add(user);
