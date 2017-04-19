@@ -29,7 +29,7 @@
 	    </div>
 	    <div class="hot-discuss">热门评论（${news.comments }）</div>
 	    <div class="discuss-list">
-	        
+	         
 	    </div>
     </div>
 	<div class="bottom-fixed display-box-h">
@@ -113,25 +113,30 @@ $(document).ready(function () {
 				}, 
 				function(result) {
 					var comment = "";
+					if("${currentUser.avatar}" == "") {
+						avatar = "/resources/img/default.png";
+					} else {
+						avatar = "${currentUser.avatar}";
+					}
 					if(result.ret == 0) {
 						$("#messageInfor").val("");
 						$("#popLayer").hide();
 						
-						//append
-						comment = '<div class="discuss-item display-box-h">'
-			        					+ '<div class="left">'
-			            					+ 	'<img src="' + "${currentUser.avatar}" + '" class="touxiang"/>'
-			        					+ '</div>'
-			        					+ '<div class="right flex-one display-box-v">'
-			            					+ '<div class="top display-box-h">'
-			                					+ '<div class="name flex-one">' + "${currentUser.nickname}" + '</div>'
-			                					+ '<div class="date">' + result.data.createTime + '</div>'
-			            					+ '</div>'
-			            					+ '<div class="bottom">'
-			               					+ content
-			            					+ '</div>'
-			        					+ '</div>'
-			    					+ '</div>';
+						comment = '<div class="display-box-h item">'
+				        			+ '<div class="left">'
+		        						+ '<img src="' + avatar + '" class="img" />'
+		        					+ '</div>'
+		        					+ '<div class="right flex-one display-box-v">'
+		        						+ '<div class="display-box-h user">'
+		        							+ '<div class="name">' + "${currentUser.nickname}" + '</div>'
+		        							+ '<div class="zan-num flex-one">'
+		        								+ '<span class="num on">10</span>'
+		        							+ '</div>'
+		        						+ '</div>'
+		        						+ '<div class="content flex-one">' + content + '</div>'
+		        						+ '<div class="date">' + result.data.createTime + '</div>'
+		        					+ '</div>'
+		        				+ '</div>';
     					$(".discuss-list").append(comment);
 					}
 				}
@@ -150,20 +155,24 @@ function loadData(start, limit) {
 	        if ( result.ret == 0 ) {
 	            var values = result.data.list;
 	            for(var i = 0; i < values.length; i++) {
-	            	var comment = '<div class="discuss-item display-box-h">'
-	            					+ '<div class="left">'
-	                					+ 	'<img src="' + values[i].avatar + '" class="touxiang"/>'
-	            					+ '</div>'
-	            					+ '<div class="right flex-one display-box-v">'
-	                					+ '<div class="top display-box-h">'
-	                    					+ '<div class="name flex-one">' + values[i].nickname + '</div>'
-	                    					+ '<div class="date">' + values[i].createTime + '</div>'
-	                					+ '</div>'
-	                					+ '<div class="bottom">'
-	                   					+ values[i].content
-	                					+ '</div>'
-	            					+ '</div>'
-	        					+ '</div>';
+	            	if(values[i].avatar == "") {
+	            		values[i].avatar = "/resources/img/default.png";
+	            	}
+	            	var comment = '<div class="display-box-h item">'
+	        			+ '<div class="left">'
+    						+ '<img src="' + values[i].avatar + '" class="img" />'
+    					+ '</div>'
+    					+ '<div class="right flex-one display-box-v">'
+    						+ '<div class="display-box-h user">'
+    							+ '<div class="name">' + values[i].nickname + '</div>'
+    							+ '<div class="zan-num flex-one">'
+    								+ '<span class="num on">10</span>'
+    							+ '</div>'
+    						+ '</div>'
+    						+ '<div class="content flex-one">' + values[i].content + '</div>'
+    						+ '<div class="date">' + values[i].createTime + '</div>'
+    					+ '</div>'
+    				+ '</div>';
 	        		$(".discuss-list").append(comment);
 	            }
 	        } else {
