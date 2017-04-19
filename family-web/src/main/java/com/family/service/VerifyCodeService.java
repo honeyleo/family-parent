@@ -27,7 +27,7 @@ public class VerifyCodeService {
 		//设置超时时间
 		redisClient.expire(key, 300);
 		//发送短信验证码给用户手机
-		SmsUtil.sendSms(phone, "验证码【" + code + "】");
+		SmsUtil.sendSms(phone, "您的验证码是：" + code + "，请在5分钟内完成验证");
 	}
 	
 	public void verifyCode(String type, String phone, String code) {
