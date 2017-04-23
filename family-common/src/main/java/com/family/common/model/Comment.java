@@ -18,6 +18,10 @@ public class Comment implements Serializable {
 	
 	private Long userId;
 	/**
+	 * 点赞数量
+	 */
+	private Integer praiseCount;
+	/**
 	 * 单位（秒）
 	 */
 	private Long createTime;
@@ -50,6 +54,12 @@ public class Comment implements Serializable {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public Integer getPraiseCount() {
+		return praiseCount;
+	}
+	public void setPraiseCount(Integer praiseCount) {
+		this.praiseCount = praiseCount;
 	}
 	public Long getCreateTime() {
 		return createTime;

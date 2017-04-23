@@ -63,9 +63,10 @@
             <thead>
             <tr>
                 <th width="40px">序号</th>
-                <th>ID</th>
+                <th width="100px">ID</th>
                 <th>标题</th>
-                <th>类型</th>
+                <th width="150px">类型</th>
+                <th width="100px">状态</th>
                 <th width="180px">创建时间</th>
                 <th width="220px">操作</th>
             </tr>
@@ -90,6 +91,7 @@
                 <button type="button" class="btn btn-primary J_sure">确定</button>
                 <button type="button" class="btn btn-primary J_delete_sure none">确定</button>
                 <button type="button" class="btn btn-primary J_add_sure none">确定</button>
+                <button type="button" class="btn btn-primary J_status_sure none">确定</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>
@@ -104,6 +106,25 @@
             </div>
             <div class="modal-body1" style="padding: 20px;">
                 <table cellspacing="0" width="100%" class="modifyTable">
+                	<tr>
+                    <th>发布状态：</th>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
+                                        id="search_dropDown-status3" value="1">发布</i></button>
+                                <button type="button"
+                                        class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
+                                        data-toggle="dropdown">
+                                    <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu modify_search_status3 scrollBar" role="menu">
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">发布</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">存草稿</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" value="50" name="status3" />
+                        </td>
+                    </tr>
                 	<tr>
                         <th>姓氏：</th>
                         <td>

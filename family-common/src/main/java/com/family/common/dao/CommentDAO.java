@@ -51,4 +51,10 @@ public interface CommentDAO {
      * @return
      */
     boolean isFavor(@Param("userId")Long userId, @Param("newsId")Long newsId);
+    /**
+     * 赞数量加1
+     * @param id
+     * @return
+     */
+    int incrPraiseCount(Long id);
 }

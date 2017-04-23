@@ -1,4 +1,5 @@
 var users = {
+	Status : {0 : "删除", 1 : "发布", 2 : "存草稿"},
     sunNum : 0,
     editor: null,
     pickerLoaded: true,
@@ -29,12 +30,22 @@ var users = {
             var createTime = new Date(value[i].createTime*1000);
             value[i].createTime = createTime.format("yyyy-MM-dd hh:mm:ss");
             value[i].type = Map.NewsConsultType[value[i].type];
+            var statusText = "";
+            var status = "";
+            if(value[i].status == 2) {
+            	statusText = users.Status[1];
+            	status = 1;
+            } else {
+            	statusText = users.Status[2];
+            	status = 2;
+            }
             users.sunNum = (i+1)+(currentPage*PAGE_SIZE);
             $opera = '<a href="#" class="operation J_delete" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>删除</a>' + 
             	//'<a href="#" class="operation J_strategyInfo" data-toggle="modal" data-target="#myModal" data-value=' + value[i].id + '>详情</a>'+
                 '<a href="#" class="operation dialog-editor" data-toggle="modal" data-target="#editorDialog"  data-value=' + value[i].id + '>编辑</a>' + 
+                '<a href="#" class="operation J_status" data-toggle="modal" data-target="#myModal"  data-value=' + value[i].id + ' data-status=' + status + '>' + statusText + '</a>' + 
                 '</td>';
-            arr.push([users.sunNum,value[i].id,value[i].title, '<div class="text_l">'+ value[i].type +'</div>', value[i].createTime, $opera]);
+            arr.push([users.sunNum,value[i].id,value[i].title, value[i].type, users.Status[value[i].status], value[i].createTime, $opera]);
         }
         self.num++;
         result.draw = self.num;
@@ -65,6 +76,7 @@ var users = {
         var self = this;
         self.dropDown('modify_search_status', 'search_dropDown-status', 'status');
         self.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
+        self.dropDown('modify_search_status3', 'search_dropDown-status3', 'status3');
         $('.J_search').click(function () {
             self.query(true);
         });
@@ -94,6 +106,19 @@ var users = {
             $('.modal-dialog .modal-content').css({'width':'auto'});
             var id = $(this).attr("data-value");
             self.deleteSure(id);
+        }).delegate(".J_status","click",function(){
+        	//状态修改
+        	var status = $(this).attr("data-status");
+        	var statusText = users.Status[status];
+            $('.modal-body').empty().html("确定要" + statusText + "吗？");
+            $('#myModalLabel').text("状态编辑");
+            var sure = $('.modal-footer .btn-primary');
+            sure.addClass("none");
+            $(".J_status_sure").removeClass("none");
+            $('.modal-dialog .modal-body').css({'overflow':"auto",'height':''});
+            $('.modal-dialog .modal-content').css({'width':'auto'});
+            var id = $(this).attr("data-value");
+            self.updateStatus(id, status);
         });
         // editor
         $("#table").on("click", ".dialog-editor", function(){
@@ -111,6 +136,7 @@ var users = {
             	if (result.ret == 0) {
             		$('#search_dropDown-status1').attr("value", result.data.type).text(Map.NewsConsultType[result.data.type]);
             		$('#search_dropDown-status2').attr("value", result.data.imgShowMode).text(Map.ImgShowMode[result.data.imgShowMode].text);
+            		$('#search_dropDown-status3').attr("value", result.data.status).text(users.Status[result.data.status]);
                     $("#id").val(result.data.id);
                     $("#title").val(result.data.title);
                     $("#intro").val(result.data.intro);
@@ -177,6 +203,7 @@ var users = {
                 content: content,
                 type: $("#search_dropDown-status1").attr("value"),
                 imgs : imgs,
+                status: $("#search_dropDown-status3").attr("value"),
                 imgShowMode : $("#search_dropDown-status2").attr("value")
             };
             $.post("/manager/news_consult/update", param, function(result){
@@ -260,6 +287,7 @@ var users = {
                 content: content,
                 type: $("#search_dropDown-status1").attr("value"),
                 imgShowMode: $("#search_dropDown-status2").attr("value"),
+                status: $("#search_dropDown-status3").attr("value"),
                 imgs : imgs
             };
             $.post("/manager/news_consult/add", param, function(result){
@@ -281,6 +309,22 @@ var users = {
                     self.query();
                 } else {
                     asyncbox.alert("删除失败！\n"+result.msg,"提示");
+                    $('#myModal').modal('hide');
+                }
+            });
+        });
+        $('#myModal').modal('show');
+    },
+    updateStatus:function(id, status){
+        var self =this;
+        $(".J_status_sure").unbind('click');
+        $(".J_status_sure").click(function () {
+            $.get("/manager/news_consult/update_status",{"id":id, status : status},function(result){
+                if (result.ret == 0) {
+                    $('#myModal').modal('hide');
+                    self.query();
+                } else {
+                    asyncbox.alert("更新状态失败！\n"+result.msg,"提示");
                     $('#myModal').modal('hide');
                 }
             });

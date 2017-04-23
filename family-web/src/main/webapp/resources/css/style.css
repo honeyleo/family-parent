@@ -19,17 +19,17 @@ fieldset, img{border:0;}
 
 .tree{width:100%;overflow-x:hidden;  overflow-y:hidden; text-align:center;background:rgba(0,0,0,0); }
 .tree ul {
-        padding-top: 20px; position: relative;
+	padding-top: 20px; position: relative;
 }
 
 .tree li {
-        float: left; text-align: center;
-        list-style-type: none;
-        position: relative;
-        padding: 20px 10px 0 10px;
-        transition: all 0.5s;
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
+	float: left; text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 10px 0 10px;
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
 }
 
 .tree li img{ width:44px; height:44px; border-radius:999px;}
@@ -39,41 +39,203 @@ fieldset, img{border:0;}
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{
-        content: '';
-        position: absolute; top: 0; right: 50%;
-        border-top: 1px solid #ccc;
-        width: 50%; height: 20px;
-}
-.tree li::after{
-        right: auto; left: 50%;
-        border-left: 1px solid #ccc;
+	content: '';
+	position: absolute; top: 0; right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%; height: 20px;
 }
 
-/*We need to remove left-right connectors from elements without
+
+
+
+
+.tree li.line{padding-top:0px;}
+.tree li.line::before, .tree li.line::after{
+	content: '';
+	position: absolute; top: 20px; right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%; height: 20px;
+}
+
+.tree li.line_2{padding-top:0px;}
+.tree li.line_3{padding-top:0px;}
+.tree li.line_2::before, .tree li.line_2::after{
+	content: '';
+	position: absolute; top: 20px; right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%; height: 20px;
+}
+
+.tree li.line_3::before, .tree li.line_3::after{
+	content: '';
+	position: absolute; top: 20px; right: 50%;
+	border-top: none;
+	width: 50%; height: 20px;
+}
+
+.tree li.rightno::before, .tree li.rightno::after{
+	content: '';
+	position: absolute; top: 0px; right: 50%;
+	border-top: none;
+	width: 50%; height: 20px;
+}
+
+
+
+.tree li.line_4::before, .tree li.line_4::after{
+	content: '';
+	position: absolute; top: 0px; right: 50%;
+	width: 100%; height: 20px;
+}
+.tree li.line_4::after{
+	border-bottom:1px solid #ccc;
+	left:50%; right:0;
+	height:42px;
+}
+
+
+.tree li.line_5::before, .tree li.line_5::after{
+	content: '';
+	position: absolute; top: 0px; right: 50%;
+	width: 50%; height: 42px;
+	border-bottom:1px solid #ccc;
+}
+.tree li.line_5::after{
+	border-bottom:none;
+	left:50%; right:0;
+	height:42px;
+}
+
+
+.tree li.line_6::before, .tree li.line_6::after{
+	content: '';
+	position: absolute; top: 0px; right: 50%;
+	width: 50%; height: 42px;
+	border-bottom:1px solid #ccc;
+	border-top:none;
+	
+}
+
+.tree li.line_6:last-child::before{ border-right:none;}
+.tree li.topno::after{ border-left:none; border-bottom:1px solid #ccc;}
+.tree li.topno{padding-right:0px;}
+.tree li.lineno::after{ border-bottom:none;}
+
+.tree li.btno:last-child::before{ border-right:none;} 
+.tree li.btno::before, .tree li.btno::after{ border-top:none !important;}
+
+
+.tree li.rline::after{
+	border-top:none;
+	border-bottom:1px solid #ccc;
+}
+
+
+
+
+
+
+.tree li img{ position:relative; z-index:9999;}
+
+
+.tree li::after{
+	right: auto; left: 50%;
+	border-left: 1px solid #ccc;
+}
+.tree li.line_5::after{
+	right: auto; left: 50%;
+	border-left: none;
+}
+.tree li.rightno::after{
+	right: 50%; left: 0%;
+	border-left: none;
+	border-bottom:1px solid #ccc;
+}
+
+
+
+
+
+
+
+/*We need to remove left-right connectors from elements without 
 any siblings*/
 .tree li:only-child::after, .tree li:only-child::before {
-        display: none;
+	display: none;
 }
 
 /*Remove space from the top of single children*/
 .tree li:only-child{ padding-top: 0;}
 
-/*Remove left connector from first child and
+/*Remove left connector from first child and 
 right connector from last child*/
 .tree li:first-child::before, .tree li:last-child::after{
-        border: 0 none;
+	border: 0 none;
 }
 /*Adding back the vertical connector to the last nodes*/
 .tree li:last-child::before{
-        border-right: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 .tree li:first-child::after{
 }
 
 /*Time to add downward connectors from parents*/
 .tree ul ul::before{
-        content: '';
-        position: absolute; top: 0; left: 50%;
-        border-left: 1px solid #ccc;
-        width: 0; height: 20px;
+	content: '';
+	position: absolute; top: 0; left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0; height: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

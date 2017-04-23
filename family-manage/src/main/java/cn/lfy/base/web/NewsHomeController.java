@@ -85,7 +85,10 @@ public class NewsHomeController extends BaseController {
     @ResponseBody
     public Object del(HttpServletRequest request) throws ApplicationException {
         Long id = RequestUtil.getLong(request, "id");
-        newsHomeService.delete(id);
+        NewsHome record = new NewsHome();
+        record.setId(id);
+        record.setStatus(0);
+        newsHomeService.updateByIdSelective(record);
         Message.Builder builder = Message.newBuilder();
         return builder.build();
     }
@@ -148,6 +151,22 @@ public class NewsHomeController extends BaseController {
 		String content = form.getContent();
 		content = content.replaceAll(imageUrl, "");
 		form.setContent(ueditorContentImgHandle(content, pathRoot, resourceManager));
+    	newsHomeService.updateByIdSelective(form);
+        return builder.build();
+    }
+    
+    /**
+     * 更新
+     * 
+     * @param request
+     * @return ModelAndView
+     * @throws ApplicationException
+     */
+    @RequestMapping("/update_status")
+    @ResponseBody
+    public Object updateSstatus(NewsHome form, HttpServletRequest request,
+            HttpServletResponse response) throws ApplicationException {
+    	Message.Builder builder = Message.newBuilder();
     	newsHomeService.updateByIdSelective(form);
         return builder.build();
     }

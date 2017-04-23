@@ -8,10 +8,55 @@
 <script>
 //服务器端返回数据
 function jsonDataFromServer(result) {
-	//var result = eval("(" + msg + ")");
-	//device.backCount(result.data.total);
+	result = eval("(" + result + ")");
+	device.backCount(result.data.total);
     var list = result.data.list;
-    children(list, $(".tree"));
+    var ul = $("<ul></ul>");
+    for(var i = 0; i < list.length; i++) {
+    	var member = list[i];
+    	var avatar = '/resources/images/tn.png';
+    	if(member.avatar != "") {
+    		avatar = member.avatar;
+    	}
+    	var liTag = $('<li class="line"></li>');
+   		var aElement = '<a href="javascript:device.gotoChose(' + member.id + ',' + member.gender + ');">' +
+	   	                 	'<img src="' + avatar + '">' +
+	   	                 	'<span>' + member.name + '</span>' +
+	   	                 	(member.alive == 0 ? '<em style="background:#cacaca;">逝</em>' : '') +
+	   	                 	(member.zibei == '' ? '' : '<em ' + (member.gender == 2 ? 'style="background:#db256e; font-size:10.9px;"' : '') + '>' + member.zibei + '</em>') +
+   	                 	'</a>';
+   	    liTag.append(aElement);
+   	    ul.append(liTag);
+   	 	var spouses = member.spouses;
+	    if(spouses.length > 0) {
+	    	for(var j = 0; j < spouses.length; j ++) {
+	    		var spouse = spouses[j];
+	    		var spouseAvatar = '/resources/images/tn.png';
+	    		if(spouse.avatar != '') {
+	    			spouseAvatar = spouse.avatar;
+	    		}
+	    		var spousesLi = $('<li class="line"></li>');
+	    		var spouseElement = '<a href="javascript:device.gotoChose(' + spouse.id + ',' + spouse.gender + ');">' +
+				                	'<img src="' + spouseAvatar + '">' +
+				                	'<span style="font-size:14.9px;">'+ spouse.name + '</span>' +
+				                	(spouse.alive == 0 ? '<em style="background:#cacaca; font-size:10.8px;">逝</em>' : '') +
+				                	(spouse.zibei == '' ? '' : '<em style="background:#db256e; font-size:10.9px;">' + spouse.zibei + '</em>') +
+				                '</a>';
+				spousesLi.append(spouseElement);
+				ul.append(spousesLi);
+				var childrens = new Array();
+				var cc = 0;
+				for(var c = 0; c < member.childrens.length; c++) {
+					if(member.childrens[c].motherId == spouse.id) {
+						childrens[cc] = member.childrens[c];
+						cc++;
+					}
+				}
+				children(childrens, spousesLi);
+	    	}
+	    }
+    }
+    $(".tree").append(ul);
 }
 
 function children(list, liElement) {
@@ -21,45 +66,78 @@ function children(list, liElement) {
 	}
 	for(var i = 0; i < list.length; i++) {
     	var member = list[i];
-    	var liTag = $('<li></<li>');
-   		var aElement = '<a href="javascript:device.gotoChose(' + member.id + ');">' +
-	   	                 	'<img src="' + (member.avatar == '' ? '/resources/images/tn.png' : member.avatar) + '">' +
+    	var avatar = '/resources/images/tn.png';
+    	if(member.avatar != "") {
+    		avatar = member.avatar;
+    	}
+    	var liTag = $('<li></li>');
+    	if(member.spouses.length > 0) {
+    		liTag.attr("class", "line_4");
+    	}
+   		var aElement = '<a href="javascript:device.gotoChose(' + member.id + ',' + member.gender + ');">' +
+	   	                 	'<img src="' + avatar + '">' +
 	   	                 	'<span>' + member.name + '</span>' +
 	   	                 	(member.alive == 0 ? '<em style="background:#cacaca;">逝</em>' : '') +
-	   	                 	'<em ' + (member.gender == 2 ? 'style="background:#db256e; font-size:10.9px;"' : '') + '>' + member.zibei + '</em>' +
+	   	                 	(member.zibei == '' ? '' : '<em ' + (member.gender == 2 ? 'style="background:' + (member.gender == 2 ? '#af57cc' : '#db256e') + '; font-size:10.9px;"' : '') + '>' + member.zibei + '</em>') +
    	                 	'</a>';
    	    liTag.append(aElement);
    	    ul.append(liTag);
-   	 	children(member.childrens, liTag);
-   	 	var spouses = member.spouses;
-   	    if(spouses.length > 0) {
-   	    	for(var j = 0; j < spouses.length; j ++) {
-   	    		var spouse = spouses[j];
-   	    		var spousesLi = $("<li></li>");
-   	    		var spouseElement = '<a href="javascript:device.gotoChose(' + spouse.id + ');">' +
-				                	'<img src="' + (spouse.avatar == '' ? '/resources/images/tn.png' : spouse.avatar) + '">' +
-				                	'<span>'+ member.name + '之妻' + spouse.name + '</span>' +
+   	 	//children(member.childrens, liTag);
+   	    if(member.spouses.length > 0) {
+   	    	for(var j = 0; j < member.spouses.length; j ++) {
+   	    		var spouse = member.spouses[j];
+   	    		var spouseAvatar = '/resources/images/tn.png';
+   	    		if(spouse.avatar != '') {
+   	    			spouseAvatar = spouse.avatar;
+   	    		}
+   	    		var spousesLi;
+   	    		if(member.spouses.length == 1) {
+   	    			spousesLi = $('<li class="line_5 lineno topno"></li>');
+   	    		} else {
+   	    			if(j == 0) {
+   	   	    			spousesLi = $('<li class="line_5 topno"></li>');
+   	   	    		} else {
+   	   	    			spousesLi = $('<li class="line_5 lineno topno"></li>');
+   	   	    		}
+   	    		}
+   	    		var spouseElement = '<a href="javascript:device.gotoChose(' + spouse.id + ',' + spouse.gender + ');">' +
+				                	'<img src="' + spouseAvatar + '">' +
+				                	'<span>'+ spouse.name + '</span>' +
 				                	(spouse.alive == 0 ? '<em style="background:#cacaca;">逝</em>' : '') +
-				                	'<em style="background:#db256e; font-size:10.9px;">' + spouse.zibei + '</em>' +
+				                	(spouse.zibei == '' ? '' : '<em style="background:#db256e; font-size:10.9px;">' + spouse.zibei + '</em>') +
 				                '</a>';
 				spousesLi.append(spouseElement);
 				ul.append(spousesLi);
+				var childrens = new Array();
+				var cc = 0;
+				for(var c = 0; c < member.childrens.length; c++) {
+					if(member.childrens[c].motherId == spouse.id) {
+						childrens[cc] = member.childrens[c];
+						cc++;
+					}
+				}
+				children(childrens, spousesLi);
    	    	}
+   	    }
+   	    if(i == list.length - 1 && member.spouses.length > 0) {
+   	    	var tmp = $('<li class="line_4" style="display:none"></li>');
+   	    	ul.append(tmp);
    	    }
    	 	liElement.append(ul);
     }
 }
-
+/*
 $(document).ready(function () {
 	$.post("/app/family/tree", 
 			{
-				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6IjYzMmJiZGRiMzVkNjQyYWI5MjUwZmM5NjdkYzdmNjA3IiwidCI6MTQ5MjE3NTQ1NiwidSI6MTd9"
+				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6Ijk5MmQwZTM0MzYwYTQ1YjFhOWUxYjE2MmEwMmY3Njk4IiwidCI6MTQ5MjkzMjE3OCwidSI6MTd9"
 			}, 
 			function(result) {
 				jsonDataFromServer(result);
 			}
 	);
 });
+*/
 </script>
 
 </head>

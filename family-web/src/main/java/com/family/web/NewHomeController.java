@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.family.common.enums.NewsType;
 import com.family.common.model.Comment;
 import com.family.common.model.NewsHome;
+import com.family.common.service.CommentBoxService;
 import com.family.common.service.CommentService;
 import com.family.common.service.NewsHomeService;
 import com.family.model.CurrentUser;
@@ -45,6 +46,10 @@ public class NewHomeController extends BaseController {
 	
 	@Autowired
 	private UserProxyService userproxyService;
+	
+	@Autowired
+	private CommentBoxService commentBoxService;
+	
 	/**
 	 * 新闻列表
 	 * @param type
@@ -203,6 +208,7 @@ public class NewHomeController extends BaseController {
 	@RequestMapping("/app/{news_type}/comments")
 	@ResponseBody
 	public Object comments(@PathVariable("news_type") String newsType, 
+			CurrentUser currentUser,
 			@RequestParam(name = "newsId", defaultValue = "0") long newsId, 
 			@RequestParam(name = "start") int start, 
 			@RequestParam(name = "limit", defaultValue = "10") int limit,
@@ -213,6 +219,12 @@ public class NewHomeController extends BaseController {
 			list = list.subList(0, limit);
 		}
 		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/comments");
+		List<Long> commentIdList = Lists.newArrayList();
+		for(Comment comment : list) {
+			commentIdList.add(comment.getId());
+		}
+		
+		List<Long> containCommentIdList = commentBoxService.getCommentIdList(currentUser.getId(), 1, commentIdList);
 		JSONObject data = new JSONObject();
 		JSONArray array = new JSONArray();
 		for(Comment comment : list) {
@@ -220,6 +232,9 @@ public class NewHomeController extends BaseController {
 			dto.put("id", comment.getId());
 			dto.put("newsId", comment.getNewsId());
 			dto.put("content", comment.getContent());
+			dto.put("praiseCount", comment.getPraiseCount());
+			boolean isPraised = containCommentIdList.contains(comment.getId());
+			dto.put("isPraised", isPraised);
 			dto.put("createTime", DateUtils.date2String2(new Date(comment.getCreateTime() * 1000)));
 			CurrentUser user = userproxyService.getCurrentUser(comment.getUserId());
 			dto.put("username", user.getUsername());
@@ -254,8 +269,31 @@ public class NewHomeController extends BaseController {
 		record.setType(1);
 		record.setUserId(user.getId());
 		record.setCreateTime(System.currentTimeMillis()/1000);
+		record.setPraiseCount(0);
 		commentService.insert(record);
 		builder.putData("createTime", DateUtils.date2String2(new Date(record.getCreateTime()*1000)));
+		builder.putData("praiseCount", 0);
+		return builder.build();
+	}
+	
+	/**
+	 * 评论新闻
+	 * @param newsId
+	 * @param content
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/app/{news_type}/praise")
+	@ResponseBody
+	public Object praise(@PathVariable("news_type") String newsType, 
+			@RequestParam(name = "commentId", defaultValue = "0") long commentId, 
+			CurrentUser user,
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/praise");
+		int ret = commentBoxService.praise(user.getId(), commentId);
+		if(ret == 2) {
+			builder.setRet(2).setMsg("已赞过，不要重复点赞");
+		}
 		return builder.build();
 	}
 	

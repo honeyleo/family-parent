@@ -4,7 +4,7 @@
   <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
   
   <sql id="Base_Column_List" >
-    id, content, type, newsId, userId, createTime
+    id, content, type, newsId, userId, createTime, praiseCount
   </sql>
   
   <select id="get" resultType="com.family.common.model.Comment" parameterType="java.lang.Long" >
@@ -64,4 +64,9 @@
     AND type = 2
     LIMIT 1
   </select>
+  <update id="incrPraiseCount" >
+    update comment
+    	SET praiseCount = praiseCount + 1
+    where id = #{id}
+  </update>
 </mapper>

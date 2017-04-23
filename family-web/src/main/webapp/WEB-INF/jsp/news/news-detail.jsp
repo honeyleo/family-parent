@@ -100,6 +100,7 @@ $(document).ready(function () {
 				}
 		);
 	});
+	
 	$("#publish").click(function(){
 		var content = $("#messageInfor").val();
 		if(!content || content == '') {
@@ -130,7 +131,7 @@ $(document).ready(function () {
 		        						+ '<div class="display-box-h user">'
 		        							+ '<div class="name">' + "${currentUser.nickname}" + '</div>'
 		        							+ '<div class="zan-num flex-one">'
-		        								+ '<span class="num on">10</span>'
+		        								+ '<span class="num on">' + result.data.praiseCount + '</span>'
 		        							+ '</div>'
 		        						+ '</div>'
 		        						+ '<div class="content flex-one">' + content + '</div>'
@@ -143,13 +144,22 @@ $(document).ready(function () {
 		);
 	});
 });
-
+var access_token = "${access_token}";
+function praise(commentId) {
+	$.post("/app/news_home/praise", {access_token: access_token, commentId : commentId}, function(result){
+		if(result.ret == 0) {
+			$("#praiseComment_" + commentId).attr("class", "num on");
+			var count = $("#praiseComment_" + commentId).text();
+			$("#praiseComment_" + commentId).text(parseInt(count) + 1);
+		}
+	});
+}
 function loadData(start, limit) {
 	var param = {
 	        start: start,
 	        limit: limit,
 	        newsId: "${news.id}",
-	        access_token: "${access_token}"
+	        access_token: access_token
 	    };
 	    $.post("/app/news_home/comments", param, function(result){
 	        if ( result.ret == 0 ) {
@@ -166,7 +176,7 @@ function loadData(start, limit) {
     						+ '<div class="display-box-h user">'
     							+ '<div class="name">' + values[i].nickname + '</div>'
     							+ '<div class="zan-num flex-one">'
-    								+ '<span class="num on">10</span>'
+    								+ '<span onclick="praise(' + values[i].id + ')" class="num ' + (values[i].isPraised ? 'on' : '') + '" id="praiseComment_' + values[i].id + '">' + values[i].praiseCount + '</span>'
     							+ '</div>'
     						+ '</div>'
     						+ '<div class="content flex-one">' + values[i].content + '</div>'

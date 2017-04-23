@@ -13,6 +13,7 @@
     <result column="imgShowMode" property="imgShowMode" jdbcType="INTEGER" />
     <result column="imgs" property="imgs" jdbcType="VARCHAR" />
     <result column="comments" property="comments" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
     <result column="updateTime" property="updateTime" jdbcType="BIGINT" />
@@ -32,6 +33,7 @@
       <if test="condition.userId != null" >
          and userId = #{condition.userId}
       </if>
+      and status > 0
     </trim>
   </sql>
   
@@ -45,7 +47,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    id, surnameId, surname, title, intro, content, newsType, type, imgShowMode, imgs, comments, userId, createTime, updateTime
+    id, surnameId, surname, title, intro, content, newsType, type, imgShowMode, imgs, comments, userId, createTime, updateTime, `status`
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.lfy.base.model.Criteria" >
@@ -75,8 +77,8 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into news (surnameId, surname, title, intro, content, newsType, type, imgShowMode, imgs, createTime, updateTime,userId)
-    values (#{surnameId}, #{surname}, #{title}, #{intro}, #{content}, #{newsType}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId})
+    insert into news (surnameId, surname, title, intro, content, newsType, type, imgShowMode, imgs, createTime, updateTime,userId, `status`)
+    values (#{surnameId}, #{surname}, #{title}, #{intro}, #{content}, #{newsType}, #{type}, #{imgShowMode}, #{imgs}, #{createTime}, #{updateTime},#{userId}, #{status})
   </insert>
   
   <select id="countByExample" parameterType="cn.lfy.base.model.Criteria" resultType="java.lang.Integer" >
@@ -110,6 +112,9 @@
       <if test="imgShowMode != null" >
         imgShowMode = #{imgShowMode},
       </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
       <if test="imgs != null" >
         imgs = #{imgs},
       </if>
@@ -136,6 +141,7 @@
     WHERE 1=1
     AND newsType = #{newsType}
     AND type = #{type}
+    AND status = 1
     <if test="surnameId != null">
     	AND surnameId = #{surnameId}
     </if>

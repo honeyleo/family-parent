@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.CommentBoxDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, userId, type, commentId, createTime
+  </sql>
+  
+  <select id="get" resultType="com.family.common.model.CommentBox" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment_box where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from comment_box where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.family.common.model.CommentBox" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into comment_box (userId, type, commentId, createTime)
+    values (#{userId}, #{type}, #{commentId}, #{createTime})
+  </insert>
+  
+  <select id="getCommentIdList" resultType="java.lang.Long">
+    SELECT
+    commentId
+    FROM comment_box
+    WHERE 1=1
+    AND userId = #{userId}
+    AND type = #{type}
+    AND commentId in
+    <foreach collection="list" open="(" item="commentId" separator="," close=")">
+    	#{commentId}
+    </foreach>
+  </select>
+  <select id="isPraised" resultType="java.lang.Boolean">
+    select 
+    	COUNT(0)
+    from comment_box where userId = #{userId} AND type = 1 AND commentId = #{commentId}
+  </select>
+</mapper>

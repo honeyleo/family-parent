@@ -10,7 +10,7 @@ public class NearbyTest {
 	@Test
 	public void list() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImQzZDk0NDY4MDJhNDQyNTk3NTVkMzhlNmQxNjNlODIwIiwiciI6ImQzNmYzZGRlMGVmZDRmYTBiNDFkZjk5NGVlNTIwMzY0IiwidCI6MTQ4ODQ2ODU4NiwidSI6MTB9");
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6Ijg1NmE1MGRiYzEzNDQ2MDVhYjMyZGNjMjFkM2JmMGY4IiwidCI6MTQ5MjY5ODM2OCwidSI6MTd9");
 		reqParams.put("lat", "22.4485150000");
 		reqParams.put("lng", "114.1661120000");
 		reqParams.put("start", "0");
@@ -26,7 +26,7 @@ public class NearbyTest {
 	@Test
 	public void list2() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6IjJlMjVhMDkxZDMwMzQzNTFiY2RkYzE2ZGJlMDYxODhhIiwidCI6MTQ4ODQ2ODUwOSwidSI6MTd9");
+		reqParams.put("access_token", "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImM4MWU3MjhkOWQ0YzJmNjM2ZjA2N2Y4OWNjMTQ4NjJjIiwiciI6ImRhMDBlOWI4MzMxNDQxMGJhNTM5ZjdlNGRmNDIyNzlhIiwidCI6MTQ5MjY5ODM5NSwidSI6Mn0=");
 		reqParams.put("lat", "22.5485150000");
 		reqParams.put("lng", "114.0661120000");
 		reqParams.put("start", "0");

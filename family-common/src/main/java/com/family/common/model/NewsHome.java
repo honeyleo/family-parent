@@ -47,7 +47,11 @@ public class NewsHome implements Serializable {
 	 * 评论数
 	 */
 	private Integer comments;
-
+	/**
+	 * 新闻状态：0-已删除；1-发布；2-待发布
+	 */
+	private Integer status = 1;
+	
 	public Long getId() {
 		return id;
 	}
@@ -158,5 +162,13 @@ public class NewsHome implements Serializable {
 
 	public void setComments(Integer comments) {
 		this.comments = comments;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

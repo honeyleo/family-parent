@@ -16,7 +16,7 @@ public class NewsTest {
 		reqParams.put("limit", "10");
 		reqParams.put("last_update_time", "0");
 		try {
-			String response = HttpClient.post(Constant.HOST + "/app/consult/list", reqParams);
+			String response = HttpClient.post(Constant.HOST + "/app/news_home/list", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
