@@ -2,6 +2,7 @@ package com.family.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -181,6 +182,10 @@ public class UserDetailDTO implements Serializable {
 	 * 是否是朋友
 	 */
 	private boolean isFriend;
+	/**
+	 * 用户兴趣列表
+	 */
+	private List<Interest> interestList;
 
 	public Long getId() {
 		return id;
@@ -507,6 +512,14 @@ public class UserDetailDTO implements Serializable {
 
 	public void setIsFriend(boolean isFriend) {
 		this.isFriend = isFriend;
+	}
+
+	public List<Interest> getInterestList() {
+		return interestList;
+	}
+
+	public void setInterestList(List<Interest> interestList) {
+		this.interestList = interestList;
 	}
 	
 }

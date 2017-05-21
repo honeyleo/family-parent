@@ -50,6 +50,12 @@ public interface InterestDAO {
      */
     List<UserInterest> getUserInterests(Long userId);
     /**
+     * 获取用户的兴趣爱好列表
+     * @param userId
+     * @return
+     */
+    List<Interest> getUserInterestList(Long userId);
+    /**
      * 
      * @param userId
      * @param list

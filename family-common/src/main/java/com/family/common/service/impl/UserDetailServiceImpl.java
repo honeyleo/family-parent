@@ -13,11 +13,13 @@ import com.family.common.dao.MemberDAO;
 import com.family.common.dao.UserDAO;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.Company;
+import com.family.common.model.Interest;
 import com.family.common.model.Member;
 import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.model.UserDetailDTODecorate;
+import com.family.common.service.InterestService;
 import com.family.common.service.UserDetailService;
 import com.google.common.collect.Lists;
 
@@ -38,6 +40,9 @@ public class UserDetailServiceImpl implements UserDetailService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	@Autowired
+	private InterestService interestService;
 
 	public int deleteByPrimaryKey(Long id) {
 		return userDetailDAO.deleteByPrimaryKey(id);
@@ -169,6 +174,8 @@ public class UserDetailServiceImpl implements UserDetailService {
 		if(userDetailDTO.getAvatar() != null) {
 			userDetailDTO.setAvatar(imageUrl + userDetailDTO.getAvatar());
 		}
+		List<Interest> userInterestList = interestService.getUserInterests(id);
+		userDetailDTO.setInterestList(userInterestList);
 		UserDetailDTODecorate userDetailDTODecorate = new UserDetailDTODecorate(userDetailDTO);
 		return userDetailDTODecorate;
 	}

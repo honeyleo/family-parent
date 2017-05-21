@@ -14,9 +14,11 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.family.common.model.Company;
+import com.family.common.model.Interest;
 import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
+import com.family.common.service.InterestService;
 import com.family.common.service.UserDetailService;
 import com.family.common.service.UserService;
 import com.family.model.AccessToken;
@@ -53,6 +55,9 @@ public class UserProxyService {
 	
 	@Autowired
 	private TokenService tokenService;
+	
+	@Autowired
+	private InterestService interestService;
 	
 	/**
 	 * 获取当前用户信息
@@ -241,6 +246,10 @@ public class UserProxyService {
 					
 				}
 			}
+		}
+		if(userDetail != null) {
+			List<Interest> userInterests = interestService.getUserInterests(id);
+			userDetail.setInterestList(userInterests);
 		}
 		return userDetail;
 	}

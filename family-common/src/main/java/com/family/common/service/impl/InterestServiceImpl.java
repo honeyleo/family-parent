@@ -63,4 +63,9 @@ public class InterestServiceImpl implements InterestService {
 		}
 		return 0;
 	}
+
+	@Override
+	public List<Interest> getUserInterests(Long userId) {
+		return interestDAO.getUserInterestList(userId);
+	}
 }

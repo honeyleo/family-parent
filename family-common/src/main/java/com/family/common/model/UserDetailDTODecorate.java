@@ -342,6 +342,14 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 		return companyList;
 	}
 
+	public List<Interest> getInterestList() {
+		return userDetailDTO.getInterestList();
+	}
+
+	public void setInterestList(List<Interest> interestList) {
+		userDetailDTO.setInterestList(interestList);
+	}
+
 	public static void main(String[] args) {
 		UserDetailDTO user = new UserDetailDTO();
 		user.setId(12L);

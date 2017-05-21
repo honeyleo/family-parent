@@ -37,5 +37,17 @@ public interface InterestService {
      * @return
      */
     List<Interest> list(Long pid);
+    /**
+     * 更新用户兴趣
+     * @param userId
+     * @param interestId
+     * @return
+     */
     int updateUserInterest(Long userId, Long[] interestId);
+    /**
+     * 获取用户兴趣
+     * @param userId
+     * @return
+     */
+    List<Interest> getUserInterests(Long userId);
 }

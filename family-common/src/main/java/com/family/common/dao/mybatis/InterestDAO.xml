@@ -55,6 +55,15 @@
     WHERE userId = #{userId}
   </select>
   
+  <select id="getUserInterestList" resultType="com.family.common.model.Interest">
+    SELECT
+    	i.id, i.name, i.pid
+    FROM user_interest ui
+    INNER JOIN interest i
+    ON ui.interestId = i.id
+    WHERE userId = #{userId}
+  </select>
+  
   <insert id="addUserInterests">
     insert into user_interest (userId, interestId, createTime)
     VALUES

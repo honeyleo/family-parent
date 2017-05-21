@@ -138,6 +138,10 @@ public class UserDetail implements Serializable {
 	 * 祖籍（县）
 	 */
 	private Long ancestralCountyId;
+	/**
+	 * 用户兴趣列表
+	 */
+	private List<Interest> interestList;
 	
 	public static UserDetail newDefaultInstance(Long id) {
 		UserDetail detail = new UserDetail();
@@ -432,6 +436,14 @@ public class UserDetail implements Serializable {
 
 	public void setPhoneList(List<Phone> phoneList) {
 		this.phoneList = phoneList;
+	}
+
+	public List<Interest> getInterestList() {
+		return interestList;
+	}
+
+	public void setInterestList(List<Interest> interestList) {
+		this.interestList = interestList;
 	}
 	
 }

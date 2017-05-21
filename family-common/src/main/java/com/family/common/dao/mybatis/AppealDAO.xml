@@ -44,6 +44,7 @@
     FROM appeal
     WHERE 1=1
     AND userId = #{userId}
+    AND status >= 0
     LIMIT #{start}, #{limit}
   </select>
   
@@ -52,6 +53,7 @@
 	  FROM appeal a LEFT JOIN `user` u 
 	  ON a.userId = u.id 
 	  WHERE u.surname = (SELECT surname FROM `user` WHERE id = #{userId}) AND a.userId != #{userId}
+	  AND a.status >= 0
 	  LIMIT #{start}, #{limit}
   </select>
 </mapper>
