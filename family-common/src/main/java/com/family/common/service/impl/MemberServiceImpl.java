@@ -159,7 +159,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDTO getChildren(MemberDTO memberDTO, List<Member> itemList, Map<Long, MemberDTO> allMap) {  
 	    Set<MemberDTO> sonList = Sets.newTreeSet();  
 	    for(Member item : itemList) {  
-	        if(memberDTO.getId() == item.getFatherId()) {  
+	        if(memberDTO.getId().longValue() == item.getFatherId().longValue()) {  
 	        	MemberDTO son = new MemberDTO();
 	        	try {
 					BeanUtils.copyProperties(son, item);
