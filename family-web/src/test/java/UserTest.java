@@ -10,6 +10,7 @@ import com.family.common.model.Phone;
 import com.google.common.collect.Lists;
 
 import cn.lfy.common.utils.HttpClient;
+import cn.lfy.common.utils.MessageDigestUtil;
 
 public class UserTest {
 
@@ -143,6 +144,46 @@ public class UserTest {
 		reqParams.put("limit", "10");
 		try {
 			String response = HttpClient.post(Constant.HOST + "/app/user/news/favor", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void contributions() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("type", "0");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/contributions", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void updatePwd() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("new_password", MessageDigestUtil.getSHA256("admin1"));
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/update_pwd", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void updatePhone() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("phone", "18028763991");
+		reqParams.put("verifyCode", "123456");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/change_phone", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

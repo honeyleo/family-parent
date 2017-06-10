@@ -45,4 +45,13 @@ public interface UserFriendService {
      * @return
      */
     boolean isFriend(long userId, long friendId);
+    /**
+     * 可能认识的宗亲
+     * @param userId
+     * @param surname
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    List<Long> mayKnowFamilyList(long userId, String surname, Integer pageIndex, Integer pageSize);
 }

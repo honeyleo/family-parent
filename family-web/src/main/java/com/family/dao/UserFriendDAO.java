@@ -54,5 +54,12 @@ public interface UserFriendDAO {
      * @return
      */
     int agree(@Param("respondentUserId")long respondentUserId, @Param("userId")long userId, @Param("friendId")long friendId);
+    /**
+     * 可能认识的宗亲
+     * @param userId
+     * @param surname
+     * @return
+     */
+    List<Long> mayKnowFamilyList(@Param("userId")long userId, @Param("surname")String surname);
     
 }

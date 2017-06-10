@@ -91,6 +91,14 @@ public class Member implements Serializable {
 	 * 逝世时间
 	 */
 	private Long dieTime;
+	/**
+	 * 1-离异；0-未离异；备注：只有当时女性时该字段才有意义
+	 */
+	private Integer divorced;
+	/**
+	 * 个人简介
+	 */
+	private String intro;
 	
 	public static Member newDefaultInstance(Long id) {
 		Member detail = new Member();
@@ -115,6 +123,8 @@ public class Member implements Serializable {
 		detail.setAncestralCountyId(0L);
 		detail.setAlive(1);
 		detail.setDieTime(0L);
+		detail.setDivorced(0);
+		detail.setIntro("");
 		return detail;
 	}
 
@@ -292,6 +302,22 @@ public class Member implements Serializable {
 
 	public void setDieTime(Long dieTime) {
 		this.dieTime = dieTime;
+	}
+
+	public Integer getDivorced() {
+		return divorced;
+	}
+
+	public void setDivorced(Integer divorced) {
+		this.divorced = divorced;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 
 }

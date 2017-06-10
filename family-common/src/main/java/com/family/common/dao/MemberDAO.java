@@ -50,7 +50,7 @@ public interface MemberDAO {
      * @param member
      * @return
      */
-    int updateParent(Member member);
+    int updateParent(@Param("entity")Member member);
     /**
      * 通过创建者获取家谱成员列表
      * @param creatorUserId
@@ -63,4 +63,18 @@ public interface MemberDAO {
      * @return
      */
     Member getFemaleSpouse(Long spouseId);
+    /**
+     * 更新父亲ID等于fatherId的人的母亲为motherId
+     * @param fatherId
+     * @param motherId
+     * @return
+     */
+    int updateChildrenOfMother(@Param("fatherId")Long fatherId, @Param("motherId")Long motherId);
+    /**
+     * 更新母亲ID等于motherId的人的父亲为fatherId
+     * @param motherId
+     * @param fatherId
+     * @return
+     */
+    int updateChildrenOfFather(@Param("motherId")Long motherId, @Param("fatherId")Long fatherId);
 }

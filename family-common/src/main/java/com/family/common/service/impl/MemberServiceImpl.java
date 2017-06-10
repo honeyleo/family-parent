@@ -110,6 +110,7 @@ public class MemberServiceImpl implements MemberService {
 			member.setMotherId(0L);
 			member.setAlive(1);
 			member.setDieTime(0L);
+			member.setDivorced(0);
 			memberDAO.insert(member);
 		}
 		int total = 0;
@@ -119,7 +120,8 @@ public class MemberServiceImpl implements MemberService {
 	        total = itemList.size();
 	        Map<Long, MemberDTO> allMap = Maps.newHashMap();
 	        for(Member item : itemList) {  
-	            if(item.getFatherId() == 0 && item.getGender() == 1) {
+	            if((item.getFatherId() == 0 && item.getMotherId() == 0 && item.getGender() == 1)
+	            		|| (item.getFatherId() == 0 && item.getMotherId() == 0 && item.getGender() == 2 && item.getSpouseId() == 0)) {
 	            	MemberDTO root = new MemberDTO();
 		        	try {
 						BeanUtils.copyProperties(root, item);
@@ -132,7 +134,7 @@ public class MemberServiceImpl implements MemberService {
 		        	allMap.put(root.getId(), root);
 	                this.getChildren(root, itemList, allMap);  
 	                result.add(root);  
-	            }  
+	            } 
 	        } 
 	        for(Member item : itemList) {
 	        	if(item.getGender() == 2 && item.getSpouseId() > 0) {
@@ -159,7 +161,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDTO getChildren(MemberDTO memberDTO, List<Member> itemList, Map<Long, MemberDTO> allMap) {  
 	    Set<MemberDTO> sonList = Sets.newTreeSet();  
 	    for(Member item : itemList) {  
-	        if(memberDTO.getId().longValue() == item.getFatherId().longValue()) {  
+	        if((memberDTO.getGender() == 1 && memberDTO.getId().longValue() == item.getFatherId().longValue())
+	        		|| (memberDTO.getGender() == 2 && memberDTO.getId().longValue() == item.getMotherId().longValue())) {  
 	        	MemberDTO son = new MemberDTO();
 	        	try {
 					BeanUtils.copyProperties(son, item);
@@ -224,12 +227,14 @@ public class MemberServiceImpl implements MemberService {
 			if(current.getGender() == 1) {//给男丁添加配偶
 				member.setSpouseId(memberId);
 				memberDAO.insert(member);
+				memberDAO.updateChildrenOfMother(memberId, member.getId());
 			} else {//给女丁添加配偶
 				memberDAO.insert(member);
 				Member tmp22 = new Member();
 				tmp22.setId(memberId);
 				tmp22.setSpouseId(member.getId());
 				memberDAO.update(tmp22);
+				memberDAO.updateChildrenOfFather(memberId, member.getId());
 			}
 			break;
 		case 31:

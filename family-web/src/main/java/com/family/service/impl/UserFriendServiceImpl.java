@@ -68,4 +68,10 @@ public class UserFriendServiceImpl implements UserFriendService {
 		return userFriendDAO.isFriend(userId, friendId);
 	}
 
+	@Override
+	public List<Long> mayKnowFamilyList(long userId, String surname,
+			Integer pageIndex, Integer pageSize) {
+		return userFriendDAO.mayKnowFamilyList(userId, surname);
+	}
+
 }

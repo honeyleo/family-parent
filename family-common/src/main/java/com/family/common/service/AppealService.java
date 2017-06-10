@@ -2,13 +2,12 @@ package com.family.common.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.family.common.model.Appeal;
+import com.family.common.model.AppealThank;
 
 /**
  * 求助消息服务接口
- * @author wendy
+ * @author Leo.liao
  *
  */
 public interface AppealService {
@@ -49,5 +48,40 @@ public interface AppealService {
      * @return
      */
     List<Appeal> familyAppealList(long userId, int start, int limit);
+    /**
+     * 用户对指定求助进行帮助
+     * @param appealId
+     * @param userId
+     * @return
+     */
+    int addHelp(long appealId, long userId);
+    /**
+     * 答谢指定求助的帮助人
+     * @param refUserId
+     * @param appealId
+     * @param thankUserIds
+     * @param contribution
+     * @return
+     */
+    int thank(long refUserId, long appealId, long[] thankUserIds, int contribution);
+    /**
+     * 获取答谢人列表
+     * @param appealId
+     * @return
+     */
+    List<Long> getThankPeopleList(long appealId);
+    
+    /**
+     * 获取接收到的答谢
+     * @param userId
+     * @return
+     */
+    List<AppealThank> getReceiveThanks(long userId);
+    /**
+     * 更新为已读
+     * @param id
+     * @return
+     */
+    int updateAppealThankForReaded(Long id);
     
 }

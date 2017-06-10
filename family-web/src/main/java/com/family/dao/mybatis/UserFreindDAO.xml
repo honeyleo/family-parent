@@ -90,4 +90,9 @@
   	SET `status` = 0 
   	WHERE respondentUserId = #{respondentUserId} AND userId = #{userId} AND friendId = #{friendId};
   </update>
+  
+  <select id="mayKnowFamilyList" resultType="java.lang.Long">
+    SELECT id FROM `user` WHERE id != #{userId} and surname = #{surname}
+    and id NOT in(SELECT friendId FROM user_friend uf WHERE uf.userId = #{userId} UNION ALL SELECT userId as friendId FROM user_friend uf WHERE uf.friendId = #{userId})
+  </select>
 </mapper>

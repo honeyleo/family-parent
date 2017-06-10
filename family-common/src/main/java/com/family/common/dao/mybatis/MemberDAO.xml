@@ -9,7 +9,7 @@
     name, gender, birthday, zibei, avatar, ranking, 
     birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, birthplaceCountyId, 
     ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId,
-    alive
+    alive, dieTime, divorced,intro
   </sql>
   
   <select id="get" resultType="com.family.common.model.Member" parameterType="java.lang.Long" >
@@ -32,7 +32,7 @@
     	name, gender, birthday, zibei, avatar, ranking, 
     	birthplaceCountryId, birthplaceProvinceId, birthplaceCityId, birthplaceCountyId, 
     	ancestralCountryId, ancestralProvinceId, ancestralCityId, ancestralCountyId,
-    	alive, dieTime, createTime
+    	alive, dieTime, createTime, divorced, intro
     )
     values (
     	#{userId}, #{spouseId}, #{creatorUserId}, 
@@ -40,7 +40,7 @@
     	#{name}, #{gender}, #{birthday}, #{zibei}, #{avatar}, #{ranking},
     	#{birthplaceCountryId}, #{birthplaceProvinceId}, #{birthplaceCityId}, #{birthplaceCountyId}, 
     	#{ancestralCountryId}, #{ancestralProvinceId}, #{ancestralCityId}, #{ancestralCountyId}, 
-    	#{alive}, #{dieTime}, UNIX_TIMESTAMP()
+    	#{alive}, #{dieTime}, UNIX_TIMESTAMP(), #{divorced}, #{intro}
     )
   </insert>
   
@@ -95,20 +95,29 @@
       <if test="entity.alive != null" >
         alive = #{entity.alive},
       </if>
+      <if test="entity.dieTime != null" >
+        dieTime = #{entity.dieTime},
+      </if>
+      <if test="entity.divorced != null" >
+        divorced = #{entity.divorced},
+      </if>
+      <if test="entity.intro != null" >
+        intro = #{entity.intro},
+      </if>
     </set>
     where id = #{entity.id}
   </update>
   <update id="updateParent" parameterType="com.family.common.model.Member" >
     update member
     <set>
-      <if test="fatherId != null" >
-        fatherId = #{fatherId},
+      <if test="entity.fatherId != null" >
+        fatherId = #{entity.fatherId},
       </if>
-      <if test="motherId != null" >
-        motherId = #{motherId},
+      <if test="entity.motherId != null" >
+        motherId = #{entity.motherId},
       </if>
      </set>
-     where id = #{id}
+     where id = #{entity.id}
   </update>
   <select id="list" resultType="com.family.common.model.Member">
   	SELECT 
@@ -136,4 +145,10 @@
     <include refid="Base_Column_List" />
     FROM member WHERE  spouseId  = #{spouseId} LIMIT 1
   </select>
+  <update id="updateChildrenOfMother">
+  	UPDATE member SET motherId = #{motherId} WHERE fatherId = #{fatherId} AND motherId = 0
+  </update>
+  <update id="updateChildrenOfFather">
+  	UPDATE member SET fatherId = #{fatherId} WHERE motherId = #{motherId} AND fatherId = 0
+  </update>
 </mapper>

@@ -161,4 +161,14 @@
     </set>
     where id = #{id}
   </update>
+  <update id="addContribution" >
+    update user_detail
+    SET contribution = contribution + #{contribution}
+    where id = #{id}
+  </update>
+  <update id="minusContribution">
+    update user_detail
+    SET contribution = contribution - #{contribution}
+    where id = #{id} AND contribution > #{contribution}
+  </update>
 </mapper>

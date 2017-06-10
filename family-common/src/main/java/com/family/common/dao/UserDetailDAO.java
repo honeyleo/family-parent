@@ -61,4 +61,18 @@ public interface UserDetailDAO {
      * @return
      */
     int updateCredit(@Param("id") Long id, @Param("credit") Integer credit);
+    /**
+     * 加贡献值
+     * @param id
+     * @param contribution
+     * @return
+     */
+    int addContribution(@Param("id") Long id, @Param("contribution")Integer contribution);
+    /**
+     * 减贡献值
+     * @param id
+     * @param contribution
+     * @return
+     */
+    int minusContribution(@Param("id") Long id, @Param("contribution") Integer contribution);
 }

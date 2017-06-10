@@ -96,6 +96,14 @@ public class MemberDTO implements Comparable<MemberDTO> {
 	 * 逝世时间
 	 */
 	private Long dieTime;
+	/**
+	 * 1-离异；0-未离异
+	 */
+	private Integer divorced;
+	/**
+	 * 个人简介
+	 */
+	private String intro;
 	
 	public Set<MemberDTO> getChildrens() {
 		return childrens;
@@ -235,6 +243,19 @@ public class MemberDTO implements Comparable<MemberDTO> {
 	}
 	public void setDieTime(Long dieTime) {
 		this.dieTime = dieTime;
+	}
+	
+	public Integer getDivorced() {
+		return divorced;
+	}
+	public void setDivorced(Integer divorced) {
+		this.divorced = divorced;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 	@Override
 	public int compareTo(MemberDTO o) {

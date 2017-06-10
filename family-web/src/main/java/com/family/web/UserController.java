@@ -18,20 +18,28 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Phone;
+import com.family.common.model.UserContributionRecord;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.model.UserNewsFavor;
 import com.family.common.service.CommentService;
+import com.family.common.service.UserContributionService;
 import com.family.common.service.UserDetailService;
+import com.family.common.service.UserService;
 import com.family.model.CurrentUser;
 import com.family.service.UserFriendService;
 import com.family.service.UserProxyService;
+import com.family.service.VerifyCodeService;
 
+import cn.lfy.base.model.User;
 import cn.lfy.common.filehandler.ResourceIdentifier;
 import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.model.Message;
+import cn.lfy.common.utils.MessageDigestUtil;
+import cn.lfy.common.utils.UUIDUtil;
+import cn.lfy.common.utils.Validators;
 import cn.lfy.common.web.BaseController;
 
 @Controller
@@ -48,7 +56,14 @@ public class UserController extends BaseController {
 	private ResourceManager resourceManager;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private UserDetailService userDetailService;
+	
+	@Autowired
+	private VerifyCodeService verifyCodeService;
+	
 	@RequestMapping("/me")
 	@ResponseBody
 	public Object me(CurrentUser user, HttpServletRequest request) {
@@ -150,4 +165,62 @@ public class UserController extends BaseController {
 		builder.putData("list", list);
 		return builder.build();
 	}
+	
+	@Autowired
+	private UserContributionService userContributionService;
+	
+	@RequestMapping("/contributions")
+	@ResponseBody
+	public Object contributions(CurrentUser currentUser, 
+			@RequestParam(value = "type", defaultValue = "0") int type, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/contributions");
+		List<UserContributionRecord> userContributionRecordList = userContributionService.getUserContributionRecordList(currentUser.getId(), type);
+		builder.putData("list", userContributionRecordList);
+		return builder.build();
+	}
+	
+	@RequestMapping("/update_pwd")
+	@ResponseBody
+	public Object updatePwd(CurrentUser currentUser, 
+			@RequestParam(value = "new_password") String new_password, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/update_pwd");
+		if (StringUtils.isNotBlank(new_password)) {// 判断password是否为空
+			User user = userService.findById(currentUser.getId());
+        	Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST, "用户不存在");
+        	
+        	String salt = UUIDUtil.salt();
+            String cNewPassword = MessageDigestUtil.getSHA256(new_password + salt);
+            User tmp = new User();
+            tmp.setId(user.getId());
+            tmp.setPassword(cNewPassword);
+            tmp.setSalt(salt);
+            userService.updateByIdSelective(tmp);
+	    }
+		return builder.build();
+	}
+	
+	@RequestMapping("/change_phone")
+	@ResponseBody
+	public Object updatePhone(CurrentUser currentUser, 
+			@RequestParam(value = "phone") String phone, 
+			@RequestParam(value = "verifyCode") String verifyCode, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/change_phone");
+		if (StringUtils.isNotBlank(phone) && StringUtils.isNotBlank(verifyCode)) {// 判断password是否为空
+			User user = userService.findById(currentUser.getId());
+        	Validators.isFalse(user == null, ErrorCode.VALUE_NOT_EXIST, "用户不存在");
+        	
+        	verifyCodeService.verifyCodeAndDel("CHANGE_PHONE", phone, verifyCode);
+        	
+            User tmp = new User();
+            tmp.setId(user.getId());
+            tmp.setPhone(phone);
+            tmp.setUsername(phone);
+            userService.updateByIdSelective(tmp);
+	    }
+		return builder.build();
+	}
+	
 }

@@ -54,6 +54,8 @@ function jsonDataFromServer(result) {
 				}
 				children(childrens, spousesLi);
 	    	}
+	    } else {
+	    	children(member.childrens, liTag);
 	    }
     }
     $(".tree").append(ul);
@@ -130,7 +132,7 @@ function children(list, liElement) {
 $(document).ready(function () {
 	$.post("/app/family/tree", 
 			{
-				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6IjcwZWZkZjJlYzliMDg2MDc5Nzk1YzQ0MjYzNmI1NWZiIiwiciI6Ijk5MmQwZTM0MzYwYTQ1YjFhOWUxYjE2MmEwMmY3Njk4IiwidCI6MTQ5MjkzMjE3OCwidSI6MTd9"
+				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImVkM2QyYzIxOTkxZTNiZWY1ZTA2OTcxM2FmOWZhNmNhIiwiciI6IjczM2Q5OTU4MjM2YzQ0MGM5NzMzOTM0YmMwZGI4YjhkIiwidCI6MTQ5NjQ3MDI2MiwidSI6OTh9"
 			}, 
 			function(result) {
 				jsonDataFromServer(result);
@@ -138,6 +140,7 @@ $(document).ready(function () {
 	);
 });
 */
+
 </script>
 
 </head>

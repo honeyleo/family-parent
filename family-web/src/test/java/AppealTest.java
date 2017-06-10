@@ -62,4 +62,70 @@ public class AppealTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void cancel() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("id", "9");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/cancel", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void help() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("id", "9");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/help", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void thankPeoples() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("appealId", "9");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/thank_peoples", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void thank() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("appealId", "9");
+		reqParams.put("thankUserIds", "98");
+		reqParams.put("contribution", "1");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/thank", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void receive_thanks() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/appeal/receive_thanks", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

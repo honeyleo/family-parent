@@ -18,6 +18,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.model.Appeal;
+import com.family.common.model.AppealThank;
+import com.family.common.model.AppealThankDTO;
 import com.family.common.service.AppealService;
 import com.family.model.CurrentUser;
 import com.family.service.UserProxyService;
@@ -148,4 +150,58 @@ public class AppealCtrl extends BaseController {
 		return Message.newBuilder("/app/appeal/list").data(data).build();
 	}
 	
+	@RequestMapping("/app/appeal/cancel")
+	@ResponseBody
+	public Object cancel(CurrentUser user, 
+			@RequestParam(name = "id") long id,
+			HttpServletRequest request) {
+		boolean success = appealService.delete(id) > 0 ? true : false;
+		return Message.newBuilder("/app/appeal/cancel").putData("success", success).build();
+	}
+	
+	@RequestMapping("/app/appeal/help")
+    @ResponseBody
+    public Object help(CurrentUser user, 
+            @RequestParam(name = "id") long id,
+            HttpServletRequest request) {
+        int ret = appealService.addHelp(id, user.getId());
+        return Message.newBuilder("/app/appeal/help").putData("success", ret > 0).build();
+    }
+	
+	@RequestMapping("/app/appeal/thank_peoples")
+    @ResponseBody
+    public Object thankPeoples(CurrentUser user, 
+            @RequestParam(name = "appealId") long appealId,
+            HttpServletRequest request) {
+        List<Long> thankPeopleList = appealService.getThankPeopleList(appealId);
+        Map<Long, CurrentUser> currentUsers = userProxyService.getCurrentUsers(thankPeopleList);
+        return Message.newBuilder("/app/appeal/thank_peoples").putData("list", currentUsers.values()).build();
+    }
+	
+	@RequestMapping("/app/appeal/thank")
+    @ResponseBody
+    public Object thank(CurrentUser user, 
+            @RequestParam(name = "appealId") long appealId,
+            @RequestParam(name = "thankUserIds") long[] thankUserId,
+            @RequestParam(name = "contribution", defaultValue = "0") int contribution,
+            HttpServletRequest request) {
+        int ret = appealService.thank(user.getId(), appealId, thankUserId, contribution);
+        return Message.newBuilder("/app/appeal/thank").putData("success", ret > 0).build();
+    }
+	
+	@RequestMapping("/app/appeal/receive_thanks")
+    @ResponseBody
+    public Object receiveThanks(CurrentUser user, 
+            HttpServletRequest request) {
+        List<AppealThank> receiveThanks = appealService.getReceiveThanks(user.getId());
+        List<AppealThankDTO> list = Lists.newArrayList();
+        for(AppealThank thank : receiveThanks) {
+        	CurrentUser u = userProxyService.getCurrentUser(thank.getUserId());
+        	AppealThankDTO dto = new AppealThankDTO(thank.getId(), "谢谢您", "获得" + thank.getContribution() + "贡献值", 
+        			"感谢" + u.getNickname() + "对我的帮助，希望家族里面多一些正能量，特以" + thank.getContribution() + "贡献值作为答谢。", thank.getContribution(), thank.getCreateTime());
+        	list.add(dto);
+        	appealService.updateAppealThankForReaded(thank.getId());
+        }
+        return Message.newBuilder("/app/appeal/receive_thanks").putData("list", list).build();
+    }
 }

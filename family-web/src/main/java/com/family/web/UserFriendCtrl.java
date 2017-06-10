@@ -2,6 +2,7 @@ package com.family.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -204,6 +205,25 @@ public class UserFriendCtrl extends BaseController {
 		JSONObject data = new JSONObject();
 		data.put("list", detailList);
 		builder.data(data);
+		return builder.build();
+	}
+	
+	@RequestMapping("/app/user_friend/may_know_family_list")
+	@ResponseBody
+	public Object mayKnowFamilyList(CurrentUser user, 
+			@RequestParam(name = "pageIndex", defaultValue = "0") int pageIndex, 
+			@RequestParam(name = "pageSize", defaultValue = "5") int pageSize, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user_friend/may_know_family_list");
+		List<Long> mayKnowFamilyList = userFriendService.mayKnowFamilyList(user.getId(), user.getSurname(), pageIndex, pageSize);
+		JSONObject data = new JSONObject();
+		if(!mayKnowFamilyList.isEmpty()) {
+			Map<Long, CurrentUser> currentUsers = userProxyService.getCurrentUsers(mayKnowFamilyList);
+			data.put("list", currentUsers.values());
+			builder.data(data);
+		} else {
+			data.put("list", Lists.newArrayList());
+		}
 		return builder.build();
 	}
 }

@@ -67,4 +67,8 @@ public interface ErrorCode extends BaseErrorCode
      * {0}不存在
      */
     static final int VALUE_NOT_EXIST = SERVER_ERROR + 13;
+    /**
+     * {0}不足够
+     */
+    static final int VALUE_NOT_ENOUGH = SERVER_ERROR + 14;
 }

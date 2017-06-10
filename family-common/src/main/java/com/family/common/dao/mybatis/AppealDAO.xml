@@ -14,7 +14,7 @@
   </select>
   
   <delete id="delete" parameterType="java.lang.Long" >
-    delete from appeal where id = #{id}
+    update appeal set status = -1 where id = #{id}
   </delete>
   
   <insert id="insert" parameterType="com.family.common.model.Appeal" >
@@ -56,4 +56,24 @@
 	  AND a.status >= 0
 	  LIMIT #{start}, #{limit}
   </select>
+  <insert id="addHelp" parameterType="com.family.common.model.AppealHelp">
+    INSERT INTO appeal_help(appealId, userId, contribution, status, createTime) 
+    VALUES(#{appealId}, #{userId}, #{contribution}, #{status}, UNIX_TIMESTAMP())
+    ON DUPLICATE KEY UPDATE createTime = UNIX_TIMESTAMP()
+  </insert>
+  <select id="getThankPeopleList" resultType="java.lang.Long">
+    SELECT userId FROM appeal_help WHERE appealId = #{appealId} AND status > 0
+  </select>
+  <update id="updateContribution">
+    UPDATE appeal_help SET contribution = contribution + #{contribution} WHERE appealId = #{appealId} AND userId = #{userId}
+  </update>
+  <insert id="addThank" parameterType="com.family.common.model.AppealThank">
+    INSERT INTO appeal_thank(appealId, userId, contribution, status, createTime) VALUES(#{appealId}, #{userId}, #{contribution}, #{status}, UNIX_TIMESTAMP())
+  </insert>
+  <select id="getReceiveThanks" resultType="com.family.common.model.AppealThank">
+    SELECT * FROM appeal_thank WHERE userId = #{userId} and status = 0
+  </select>
+  <update id="updateAppealThankForReaded">
+    UPDATE appeal_thank SET status = 1 WHERE id = #{id}
+  </update>
 </mapper>

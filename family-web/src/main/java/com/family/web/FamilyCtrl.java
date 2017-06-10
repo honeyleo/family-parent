@@ -63,6 +63,12 @@ public class FamilyCtrl  extends BaseController {
 		} else if(member.getAlive() != null && member.getAlive() == 1) {
 			Validators.isFalse(member.getDieTime() == null, ErrorCode.PARAM_ILLEGAL, "逝世时间");
 		}
+		if(member.getDivorced() == null) {
+			member.setDivorced(0);
+		}
+		if(member.getIntro() == null) {
+			member.setIntro("");
+		}
 		try {
 			if(file != null) {
 				ResourceIdentifier dest = handleFile("avatar_image", file, resourceManager);

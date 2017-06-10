@@ -12,7 +12,7 @@ public class ApiTest {
 	@Test
 	public void login() {
 		Map<String, String> reqParams = new HashMap<String, String>();
-		reqParams.put("username", "18028763999");
+		reqParams.put("username", "admin");
 		reqParams.put("password", MessageDigestUtil.getSHA256("admin"));
 		try {
 			String response = HttpClient.post(Constant.HOST + "/oauth/login", reqParams);
@@ -150,6 +150,19 @@ public class ApiTest {
 		reqParams.put("versionCode", "2");
 		try {
 			String response = HttpClient.post(Constant.HOST + "/version/check_update", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void may_know_family_list() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("pageSize", "1");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/may_know_family_list", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();
