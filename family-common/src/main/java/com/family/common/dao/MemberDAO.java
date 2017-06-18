@@ -77,4 +77,47 @@ public interface MemberDAO {
      * @return
      */
     int updateChildrenOfFather(@Param("motherId")Long motherId, @Param("fatherId")Long fatherId);
+    /**
+     * 更新父亲Id等于fatherId的所有孩子的fatherId为0
+     * @param fatherId
+     * @return
+     */
+    int updateChildrenOfFatherId(Long fatherId);
+    /**
+     * 更新母亲Id等于motherId的所有孩子的motherId为0
+     * @param motherId
+     * @return
+     */
+    int updateChildrenOfMotherId(Long motherId);
+    /**
+     * 更新配偶Id等于spouseId的女性的spouseId为0
+     * @param spouseId
+     * @return
+     */
+    int updateSpouseIdForZero(Long spouseId);
+    /**
+     * 删除母亲Id等于motherId并且userId不等于userId的孩子
+     * @param motherId
+     * @param userId
+     * @return
+     */
+    int deleteChildren(@Param("motherId")Long motherId, @Param("userId")Long userId);
+    /**
+     * 是否有孙子孙女
+     * @param motherId
+     * @return
+     */
+    boolean hasGrandChildren(@Param("motherId")Long motherId);
+    /**
+     * 是否有女婿
+     * @param motherId
+     * @return
+     */
+    Boolean hasDaughtershusband(@Param("motherId")Long motherId);
+    /**
+     * 是否有丈夫
+     * @param id
+     * @return
+     */
+    Boolean hasHusband(Long id);
 }

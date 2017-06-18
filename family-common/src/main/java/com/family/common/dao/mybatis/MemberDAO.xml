@@ -151,4 +151,25 @@
   <update id="updateChildrenOfFather">
   	UPDATE member SET fatherId = #{fatherId} WHERE motherId = #{motherId} AND fatherId = 0
   </update>
+  <update id="updateChildrenOfFatherId">
+    UPDATE member SET fatherId = 0 WHERE fatherId = #{fatherId}
+  </update>
+  <update id="updateChildrenOfMotherId">
+    UPDATE member SET motherId = 0 WHERE motherId = #{motherId}
+  </update>
+  <update id="updateSpouseIdForZero">
+    UPDATE member SET spouseId = 0 WHERE spouseId = #{spouseId}
+  </update>
+  <delete id="deleteChildren">
+    DELETE FROM member WHERE motherId = #{motherId} AND userId != #{userId}
+  </delete>
+  <select id="hasGrandChildren" resultType="java.lang.Boolean">
+    SELECT COUNT(0) FROM member WHERE fatherId in(SELECT id FROM member WHERE motherId = #{motherId})
+  </select>
+  <select id="hasDaughtershusband" resultType="java.lang.Boolean">
+    SELECT spouseId FROM member WHERE id in(SELECT id FROM member WHERE motherId = #{motherId}) AND gender = 2
+  </select>
+  <select id="hasHusband" resultType="java.lang.Boolean">
+    SELECT spouseId FROM member WHERE id = #{id} AND gender = 2;
+  </select>
 </mapper>

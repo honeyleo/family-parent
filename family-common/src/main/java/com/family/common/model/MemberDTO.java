@@ -264,13 +264,14 @@ public class MemberDTO implements Comparable<MemberDTO> {
 		} else if(this.getRanking() < o.getRanking()) {
 			return -1;
 		} else {
-//			if(this.getGender() > o.getGender()) {
-//				return 1;
-//			} else if(this.getGender() < o.getGender()) {
-//				return -1;
-//			}
+			if(this.getId() > o.getId()) {
+				return 1;
+			} else if(this.getId() < o.getId()) {
+				return -1;
+			} else {
+				return 0;
+			}
 		}
-		return 0;
 	}
 	
 }

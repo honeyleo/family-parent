@@ -2,6 +2,7 @@ package com.family.common.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,7 @@ import com.family.common.service.MemberService;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.framework.exception.ErrorCode;
 import cn.lfy.common.utils.Validators;
 
@@ -67,10 +69,32 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	
 	@Override
+	@Transactional
 	public int delete(long userId, Long id) {
 		Member member = get(id);
+		if(member.getUserId().longValue() == userId) {
+			throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "不能删除自己");
+		}
 		if(member != null) {
 			if(member.getCreatorUserId().longValue() == userId) {
+				Boolean hasHusband = memberDAO.hasHusband(id);
+				if(hasHusband != null && hasHusband) {
+					throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "有丈夫，请先删除丈夫");
+				}
+				Boolean hasDaughtershusband = memberDAO.hasDaughtershusband(id);
+				if(hasDaughtershusband != null && hasDaughtershusband) {
+					throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "有女婿，请先删除女婿");
+				}
+				if(memberDAO.hasGrandChildren(id)) {
+					throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "有孙子孙女，请先从叶子节点删除");
+				}
+				if(member.getGender() == 1) {
+					memberDAO.updateChildrenOfFatherId(id);
+					memberDAO.updateSpouseIdForZero(member.getId());
+				}
+				if(member.getGender() == 2) {
+					memberDAO.deleteChildren(id, userId);
+				}
 				return memberDAO.delete(id);
 			}
 		}
@@ -120,41 +144,64 @@ public class MemberServiceImpl implements MemberService {
 			memberDAO.insert(member);
 		}
 		int total = 0;
-		List<MemberDTO> result = new ArrayList<MemberDTO>();  
+		List<MemberDTO> result = new ArrayList<MemberDTO>(); 
+		Set<Long> daughtersHusband = Sets.newHashSet();
 		try {   
 	        List<Member> itemList = memberDAO.list(userId); 
 	        total = itemList.size();
 	        Map<Long, MemberDTO> allMap = Maps.newHashMap();
-	        for(Member item : itemList) {  
-	            if((item.getFatherId() == 0 && item.getMotherId() == 0 && item.getGender() == 1)
-	            		|| (item.getFatherId() == 0 && item.getMotherId() == 0 && item.getGender() == 2 && item.getSpouseId() == 0)) {
-	            	MemberDTO root = new MemberDTO();
-		        	try {
-						BeanUtils.copyProperties(root, item);
-						if(StringUtils.isNotBlank(root.getAvatar())) {
-							root.setAvatar(imageUrl + root.getAvatar());
-						}
-					} catch (IllegalAccessException | InvocationTargetException e) {
-						e.printStackTrace();
+	        for(Member member : itemList) {
+	        	MemberDTO memberDTO = new MemberDTO();
+	        	try {
+					BeanUtils.copyProperties(memberDTO, member);
+					if(StringUtils.isNotBlank(memberDTO.getAvatar())) {
+						memberDTO.setAvatar(imageUrl + memberDTO.getAvatar());
 					}
-		        	allMap.put(root.getId(), root);
-	                this.getChildren(root, itemList, allMap);  
-	                result.add(root);  
-	            } 
-	        } 
-	        for(Member item : itemList) {
-	        	if(item.getGender() == 2 && item.getSpouseId() > 0) {
-	        		MemberDTO memberDTO = allMap.get(item.getSpouseId());
-	        		MemberDTO spouse = new MemberDTO();
-	        		try {
-						BeanUtils.copyProperties(spouse, item);
-						if(StringUtils.isNotBlank(spouse.getAvatar())) {
-							spouse.setAvatar(imageUrl + spouse.getAvatar());
-						}
-					} catch (IllegalAccessException | InvocationTargetException e) {
-						e.printStackTrace();
-					}
-	        		memberDTO.getSpouses().add(spouse);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					e.printStackTrace();
+				}
+	        	allMap.put(member.getId(), memberDTO);
+	        }
+	        for(Member member : itemList) {
+	        	MemberDTO memberDTO = allMap.get(member.getId());
+	        	if(member.getMotherId() > 0) {
+	        		allMap.get(member.getMotherId()).getChildrens().add(memberDTO);
+	        	} 
+	        	if(member.getMotherId() == 0 && member.getFatherId() > 0) {
+	        		allMap.get(member.getFatherId()).getChildrens().add(memberDTO);
+	        	} 
+	        	if(member.getGender() == 2) {
+	        		MemberDTO spouse = allMap.get(member.getSpouseId());
+	        		if(spouse != null) {
+	        			spouse.getSpouses().add(memberDTO);
+	        		}
+	        	}
+	        	if(member.getMotherId() > 0 && member.getFatherId() > 0 && member.getGender() == 2) {
+	        		MemberDTO spouse = allMap.get(member.getSpouseId());
+	        		if(spouse != null) {
+	        			daughtersHusband.add(member.getSpouseId());
+	        			memberDTO.getSpouses().add(spouse);
+	        		}
+	        	}
+	        	if(member.getFatherId() == 0 && member.getMotherId() == 0 && member.getGender() == 1) {
+	        		result.add(memberDTO);
+	        	}
+	        }
+	        Iterator<MemberDTO> it = result.iterator();
+	        while(it.hasNext()) {
+	        	MemberDTO member = it.next();
+	        	if(daughtersHusband.contains(member.getId())) {
+	        		Set<MemberDTO> set = Sets.newHashSet();
+	        		member.setSpouses(set);
+	        		it.remove();
+	        	}
+	        }
+	        if(result.isEmpty()) {
+	        	for(Member member : itemList) {
+	        		if(member.getFatherId() == 0 && member.getMotherId() == 0 && member.getGender() == 2 && member.getSpouseId() == 0) {
+	        			MemberDTO memberDTO = allMap.get(member.getId());
+		        		result.add(memberDTO);
+		        	}
 	        	}
 	        }
 	    } catch(Exception e) {  
@@ -164,28 +211,6 @@ public class MemberServiceImpl implements MemberService {
 		return wrapper;
 	}
 	
-	private MemberDTO getChildren(MemberDTO memberDTO, List<Member> itemList, Map<Long, MemberDTO> allMap) {  
-	    Set<MemberDTO> sonList = Sets.newTreeSet();  
-	    for(Member item : itemList) {  
-	        if((memberDTO.getGender() == 1 && memberDTO.getId().longValue() == item.getFatherId().longValue())
-	        		|| (memberDTO.getGender() == 2 && memberDTO.getId().longValue() == item.getMotherId().longValue())) {  
-	        	MemberDTO son = new MemberDTO();
-	        	try {
-					BeanUtils.copyProperties(son, item);
-					if(StringUtils.isNotBlank(son.getAvatar())) {
-						son.setAvatar(imageUrl + son.getAvatar());
-					}
-				} catch (IllegalAccessException | InvocationTargetException e) {
-					e.printStackTrace();
-				}
-	            sonList.add(son);  
-	            allMap.put(son.getId(), son);
-	            this.getChildren(son,itemList, allMap);  
-	        }  
-	    }  
-	    memberDTO.setChildrens(sonList); 
-	    return memberDTO;
-	}   
 	/**
 	 *  给指定用户添加
 	 * @param userId 创建者
@@ -197,11 +222,14 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public void addMember(Long userId, Long memberId, int relation, Member member) {
 		LOG.info("userId={} give memberId={} add relation={}  of {}", new Object[]{userId, memberId, relation, member});
-		member.setGender(relation%2 == 0 ? 2 : 1);
+		
+		if(relation != 22) {
+			member.setGender(relation%2 == 0 ? 2 : 1);
+		}
 		switch (relation) {
 		case 11://父亲
 			Member father = memberDAO.getFather(memberId);
-			Validators.isFalse(father != null, ErrorCode.VALUE_EXIST, "母亲");
+			Validators.isFalse(father != null, ErrorCode.VALUE_EXIST, "父亲");
 			int ret = memberDAO.insert(member);
 			Validators.isFalse(ret <= 0, ErrorCode.SERVER_ERROR);
 			Member tmp = new Member();
@@ -228,12 +256,22 @@ public class MemberServiceImpl implements MemberService {
 			tmp12.setMotherId(member.getId());
 			memberDAO.updateParent(tmp12);
 			break;
+		case 13://继父
+			Member father2 = memberDAO.getFather(memberId);
+			Validators.isFalse(father2 != null, ErrorCode.VALUE_EXIST, "母亲");
+			int ret2 = memberDAO.insert(member);
+			Validators.isFalse(ret2 <= 0, ErrorCode.SERVER_ERROR);
+			Member tmp2 = new Member();
+			tmp2.setId(memberId);
+			tmp2.setFatherId(member.getId());
+			memberDAO.updateParent(tmp2);
+			break;
 		case 22://配偶
 			Member current = memberDAO.get(memberId);
 			if(current.getGender() == 1) {//给男丁添加配偶
 				member.setSpouseId(memberId);
 				memberDAO.insert(member);
-				memberDAO.updateChildrenOfMother(memberId, member.getId());
+//				memberDAO.updateChildrenOfMother(memberId, member.getId());
 			} else {//给女丁添加配偶
 				memberDAO.insert(member);
 				Member tmp22 = new Member();
@@ -277,18 +315,27 @@ public class MemberServiceImpl implements MemberService {
 		case 41:
 		case 42://儿女
 			Member currentParent = memberDAO.get(memberId);
-			if(currentParent.getGender() == 1) {
-				member.setFatherId(memberId);
-				Member currentMother = memberDAO.getFemaleSpouse(memberId);
-				if(currentMother != null) {
-					member.setMotherId(currentMother.getId());
-				}
-			} else {
+			if(currentParent.getGender() == 2) {
 				member.setMotherId(memberId);
 				Member currentFather = memberDAO.get(currentParent.getSpouseId());
-				member.setFatherId(currentFather.getId());
+				if(currentFather != null) {
+					member.setFatherId(currentFather.getId());
+				}
+				memberDAO.insert(member);
+			} else {
+				throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "子女只能从女性上添加");
 			}
-			memberDAO.insert(member);
+			break;
+		
+		case 43://添加继子/继女，只能从男性添加
+		case 44:
+			Member current2 = memberDAO.get(memberId);
+			if(current2.getGender() == 1) {
+				member.setFatherId(memberId);
+				memberDAO.insert(member);
+			} else {
+				throw ApplicationException.newInstance(ErrorCode.SERVER_ERROR, "继子女只能从男性上添加");
+			}
 			break;
 		default:
 			break;

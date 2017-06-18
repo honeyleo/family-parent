@@ -8,8 +8,8 @@
 <script>
 //服务器端返回数据
 function jsonDataFromServer(result) {
-	//result = eval("(" + result + ")");
-	//device.backCount(result.data.total);
+	result = eval("(" + result + ")");
+	device.backCount(result.data.total);
     var list = result.data.list;
     var ul = $("<ul></ul>");
     for(var i = 0; i < list.length; i++) {
@@ -44,11 +44,17 @@ function jsonDataFromServer(result) {
 				                '</a>';
 				spousesLi.append(spouseElement);
 				ul.append(spousesLi);
-				var childrens = spouse.childrens;
+				var childrens = new Array();
+				var cc = 0;
+				for(var c = 0; c < member.childrens.length; c++) {
+					if(member.childrens[c].motherId == spouse.id) {
+						childrens[cc] = member.childrens[c];
+						cc++;
+					}
+				}
 				children(childrens, spousesLi);
 	    	}
-	    } 
-	    if(member.childrens.length > 0) {
+	    } else {
 	    	children(member.childrens, liTag);
 	    }
     }
@@ -104,14 +110,17 @@ function children(list, liElement) {
 				                '</a>';
 				spousesLi.append(spouseElement);
 				ul.append(spousesLi);
-				var childrens = spouse.childrens;
+				var childrens = new Array();
+				var cc = 0;
+				for(var c = 0; c < member.childrens.length; c++) {
+					if(member.childrens[c].motherId == spouse.id) {
+						childrens[cc] = member.childrens[c];
+						cc++;
+					}
+				}
 				children(childrens, spousesLi);
    	    	}
    	    }
-   	    
-   	    if(member.childrens.length > 0) {
-            children(member.childrens, liTag);
-        }
    	    if(i == list.length - 1 && member.spouses.length > 0) {
    	    	var tmp = $('<li class="line_4" style="display:none"></li>');
    	    	ul.append(tmp);
@@ -119,16 +128,18 @@ function children(list, liElement) {
    	 	liElement.append(ul);
     }
 }
+/*
 $(document).ready(function () {
 	$.post("/app/family/tree", 
 			{
-				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImM4MWU3MjhkOWQ0YzJmNjM2ZjA2N2Y4OWNjMTQ4NjJjIiwiciI6ImE5ZDkzODY2MTgyYjRmYTdiYjVhZjkyNTM2NmZiN2NhIiwidCI6MTQ5NzcxMzgxMywidSI6Mn0="
+				access_token: "eyJpIjoiMTI3LjAuMC4xIiwibCI6ImVkM2QyYzIxOTkxZTNiZWY1ZTA2OTcxM2FmOWZhNmNhIiwiciI6IjczM2Q5OTU4MjM2YzQ0MGM5NzMzOTM0YmMwZGI4YjhkIiwidCI6MTQ5NjQ3MDI2MiwidSI6OTh9"
 			}, 
 			function(result) {
 				jsonDataFromServer(result);
 			}
 	);
 });
+*/
 
 </script>
 
