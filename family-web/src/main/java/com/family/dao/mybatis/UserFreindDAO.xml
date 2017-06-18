@@ -95,4 +95,8 @@
     SELECT id FROM `user` WHERE id != #{userId} and surname = #{surname}
     and id NOT in(SELECT friendId FROM user_friend uf WHERE uf.userId = #{userId} UNION ALL SELECT userId as friendId FROM user_friend uf WHERE uf.friendId = #{userId})
   </select>
+  
+  <delete id="del">
+    DELETE FROM user_friend WHERE (userId = #{userId} AND friendId = #{friendId}) OR (userId = #{friendId} AND friendId = #{userId})
+  </delete>
 </mapper>

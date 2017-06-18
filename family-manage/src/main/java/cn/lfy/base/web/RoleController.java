@@ -24,6 +24,7 @@ import cn.lfy.base.model.LoginUser;
 import cn.lfy.base.model.Menu;
 import cn.lfy.base.model.Role;
 import cn.lfy.base.model.TreeNode;
+import cn.lfy.base.model.type.RoleType;
 import cn.lfy.base.model.type.StateType;
 import cn.lfy.base.service.MenuService;
 import cn.lfy.base.service.RoleMenuService;
@@ -111,6 +112,9 @@ public class RoleController {
         Role parent = roleService.getById(role.getParentId());
         Validators.notNull(parent, ErrorCode.PARAM_ILLEGAL, "parentId");
         role.setLevel(parent.getLevel() + 1);
+        if(role.getType() == null) {
+        	role.setType(RoleType.CUSTOMER.getType());
+        }
     	roleService.insert(role);
         return Message.newBuilder().build();
     }

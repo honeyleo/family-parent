@@ -96,4 +96,9 @@ public class NewsHomeServiceImpl implements NewsHomeService {
 		return newsHomeDAO.getSurnameBySurname(surname);
 	}
 
+	@Override
+	public Surname getSurname(String surname) {
+		return newsHomeDAO.getSurname(surname);
+	}
+
 }

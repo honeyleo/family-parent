@@ -226,4 +226,16 @@ public class UserFriendCtrl extends BaseController {
 		}
 		return builder.build();
 	}
+	
+	@RequestMapping("/app/user_friend/del")
+	@ResponseBody
+	public Object del(CurrentUser user, 
+			@RequestParam(name = "friendIds", required = true) long[] friendIds, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user_friend/del");
+		if(friendIds != null) {
+			userFriendService.del(user.getId(), friendIds);
+		}
+		return builder.build();
+	}
 }

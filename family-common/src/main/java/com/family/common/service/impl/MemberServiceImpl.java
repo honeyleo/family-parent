@@ -67,8 +67,14 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	
 	@Override
-	public int delete(Long id) {
-		return memberDAO.delete(id);
+	public int delete(long userId, Long id) {
+		Member member = get(id);
+		if(member != null) {
+			if(member.getCreatorUserId().longValue() == userId) {
+				return memberDAO.delete(id);
+			}
+		}
+		return 0;
 	}
 	
 	@Override

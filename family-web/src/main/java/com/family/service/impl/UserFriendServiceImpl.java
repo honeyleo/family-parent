@@ -74,4 +74,12 @@ public class UserFriendServiceImpl implements UserFriendService {
 		return userFriendDAO.mayKnowFamilyList(userId, surname);
 	}
 
+	@Override
+	public boolean del(long userId, long[] friendIds) {
+		for(long friendId : friendIds) {
+			userFriendDAO.del(userId, friendId);
+		}
+		return true;
+	}
+
 }

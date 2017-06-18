@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.family.common.model.ContributionRank;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
 
@@ -75,4 +76,10 @@ public interface UserDetailDAO {
      * @return
      */
     int minusContribution(@Param("id") Long id, @Param("contribution") Integer contribution);
+    /**
+     * 获取该用户贡献值排行
+     * @param id
+     * @return
+     */
+    ContributionRank getContributionRank(Long id);
 }

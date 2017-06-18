@@ -115,7 +115,7 @@ public class FamilyCtrl  extends BaseController {
 			@RequestParam(name = "memberId") long memberId,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/member/del");
-		memberService.delete(memberId);
+		memberService.delete(user.getId(), memberId);
 		return builder.build();
 	}
 	

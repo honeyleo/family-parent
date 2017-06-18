@@ -54,4 +54,12 @@ public interface UserFriendService {
      * @return
      */
     List<Long> mayKnowFamilyList(long userId, String surname, Integer pageIndex, Integer pageSize);
+    
+    /**
+     * 删除好友
+     * @param userId
+     * @param friendIds
+     * @return
+     */
+    boolean del(long userId, long[] friendIds);
 }

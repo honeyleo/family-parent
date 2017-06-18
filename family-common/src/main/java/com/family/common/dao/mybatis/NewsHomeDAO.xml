@@ -33,6 +33,9 @@
       <if test="condition.userId != null" >
          and userId = #{condition.userId}
       </if>
+      <if test="condition.surnameId != null">
+        and surnameId = #{condition.surnameId}
+      </if>
       and status > 0
     </trim>
   </sql>

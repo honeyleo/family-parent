@@ -171,4 +171,31 @@
     SET contribution = contribution - #{contribution}
     where id = #{id} AND contribution > #{contribution}
   </update>
+  <select id="getContributionRank" resultType="com.family.common.model.ContributionRank">
+    SELECT rownum as rank, contribution FROM(
+	SELECT
+	    obj.id,
+	    obj.contribution,
+	    CASE
+	WHEN @rowtotal = obj.contribution THEN
+	    @rownum
+	WHEN @rowtotal := obj.contribution THEN
+	    @rownum :=@rownum + 1
+	WHEN @rowtotal = 0 THEN
+	    @rownum :=@rownum + 1
+	END AS rownum
+	FROM
+	    (
+	        SELECT
+	            id,
+	            contribution
+	        FROM
+	            `user_detail`
+	        ORDER BY
+	            contribution DESC
+	    ) AS obj,
+	    (SELECT @rownum := 0 ,@rowtotal := NULL) r
+	) AS ranking WHERE id = #{id}
+	LIMIT 1
+  </select>
 </mapper>

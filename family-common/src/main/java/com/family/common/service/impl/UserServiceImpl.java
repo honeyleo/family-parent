@@ -85,5 +85,15 @@ public class UserServiceImpl implements UserService {
 	public List<User> search(String query) {
 		return userDAO.search(query);
 	}
+
+	@Override
+	public Long getTodayRegisterCount() {
+		return userDAO.getTodayRegisterCount();
+	}
+
+	@Override
+	public Long getTotalRegisterCount() {
+		return userDAO.getTotalRegisterCount();
+	}
     
 }

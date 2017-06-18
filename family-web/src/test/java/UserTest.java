@@ -189,4 +189,16 @@ public class UserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void rank() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user/rank", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -13,6 +13,7 @@ import com.family.common.dao.MemberDAO;
 import com.family.common.dao.UserDAO;
 import com.family.common.dao.UserDetailDAO;
 import com.family.common.model.Company;
+import com.family.common.model.ContributionRank;
 import com.family.common.model.Interest;
 import com.family.common.model.Member;
 import com.family.common.model.Phone;
@@ -178,6 +179,11 @@ public class UserDetailServiceImpl implements UserDetailService {
 		userDetailDTO.setInterestList(userInterestList);
 		UserDetailDTODecorate userDetailDTODecorate = new UserDetailDTODecorate(userDetailDTO);
 		return userDetailDTODecorate;
+	}
+
+	@Override
+	public ContributionRank getContributionRank(Long id) {
+		return userDetailDAO.getContributionRank(id);
 	}
 	
 	

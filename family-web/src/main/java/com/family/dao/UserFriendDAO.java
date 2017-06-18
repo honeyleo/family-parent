@@ -61,5 +61,12 @@ public interface UserFriendDAO {
      * @return
      */
     List<Long> mayKnowFamilyList(@Param("userId")long userId, @Param("surname")String surname);
+    /**
+     * 删除好友
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    int del(@Param("userId")long userId, @Param("friendId")long friendId);
     
 }

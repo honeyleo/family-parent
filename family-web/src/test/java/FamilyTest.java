@@ -24,12 +24,12 @@ public class FamilyTest {
 	public void add() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
-		reqParams.put("memberId", "151");
+		reqParams.put("memberId", "153");
 		reqParams.put("relation", "22");
-		reqParams.put("name", "廖焯明");
-		reqParams.put("gender", "1");
+		reqParams.put("name", "高文");
+		reqParams.put("gender", "2");
 		reqParams.put("birthday", "" + System.currentTimeMillis()/1000);
-		reqParams.put("zibei", "明");
+		reqParams.put("zibei", "文");
 		reqParams.put("ranking", "1");
 		reqParams.put("birthplaceCountryId", "1");
 		reqParams.put("birthplaceProvinceId", "2");
@@ -108,6 +108,19 @@ public class FamilyTest {
 		reqParams.put("memberId", "1");
 		try {
 			String response = HttpClient.post(Constant.HOST + "/app/member/detail", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void del() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("memberId", "154");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/member/del", reqParams);
 			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace();

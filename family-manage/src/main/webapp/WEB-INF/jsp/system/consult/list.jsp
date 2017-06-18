@@ -3,6 +3,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -125,6 +126,7 @@
                             <input type="hidden" value="50" name="status3" />
                         </td>
                     </tr>
+                    <c:if test="${sessionScope.roleType == 1}">
                 	<tr>
                         <th>姓氏：</th>
                         <td>
@@ -137,6 +139,7 @@
                             </div>
                         </td>
                     </tr>
+                    </c:if>
                 	<tr>
                         <th>新闻类型：</th>
                         <td>

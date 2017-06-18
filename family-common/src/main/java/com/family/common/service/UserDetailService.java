@@ -2,6 +2,7 @@ package com.family.common.service;
 
 import java.util.List;
 
+import com.family.common.model.ContributionRank;
 import com.family.common.model.Phone;
 import com.family.common.model.UserDetail;
 import com.family.common.model.UserDetailDTO;
@@ -62,4 +63,11 @@ public interface UserDetailService {
      * @return
      */
     UserDetailDTO getUserDetailDTO(Long id);
+    
+    /**
+     * 获取该用户贡献值排行
+     * @param id
+     * @return
+     */
+    ContributionRank getContributionRank(Long id);
 }

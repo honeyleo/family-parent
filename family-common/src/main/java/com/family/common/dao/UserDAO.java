@@ -57,4 +57,14 @@ public interface UserDAO {
      * @return
      */
     List<User> search(@Param("query")String query);
+    /**
+     * 获取今天注册数
+     * @return
+     */
+    Long getTodayRegisterCount();
+    /**
+     * 获取总注册数
+     * @return
+     */
+    Long getTotalRegisterCount();
 }

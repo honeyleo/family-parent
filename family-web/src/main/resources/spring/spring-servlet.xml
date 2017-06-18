@@ -54,6 +54,7 @@
 	            <property name="features">
 	                <list>
 	                    <value>QuoteFieldNames</value>
+	                    <value>DisableCircularReferenceDetect</value>
 	                </list>
 	            </property>
 	        </bean>

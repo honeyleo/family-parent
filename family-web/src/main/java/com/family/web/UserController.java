@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
+import com.family.common.model.ContributionRank;
 import com.family.common.model.Phone;
 import com.family.common.model.UserContributionRecord;
 import com.family.common.model.UserDetail;
@@ -220,6 +221,16 @@ public class UserController extends BaseController {
             tmp.setUsername(phone);
             userService.updateByIdSelective(tmp);
 	    }
+		return builder.build();
+	}
+	
+	@RequestMapping("/rank")
+	@ResponseBody
+	public Object rank(CurrentUser currentUser, 
+			HttpServletRequest request) {
+		Message.Builder builder = Message.newBuilder("/app/user/rank");
+		ContributionRank contributionRank = userDetailService.getContributionRank(currentUser.getId());
+		builder.data(contributionRank);
 		return builder.build();
 	}
 	

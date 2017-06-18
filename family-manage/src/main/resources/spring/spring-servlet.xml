@@ -38,6 +38,7 @@
 	<mvc:resources mapping="/fileserver/**" location="/fileserver/" />
 	<mvc:resources mapping="/news/**" location="/news/" />
 	<mvc:resources mapping="/content_image/**" location="/content_image/" />
+	<mvc:resources mapping="/feedback_image/**" location="/feedback_image/" />
 	
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<mvc:annotation-driven>

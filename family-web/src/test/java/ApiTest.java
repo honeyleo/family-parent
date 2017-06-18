@@ -168,4 +168,17 @@ public class ApiTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void del() {
+		Map<String, String> reqParams = new HashMap<String, String>();
+		reqParams.put("access_token", Constant.access_token);
+		reqParams.put("friendIds", "1");
+		try {
+			String response = HttpClient.post(Constant.HOST + "/app/user_friend/del", reqParams);
+			System.out.println(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

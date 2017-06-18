@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.family.common.dao.FeedbackDAO" >
+  <cache flushInterval="1800000" size="1024" readOnly="true" eviction="LRU"></cache>
+  
+  <sql id="Base_Column_List" >
+    id, description, images, userId, status, createTime, updateTime
+  </sql>
+  
+  <insert id="insert" parameterType="com.family.common.model.Feedback" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into feedback (description, images, userId, status, createTime, updateTime)
+    values (#{description}, #{images}, #{userId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from feedback where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="com.family.common.model.Feedback" >
+    update feedback
+    <set >
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      updateTime = UNIX_TIMESTAMP()
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="get" resultType="com.family.common.model.Feedback" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from feedback where id = #{id}
+  </select>
+  
+  <select id="list" resultType="com.family.common.model.Feedback">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	FROM `feedback`
+  	WHERE 1=1
+  	<if test="status != null" >
+        AND status = #{status}
+    </if>
+  </select>
+</mapper>

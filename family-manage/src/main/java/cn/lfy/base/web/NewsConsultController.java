@@ -1,6 +1,7 @@
 package cn.lfy.base.web;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,11 +17,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 import com.family.common.enums.NewsType;
 import com.family.common.model.NewsHome;
+import com.family.common.model.Surname;
 import com.family.common.service.NewsHomeService;
 import com.google.common.base.Joiner;
 
 import cn.lfy.base.model.Criteria;
+import cn.lfy.base.model.LoginUser;
 import cn.lfy.base.model.PageInfo;
+import cn.lfy.base.model.Role;
+import cn.lfy.base.model.type.RoleType;
 import cn.lfy.common.filehandler.ResourceManager;
 import cn.lfy.common.framework.exception.ApplicationException;
 import cn.lfy.common.model.Message;
@@ -55,9 +60,18 @@ public class NewsConsultController extends BaseController {
         return new ModelAndView("/system/consult/list");
     }
     
+    private static boolean isStaff(LoginUser currentUser) {
+    	Set<Role> roles = currentUser.getRoles();
+    	for(Role role : roles) {
+    		if(role.getType() == RoleType.STAFF.getType()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     @RequestMapping(value = "/api/list")
     @ResponseBody
-    public Object api_list(HttpServletRequest request) throws ApplicationException {
+    public Object api_list(LoginUser currentUser, HttpServletRequest request) throws ApplicationException {
         Integer pageNum = RequestUtil.getInteger(request, "currentPage");
         Integer pageSize = RequestUtil.getInteger(request, "pageSize");
         Criteria criteria = new Criteria();
@@ -65,6 +79,15 @@ public class NewsConsultController extends BaseController {
         Integer type = RequestUtil.getInteger(request, "type");
         if(type != 0) {
         	criteria.put("type", type);
+        }
+        
+        if(!isStaff(currentUser)) {
+        	Surname surnameObj = newsHomeService.getSurname(currentUser.getUser().getSurname());
+        	Long surnameId = null;
+			if(surnameObj != null) {
+				surnameId = surnameObj.getId();
+			}
+        	criteria.put("surnameId", surnameId);
         }
         PageInfo<NewsHome> result = newsHomeService.findListByCriteria(criteria, pageNum, pageSize);
         JSONObject json = new JSONObject();
@@ -121,7 +144,7 @@ public class NewsConsultController extends BaseController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public Object add(NewsHome form, HttpServletRequest request) throws ApplicationException {
+    public Object add(LoginUser currentUser, NewsHome form, HttpServletRequest request) throws ApplicationException {
     	Message.Builder builder = Message.newBuilder();
     	String pathRoot = request.getSession().getServletContext().getRealPath( "/" );
         
@@ -130,6 +153,15 @@ public class NewsConsultController extends BaseController {
 		String content = form.getContent();
 		form.setContent(ueditorContentImgHandle(content, pathRoot, resourceManager));
 		form.setNewsType(NewsType.NEWS_CONSULT.getValue());
+		
+		if(!isStaff(currentUser)) {
+        	Surname surnameObj = newsHomeService.getSurname(currentUser.getUser().getSurname());
+        	if(surnameObj != null) {
+        		form.setSurnameId(surnameObj.getId());
+        		form.setSurname(surnameObj.getSurname());
+        	}
+        }
+		
         newsHomeService.insert(form);
         return builder.build();
     }

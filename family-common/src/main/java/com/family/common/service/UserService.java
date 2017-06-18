@@ -51,4 +51,15 @@ public interface UserService {
      */
     List<User> search(String query);
     
+    /**
+     * 获取今天注册数
+     * @return
+     */
+    Long getTodayRegisterCount();
+    /**
+     * 获取总注册数
+     * @return
+     */
+    Long getTotalRegisterCount();
+    
 }

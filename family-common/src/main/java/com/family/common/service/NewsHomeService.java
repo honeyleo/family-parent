@@ -73,5 +73,12 @@ public interface NewsHomeService {
      * @return
      */
     List<Surname> getSurnameBySurname(String surname);
+    
+    /**
+     * 获取姓氏
+     * @param surname
+     * @return
+     */
+    Surname getSurname(String surname);
 
 }

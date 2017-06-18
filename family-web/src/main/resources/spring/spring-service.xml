@@ -62,6 +62,7 @@
 		<entry key="avatar_image" value-ref="avatar_image" />
 		<entry key="appeal_image" value-ref="appeal_image" />
 		<entry key="cert_image" value-ref="cert_image" />
+		<entry key="feedback_image" value-ref="feedback_image" />
 	</util:map>
 	
 	<bean id="avatar_image"
@@ -82,4 +83,11 @@
 		<property name="childDir" value="cert_image"></property>
 		<property name="baseURL" value="${fileserver.image.url}"></property>
 	</bean>
+	
+	<bean id="feedback_image"
+        class="cn.lfy.common.filehandler.ResourceHandlerImpl">
+        <property name="baseDir" value="${fileserver.image.dir}"></property>
+        <property name="childDir" value="feedback_image"></property>
+        <property name="baseURL" value="${fileserver.image.url}"></property>
+    </bean>
 </beans>

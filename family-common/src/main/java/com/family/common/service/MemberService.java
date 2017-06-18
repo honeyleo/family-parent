@@ -13,7 +13,7 @@ public interface MemberService {
     /**
      * 根据主键删除记录
      */
-    int delete(Long id);
+    int delete(long userId, Long id);
 
     /**
      * 保存记录

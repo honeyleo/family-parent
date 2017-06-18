@@ -16,6 +16,10 @@ public class LoginUser extends BaseEntity {
 	private Set<String> uriSet;
 	
 	/**
+	 * 角色分类：1-员工；2-客户
+	 */
+	private int roleType;
+	/**
 	 * 登录账号信息关联的用户
 	 * @return
 	 */
@@ -61,6 +65,14 @@ public class LoginUser extends BaseEntity {
 
 	public void setRoleIds(Set<Long> roleIds) {
 		this.roleIds = roleIds;
+	}
+
+	public int getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(int roleType) {
+		this.roleType = roleType;
 	}
 	
 

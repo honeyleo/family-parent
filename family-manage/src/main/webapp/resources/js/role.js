@@ -1,9 +1,19 @@
 var roles = {
+	Type : {1 : "员工", 2 : "客户"},
     editor: null,
     sourceArray: [],
     textCon:null,
     init: function () {
+    	roles.dropDown('modify_search_status1', 'search_dropDown-status1', 'status1');
         this.loadTree();
+    },
+    dropDown: function (id, text, inp) {
+        $('.' + id).delegate('li a', 'click', function () {
+            $("#" + text).text($(this).text());
+            var value = $(this).attr('value');
+            $("input[name =" + inp + "]").attr("value", value);
+            $("#" + text).attr("value", value);
+        });
     },
     //加载数据
     loadTree: function () {
@@ -149,11 +159,7 @@ var roles = {
         });
         $.getJSON("/manager/role/detail", {id: treeNode.id}, function(result){
         	if (result.ret == 0) {
-                if (result.data.onMenu == 0) {
-                	$('#search_dropDown-status1').attr("value",'0').text("否");
-                } else {
-                	$('#search_dropDown-status1').attr("value", '1').text("是");
-                }
+                $('#search_dropDown-status1').attr("value", result.data.type).text(roles.Type[result.data.type]);
                 $("#id").val(result.data.id);
                 $("#parentId").val(result.data.parentId);
                 $("#name").val(result.data.name);
@@ -170,7 +176,7 @@ var roles = {
                 name: $("#name").val(),
                 url: $("#url").val(),
                 orderNo: $("#orderNo").val(),
-                onMenu:$("#search_dropDown-status1").attr("value")
+                type:$("#search_dropDown-status1").attr("value")
             };
             $.post("/manager/role/update", param, function(result){
                 if ( result.ret == 0 ) {
@@ -212,6 +218,7 @@ var roles = {
     			parentId: parentId,
                 name: $("#name").val(),
                 desc: $("#desc").val(),
+                type:$("#search_dropDown-status1").attr("value")
             };
             $.post("/manager/role/add", param, function(result){
                 if ( result.ret == 0 ) {

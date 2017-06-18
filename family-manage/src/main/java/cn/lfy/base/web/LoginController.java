@@ -23,6 +23,7 @@ import cn.lfy.base.model.LoginUser;
 import cn.lfy.base.model.Menu;
 import cn.lfy.base.model.Role;
 import cn.lfy.base.model.User;
+import cn.lfy.base.model.type.RoleType;
 import cn.lfy.base.model.type.StateType;
 import cn.lfy.base.service.RoleMenuService;
 import cn.lfy.base.service.UserRoleService;
@@ -134,6 +135,7 @@ public class LoginController {
         }
         account.setId(user.getId());
         request.getSession().setAttribute(Constants.SESSION_LOGIN_USER, account);
+        request.getSession().setAttribute("roleType", account.getRoleType());
     }
     
     private LoginUser getLoginUser(String username){
@@ -147,7 +149,14 @@ public class LoginController {
         roleSet.addAll(roleList);
         account.setRoles(roleSet);
         account.setUser(dbUser);
-
+        int roleType = RoleType.CUSTOMER.getType();
+        for(Role role : roleList) {
+        	if(role.getType() == RoleType.STAFF.getType()) {
+        		roleType = RoleType.STAFF.getType();
+        		break;
+        	}
+        }
+        account.setRoleType(roleType);
         return account;
     }
 

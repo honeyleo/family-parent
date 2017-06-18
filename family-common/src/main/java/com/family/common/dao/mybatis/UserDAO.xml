@@ -139,4 +139,20 @@
     <include refid="Base_Column_List" />
     from user where nickname = #{query} OR phone=#{query}
   </select>
+  
+  <select id="getTodayRegisterCount" resultType="java.lang.Long">
+    SELECT
+        COUNT(0)
+    FROM
+    `user`
+    WHERE
+        createTime BETWEEN FROM_UNIXTIME(UNIX_TIMESTAMP(DATE_FORMAT(now(),'%Y-%m-%d')),'%Y-%m-%d %H:%i:%S')
+            AND FROM_UNIXTIME(UNIX_TIMESTAMP(DATE_FORMAT(now(),'%Y-%m-%d')) +86399,'%Y-%m-%d %H:%i:%S')
+  </select>
+  <select id="getTotalRegisterCount" resultType="java.lang.Long">
+    SELECT
+        COUNT(0)
+    FROM
+    `user`
+  </select>
 </mapper>

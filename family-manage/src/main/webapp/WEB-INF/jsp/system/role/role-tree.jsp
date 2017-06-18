@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +44,27 @@
             </div>
             <div class="modal-body1" style="padding: 20px;">
                 <table cellspacing="0" width="100%" class="modifyTable">
+                    <c:if test="${sessionScope.roleType == 1}">
+                    <tr>
+                        <th>角色分类：</th>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-default-disable dropDown-style"><i
+                                        id="search_dropDown-status1" value="1">员工</i></button>
+                                <button type="button"
+                                        class="btn btn-default dropdown-toggle  btn-default-disable search_status_list"
+                                        data-toggle="dropdown">
+                                    <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu modify_search_status1 scrollBar" role="menu">
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="1">员工</a></li>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0);' value="2">客户</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" value="50" name="status1" />
+                        </td>
+                    </tr>
+                    </c:if>
                     <tr>
 	                    <th>角色名称：</th>
 	                    <td>

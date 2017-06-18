@@ -18,8 +18,14 @@ public class Feedback implements Serializable {
 	private String images;
 	
 	private Long userId;
+	/**
+	 * 反馈状态：0-未处理；1-已处理；-1-已删除
+	 */
+	private Integer status;
 	
 	private Long createTime;
+	
+	private Long updateTime;
 
 	public Long getId() {
 		return id;
@@ -53,12 +59,28 @@ public class Feedback implements Serializable {
 		this.userId = userId;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Long getCreateTime() {
 		return createTime;
 	}
 
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
+	}
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }
