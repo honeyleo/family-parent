@@ -17,12 +17,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.family.common.dao.MemberDAO;
+import com.family.common.dao.UserContributionDAO;
 import com.family.common.dao.UserDetailDAO;
+import com.family.common.enums.ContributionType;
+import com.family.common.enums.InOrOutType;
 import com.family.common.model.Member;
 import com.family.common.model.MemberDTO;
 import com.family.common.model.MemberDTOWrapper;
+import com.family.common.model.UserContributionRecord;
 import com.family.common.model.UserDetailDTO;
 import com.family.common.service.MemberService;
+import com.family.common.service.UserContributionService;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -67,6 +72,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	@Autowired
+	private UserContributionService userContributionService;
+	
+	@Autowired
+	private UserContributionDAO userContributionDAO;
 	
 	@Override
 	@Transactional
@@ -142,6 +153,20 @@ public class MemberServiceImpl implements MemberService {
 			member.setDieTime(0L);
 			member.setDivorced(0);
 			memberDAO.insert(member);
+			
+		}
+		List<UserContributionRecord> userContributionRecord = userContributionService.getUserContributionRecord(userId, ContributionType.CREATE_FAMILY_TREE, InOrOutType.INCOME);
+		if(userContributionRecord == null || userContributionRecord.isEmpty()) {
+			UserContributionRecord entity = new UserContributionRecord();
+			entity.setUserId(userId);
+			entity.setContribution(100);
+			entity.setType(ContributionType.CREATE_FAMILY_TREE.getType());
+			entity.setInOrOutType(InOrOutType.INCOME.getType());
+			entity.setCreateTime(System.currentTimeMillis()/1000);
+			int ret = userContributionDAO.addUserContributionRecord(entity);
+			if(ret > 0) {
+				userDetailDAO.addContribution(userId, 100);
+			}
 		}
 		int total = 0;
 		List<MemberDTO> result = new ArrayList<MemberDTO>(); 

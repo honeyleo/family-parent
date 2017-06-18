@@ -46,6 +46,14 @@ public class UserDetailDTODecorate extends UserDetailDTO {
 		userDetailDTO.setId(id);
 	}
 
+	public Integer getCert() {
+		return userDetailDTO.getCert();
+	}
+
+	public void setCert(Integer cert) {
+		userDetailDTO.setCert(cert);
+	}
+
 	public String getUsername() {
 		return userDetailDTO.getUsername();
 	}

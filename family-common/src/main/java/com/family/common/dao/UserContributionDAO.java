@@ -21,4 +21,13 @@ public interface UserContributionDAO {
 	 * @return
 	 */
 	List<UserContributionRecord> getUserContributionRecordList(@Param("userId") Long userId, @Param("inOrOutType") Integer inOrOutType);
+	/**
+	 * 获取用户贡献值记录
+	 * @param userId 
+	 * @param type 1-创建家谱；2-首页文章；3-资讯文章；4-求助消息；5-家族基金；6-用户推荐；
+	 * @param inOrOutType 1-收入；2-支出
+	 * @return
+	 */
+	List<UserContributionRecord> getUserContributionRecord(@Param("userId")Long userId, @Param("type") Integer type, @Param("inOrOutType") Integer inOrOutType);
+	
 }

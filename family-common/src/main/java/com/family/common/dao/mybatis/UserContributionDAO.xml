@@ -28,4 +28,10 @@
     </if>
     ORDER BY id DESC
   </select>
+  <select id="getUserContributionRecord" resultType="com.family.common.model.UserContributionRecord">
+    SELECT * FROM user_contribution_record
+    WHERE 1 = 1 AND userId = #{userId}
+    AND type = #{type}
+    AND inOrOutType = #{inOrOutType}
+  </select>
 </mapper>

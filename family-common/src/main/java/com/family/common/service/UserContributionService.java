@@ -2,6 +2,8 @@ package com.family.common.service;
 
 import java.util.List;
 
+import com.family.common.enums.ContributionType;
+import com.family.common.enums.InOrOutType;
 import com.family.common.model.UserContributionRecord;
 
 public interface UserContributionService {
@@ -13,4 +15,13 @@ public interface UserContributionService {
 	 * @return
 	 */
 	List<UserContributionRecord> getUserContributionRecordList(long userId, int inOrOutType);
+	
+	/**
+	 * 获取用户贡献值记录
+	 * @param userId 
+	 * @param type
+	 * @param inOrOutType
+	 * @return
+	 */
+	List<UserContributionRecord> getUserContributionRecord(Long userId, ContributionType type, InOrOutType inOrOutType);
 }
