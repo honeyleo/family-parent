@@ -1,1 +1,9 @@
 /*可以在这里添加你自己的css*/
+iframe.css这个文件是百度编辑器提供的样式文件。
+
+ img {  
+ max-width: 100%; /*图片自适应宽度*/  
+}  
+body {  
+ overflow-y: scroll !important;  
+}

@@ -68,13 +68,13 @@ public class FamilyTest {
 	public void addChild() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
-		reqParams.put("memberId", "180");
+		reqParams.put("memberId", "187");
 		reqParams.put("relation", "41");
-		reqParams.put("name", "廖国国");
+		reqParams.put("name", "廖满爷");
 		reqParams.put("gender", "1");
 		reqParams.put("birthday", "" + System.currentTimeMillis()/1000);
-		reqParams.put("zibei", "国");
-		reqParams.put("ranking", "1");
+		reqParams.put("zibei", "明");
+		reqParams.put("ranking", "2");
 		reqParams.put("birthplaceCountryId", "1");
 		reqParams.put("birthplaceProvinceId", "2");
 		reqParams.put("birthplaceCityId", "0");
@@ -109,12 +109,12 @@ public class FamilyTest {
 	public void addMother() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
-		reqParams.put("memberId", "183");
+		reqParams.put("memberId", "186");
 		reqParams.put("relation", "12");
-		reqParams.put("name", "甘姗英");
+		reqParams.put("name", "刘氏");
 		reqParams.put("gender", "2");
 		reqParams.put("birthday", "" + System.currentTimeMillis()/1000);
-		reqParams.put("zibei", "姗");
+		reqParams.put("zibei", "氏");
 		reqParams.put("ranking", "1");
 		reqParams.put("birthplaceCountryId", "1");
 		reqParams.put("birthplaceProvinceId", "2");
@@ -243,7 +243,7 @@ public class FamilyTest {
 	public void del() {
 		Map<String, String> reqParams = new HashMap<String, String>();
 		reqParams.put("access_token", Constant.access_token);
-		reqParams.put("memberId", "185");
+		reqParams.put("memberId", "187");
 		try {
 			String response = HttpClient.post(Constant.HOST + "/app/member/del", reqParams);
 			System.out.println(response);

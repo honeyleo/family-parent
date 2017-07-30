@@ -36,9 +36,14 @@
 	    <div class="left flex-one">
 	        <div class="input-text" id="commentContent" onclick="showTextarea()"></div>
 	    </div>
-	    <div class="center">
-	        ${news.comments }
-	    </div>
+	    <c:choose>
+	       <c:when test="${news.comments > 0 }">
+	           <div class="center on" id="comments">${news.comments }</div>
+	       </c:when>
+	       <c:otherwise>
+	            <div class="center" id="comments">${news.comments }</div>
+	       </c:otherwise>
+	    </c:choose>
 	    <div class="right">
 	        <c:choose>
 		   	<c:when test="${isFavor}">  
@@ -139,6 +144,9 @@ $(document).ready(function () {
 		        					+ '</div>'
 		        				+ '</div>';
     					$(".discuss-list").append(comment);
+    					$("#comments").attr("class", "center on");
+    					var comments = $("#comments").text();
+    					$("#comments").text(1 + parseInt(comments));
 					}
 				}
 		);

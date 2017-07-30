@@ -202,15 +202,16 @@ p {
     line-height: 0.66667rem; }
   .index-wrap .content img {
   	display:block;
-    max-width: 90%;
-    margin: 0.4rem auto; }
+    max-width: 100%;
+    margin: 0.01rem auto; }
   .index-wrap .content .text {
     color: #888888;
     font-size: 0.42667rem;
     line-height: 0.58667rem;
     margin: 0.26667rem 0; }
     .index-wrap .content p{
-    padding:10px 0 ;}
+    padding:5px 0 ;
+    font-size: 0.42667rem;}
   .index-wrap .tourist-list {
     border-bottom: 1px dotted #b5b5b6; }
     .index-wrap .tourist-list .tourist-item {
@@ -372,18 +373,28 @@ p {
       display: inline-block;
       vertical-align: middle; }
   .bottom-fixed .center {
-    background: #8ec31f;
-    border-radius: 0.10667rem 0.10667rem 0.10667rem 0;
-    min-width: 1.30667rem;
-    padding: 0 0.13333rem;
+    background:url("/resources/img/message.png") left center no-repeat;
+    background-size:0.6rem auto;
+    padding-left:0.8rem;
     height: 0.85333rem;
-    line-height: 0.85333rem;
+    line-height: 0.8rem;
     display: inline-block;
     vertical-align: middle;
-    color: #fff;
-    font-size: 0.37333rem;
+    color: #ccc;
+    font-size: 0.4rem;
     position: relative; }
-    .bottom-fixed .center::before {
+    .bottom-fixed .center.on {
+    background:url("/resources/img/message-on.png") left center no-repeat;
+    background-size:0.6rem auto;
+    padding-left:0.8rem;
+    height: 0.85333rem;
+    line-height: 0.8rem;
+    display: inline-block;
+    vertical-align: middle;
+    color: #3fa7df;
+    font-size: 0.4rem;
+    position: relative; }
+   /*  .bottom-fixed .center::before {
       content: "";
       position: absolute;
       left: 0;
@@ -392,12 +403,12 @@ p {
       width: 0;
       height: 0;
       border-top: 0.26667rem solid #8ec31f;
-      border-right: 0.21333rem solid transparent; }
+      border-right: 0.21333rem solid transparent; } */
   .bottom-fixed .right {
-    padding: 0 3% 0 0.26667rem; }
+    padding: 0 5% 0 0.26667rem; }
     .bottom-fixed .right .shoucang {
-      width: 0.8rem;
-      height: 0.8rem;
+      width: 0.58rem;
+      height: 0.58rem;
       vertical-align: middle; }
 #popLayer{
 	background:rgba(0,0,0,.5);
@@ -440,6 +451,11 @@ p {
 	font-size:18px;
 	line-height:30px;
 }
-      
+img {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}      
 
 /*# sourceMappingURL=index.css.map */
