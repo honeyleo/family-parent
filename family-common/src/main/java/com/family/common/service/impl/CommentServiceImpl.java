@@ -72,8 +72,12 @@ public class CommentServiceImpl implements CommentService {
 		record.setCreateTime(System.currentTimeMillis()/1000);
 		return commentDAO.insert(record);
 	}
-	public boolean isFavor(long userId, long newsId) {
+	
+	public Boolean isFavor(long userId, long newsId) {
 		return commentDAO.isFavor(userId, newsId);
+	}
+	public Comment getFavor(long userId, long newsId) {
+		return commentDAO.getFavor(userId, newsId);
 	}
 	public List<UserNewsFavor> getUserNewsFavorList(long userId, int start, int limit) {
 		List<Comment> commentList = commentDAO.getFavorListByUserId(userId, start, limit + 1);

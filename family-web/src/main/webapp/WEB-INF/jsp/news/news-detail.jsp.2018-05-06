@@ -16,7 +16,7 @@
     <meta name="x5-fullscreen" content="true">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="/resources/css/index.css?t-123">
+    <link rel="stylesheet" href="/resources/css/index.css?t=1123">
     <link href="/resources/css/asyncbox.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -25,9 +25,9 @@
 	<div class="header flex-one">
 
 	    <div class="content">
-	        12222
+	        ${news.content}
 	    </div>
-	    <div class="hot-discuss">热门评论（）</div>
+	    <div class="hot-discuss">热门评论（${news.comments }）</div>
 	    <div class="discuss-list">
 	         
 	    </div>
@@ -47,10 +47,10 @@
 	    <div class="right">
 	        <c:choose>
 		   	<c:when test="${isFavor}">  
-		   		<img src="/resources/img/favored.png" favor="${isFavor}" class="shoucang"/>
+		   		<img src="/resources/img/favored.png" class="shoucang"/>
 		   	</c:when>
 		   	<c:otherwise> 
-		   		<img src="/resources/img/favor.png" favor="${isFavor}" class="shoucang"/>
+		   		<img src="/resources/img/favor.png" class="shoucang"/>
 		   	</c:otherwise>
 			</c:choose>
 	    </div>
@@ -90,34 +90,20 @@ $(document).ready(function () {
 	$("#popLayer").hide();
 	loadData(0, 10);
 	$(".shoucang").click(function(){
-		var favor = $(".shoucang").attr("favor");
-		if(favor == "true") {
-			$.post("/app/news_home/favor", 
-	                {
-	                    newsId: "${news.id}", 
-	                    access_token: "${access_token}"
-	                }, 
-	                function(result) {
-	                    if(result.ret == 0) {
-	                    	$(".shoucang").attr("favor", "false");
-	                    	$(".shoucang").attr("src", "/resources/img/favor.png");
-	                    }
-	                }
-	        );
-		} else {
-			$.post("/app/news_home/favor", 
-	                {
-	                    newsId: "${news.id}", 
-	                    access_token: "${access_token}"
-	                }, 
-	                function(result) {
-	                    if(result.ret == 0) {
-	                    	$(".shoucang").attr("favor", "true");
-	                        $(".shoucang").attr("src", "/resources/img/favored.png");
-	                    }
-	                }
-	        );
+		if("${isFavor}" == "true") {
+			return;
 		}
+		$.post("/app/news_home/favor", 
+				{
+					newsId: "${news.id}", 
+					access_token: "${access_token}"
+				}, 
+				function(result) {
+					if(result.ret == 0) {
+						$(".shoucang").attr("src", "/resources/img/favored.png");
+					}
+				}
+		);
 	});
 	
 	$("#publish").click(function(){

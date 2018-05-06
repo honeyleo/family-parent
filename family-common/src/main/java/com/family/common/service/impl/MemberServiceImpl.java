@@ -105,6 +105,7 @@ public class MemberServiceImpl implements MemberService {
 				}
 				if(member.getGender() == 2) {
 					memberDAO.deleteChildren(id, userId);
+					memberDAO.updateMotherIdForZero(id, userId);
 				}
 				return memberDAO.delete(id);
 			}

@@ -120,4 +120,11 @@ public interface MemberDAO {
      * @return
      */
     Boolean hasHusband(Long id);
+    /**
+     * 根据motherId和userId更新用户motherId为0
+     * @param motherId
+     * @param userId
+     * @return
+     */
+    int updateMotherIdForZero(@Param("motherId")Long motherId, @Param("userId")Long userId);
 }

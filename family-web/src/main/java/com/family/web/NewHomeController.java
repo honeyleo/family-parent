@@ -310,8 +310,9 @@ public class NewHomeController extends BaseController {
 			CurrentUser user,
 			HttpServletRequest request) {
 		Message.Builder builder = Message.newBuilder("/app/" + newsType + "/favor");
-		if(commentService.isFavor(user.getId(), newsId)) {
-			builder.setMsg("已收藏过，不需重复收藏");
+		Comment comment = commentService.getFavor(user.getId(), newsId);
+		if(comment != null) {
+			commentService.delete(comment.getId());
 			return builder.build();
 		}
 		commentService.favor(user.getId(), newsId);

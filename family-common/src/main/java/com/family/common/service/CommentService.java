@@ -56,5 +56,12 @@ public interface CommentService {
      * @param newsId
      * @return
      */
-    boolean isFavor(long userId, long newsId);
+    Boolean isFavor(long userId, long newsId);
+    /**
+     * 是否收藏
+     * @param userId
+     * @param newsId
+     * @return
+     */
+    Comment getFavor(long userId, long newsId);
 }

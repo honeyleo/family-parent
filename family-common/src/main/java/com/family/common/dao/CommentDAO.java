@@ -50,7 +50,15 @@ public interface CommentDAO {
      * @param newsId
      * @return
      */
-    boolean isFavor(@Param("userId")Long userId, @Param("newsId")Long newsId);
+    Comment getFavor(@Param("userId")Long userId, @Param("newsId")Long newsId);
+    
+    /**
+     * 判断用户是否收藏过
+     * @param userId
+     * @param newsId
+     * @return
+     */
+    Boolean isFavor(@Param("userId")Long userId, @Param("newsId")Long newsId);
     /**
      * 赞数量加1
      * @param id

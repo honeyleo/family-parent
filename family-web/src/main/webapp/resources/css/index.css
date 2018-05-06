@@ -319,7 +319,8 @@ p {
      font-size:14px;
      line-height:24px;
      color:#888888;
-     
+     word-wrap:break-word;
+     word-break: break-all;
      }
      .index-wrap .discuss-list .item .right .date{
      color:#b4b4b4;

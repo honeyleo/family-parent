@@ -163,6 +163,9 @@
   <delete id="deleteChildren">
     DELETE FROM member WHERE motherId = #{motherId} AND userId != #{userId}
   </delete>
+  <update id="updateMotherIdForZero">
+    UPDATE member SET motherId = 0 WHERE motherId = #{motherId} AND userId = #{userId}
+  </update>
   <select id="hasGrandChildren" resultType="java.lang.Boolean">
     SELECT COUNT(0) FROM member WHERE fatherId in(SELECT id FROM member WHERE motherId = #{motherId})
   </select>

@@ -54,10 +54,18 @@
     AND type = 2
     LIMIT #{start}, #{limit}
   </select>
-  
   <select id="isFavor" resultType="java.lang.Boolean">
     SELECT
-    	COUNT(0)
+        COUNT(0)
+    FROM comment
+    WHERE 1=1
+    AND userId = #{userId} AND newsId = #{newsId}
+    AND type = 2
+    LIMIT 1
+  </select>
+  <select id="getFavor" resultType="com.family.common.model.Comment">
+    SELECT
+    	<include refid="Base_Column_List" />
     FROM comment
     WHERE 1=1
     AND userId = #{userId} AND newsId = #{newsId}
