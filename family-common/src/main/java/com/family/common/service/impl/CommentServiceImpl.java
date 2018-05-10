@@ -104,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
 			favor.setImgs(BaseController.getImgsList(newsHome.getImgs(), imageUrl));
 			favor.setCreateTime(comment.getCreateTime());
 			favor.setNewsCreateTime(newsHome.getCreateTime());
-			favor.setDetail_url(domainName + "/app/" + newsType.getLabel() + "/detail/" + newsHome.getId() + ".html");
+			favor.setDetail_url(domainName + "/app/" + newsType.getLabel() + "/news-detail/" + newsHome.getId() + ".html");
 			list.add(favor);
 		}
 		return list;

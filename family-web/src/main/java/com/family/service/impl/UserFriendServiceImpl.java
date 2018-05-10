@@ -19,6 +19,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 	
 	@Override
 	public int add(long userId, long friendId, String remark) {
+		Validators.isFalse(friendId == userId, ErrorCode.FRIEND_NOT_ADD_SELF);
 		UserFriend record = new UserFriend();
 		record.setRemark(remark);
 		boolean isFriend = userFriendDAO.isFriend(userId < friendId ? userId : friendId, userId < friendId ? friendId : userId);

@@ -71,4 +71,8 @@ public interface ErrorCode extends BaseErrorCode
      * {0}不足够
      */
     static final int VALUE_NOT_ENOUGH = SERVER_ERROR + 14;
+    /**
+     * 好友不能添加自己
+     */
+    static final int FRIEND_NOT_ADD_SELF = SERVER_ERROR + 15;
 }
